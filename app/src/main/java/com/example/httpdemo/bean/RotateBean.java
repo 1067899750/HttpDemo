@@ -1,10 +1,5 @@
 package com.example.httpdemo.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.List;
-
 /**
  * 
  * Description
@@ -13,163 +8,106 @@ import java.util.List;
  * Date 2019/5/13 14:31
  */
 
-public class RotateBean extends BaseBean implements Parcelable {
+public class RotateBean {
+
+
     /**
-     * err_no : 0
-     * err_msg :
-     * ex : asdfasdfasdf
-     * records : [{"type":"open_page","pic_url":"http://www.youku.com/asdfasdfas.png","link_url":"http://www.youku.com/asdfad.html"},{"type":"open_comic","pic_url":"http://www.youku.com/asdfasdfas.png","link_cid":"sdtertehhee"},{"type":"open_tab","pic_url":"http://www.youku.com/asdfasdfas.png","link_tid":"wretrewrtewrt"},"\u2026\u2026"]
+     * weatherinfo : {"city":"北京","cityid":"101010100","temp1":"18℃","temp2":"31℃","weather":"多云转阴","img1":"n1.gif","img2":"d2.gif","ptime":"18:00"}
      */
 
-    private List<RecordsBean> records;
+    private WeatherinfoBean weatherinfo;
 
-    public List<RecordsBean> getRecords() {
-        return records;
+    public WeatherinfoBean getWeatherinfo() {
+        return weatherinfo;
     }
 
-    public void setRecords(List<RecordsBean> records) {
-        this.records = records;
+    public void setWeatherinfo(WeatherinfoBean weatherinfo) {
+        this.weatherinfo = weatherinfo;
     }
 
-    @Override
-    public String toString() {
-        return "RotateBean{" +
-                "records=" + records +
-                '}';
-    }
-
-    public static class RecordsBean implements Parcelable {
+    public static class WeatherinfoBean {
         /**
-         * type : open_page
-         * pic_url : http://www.youku.com/asdfasdfas.png
-         * link_url : http://www.youku.com/asdfad.html
-         * link_cid : sdtertehhee
-         * link_tid : wretrewrtewrt
-         *
-         * {"err_no":"0","err_msg":"","records":[{"type":"open_page","pic_url":"http://112.74.182.187/upload/image/20c9f2dd36ba6ba161d27d79e28b749c.jpeg","link_url":"http://www.baidu.com"},{"type":"open_page","pic_url":"http://112.74.182.187/upload/image/timg.jpg","link_url":"http://www.baidu.com"}]}
+         * city : 北京
+         * cityid : 101010100
+         * temp1 : 18℃
+         * temp2 : 31℃
+         * weather : 多云转阴
+         * img1 : n1.gif
+         * img2 : d2.gif
+         * ptime : 18:00
          */
 
-        private String type;
-        private String pic_url;
-        private String link_url;
-        private String link_cid;
-        private String link_tid;
+        private String city;
+        private String cityid;
+        private String temp1;
+        private String temp2;
+        private String weather;
+        private String img1;
+        private String img2;
+        private String ptime;
 
-        @Override
-        public String toString() {
-            return "RecordsBean{" +
-                    "type='" + type + '\'' +
-                    ", pic_url='" + pic_url + '\'' +
-                    ", link_url='" + link_url + '\'' +
-                    ", link_cid='" + link_cid + '\'' +
-                    ", link_tid='" + link_tid + '\'' +
-                    '}';
+        public String getCity() {
+            return city;
         }
 
-        public String getType() {
-            return type;
+        public void setCity(String city) {
+            this.city = city;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public String getCityid() {
+            return cityid;
         }
 
-        public String getPic_url() {
-            return pic_url;
+        public void setCityid(String cityid) {
+            this.cityid = cityid;
         }
 
-        public void setPic_url(String pic_url) {
-            this.pic_url = pic_url;
+        public String getTemp1() {
+            return temp1;
         }
 
-        public String getLink_url() {
-            return link_url;
+        public void setTemp1(String temp1) {
+            this.temp1 = temp1;
         }
 
-        public void setLink_url(String link_url) {
-            this.link_url = link_url;
+        public String getTemp2() {
+            return temp2;
         }
 
-        public String getLink_cid() {
-            return link_cid;
+        public void setTemp2(String temp2) {
+            this.temp2 = temp2;
         }
 
-        public void setLink_cid(String link_cid) {
-            this.link_cid = link_cid;
+        public String getWeather() {
+            return weather;
         }
 
-        public String getLink_tid() {
-            return link_tid;
+        public void setWeather(String weather) {
+            this.weather = weather;
         }
 
-        public void setLink_tid(String link_tid) {
-            this.link_tid = link_tid;
+        public String getImg1() {
+            return img1;
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
+        public void setImg1(String img1) {
+            this.img1 = img1;
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.type);
-            dest.writeString(this.pic_url);
-            dest.writeString(this.link_url);
-            dest.writeString(this.link_cid);
-            dest.writeString(this.link_tid);
+        public String getImg2() {
+            return img2;
         }
 
-        public RecordsBean() {
+        public void setImg2(String img2) {
+            this.img2 = img2;
         }
 
-        protected RecordsBean(Parcel in) {
-            this.type = in.readString();
-            this.pic_url = in.readString();
-            this.link_url = in.readString();
-            this.link_cid = in.readString();
-            this.link_tid = in.readString();
+        public String getPtime() {
+            return ptime;
         }
 
-        public static final Creator<RecordsBean> CREATOR = new Creator<RecordsBean>() {
-            @Override
-            public RecordsBean createFromParcel(Parcel source) {
-                return new RecordsBean(source);
-            }
-
-            @Override
-            public RecordsBean[] newArray(int size) {
-                return new RecordsBean[size];
-            }
-        };
+        public void setPtime(String ptime) {
+            this.ptime = ptime;
+        }
     }
-
-    public RotateBean() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.records);
-    }
-
-    protected RotateBean(Parcel in) {
-        this.records = in.createTypedArrayList(RecordsBean.CREATOR);
-    }
-
-    public static final Creator<RotateBean> CREATOR = new Creator<RotateBean>() {
-        @Override
-        public RotateBean createFromParcel(Parcel source) {
-            return new RotateBean(source);
-        }
-
-        @Override
-        public RotateBean[] newArray(int size) {
-            return new RotateBean[size];
-        }
-    };
 }

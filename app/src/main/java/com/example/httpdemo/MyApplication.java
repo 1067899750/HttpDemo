@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.httpdemo.http.HttpHelper;
 import com.example.httpdemo.http.net.OkHttpProcessor;
+import com.example.httpdemo.http.net.VolleyProcessor;
 
 /**
  * @Describe
@@ -15,8 +16,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        HttpHelper.init(new VolleyProcessor(this));
-        HttpHelper.init(new OkHttpProcessor());
+        HttpHelper.init(new VolleyProcessor(this));
+//        HttpHelper.init(new OkHttpProcessor());
     }
 }
 

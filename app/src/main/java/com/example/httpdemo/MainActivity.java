@@ -9,14 +9,14 @@ import com.example.httpdemo.bean.RotateBean;
 import com.example.httpdemo.http.HttpCallback;
 import com.example.httpdemo.http.HttpHelper;
 import com.example.httpdemo.untils.HttpUtil;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private String url = HttpUtil.GET_SERIAL_ROTATE;
+    private String url = HttpUtil.GET_CITY_INFO;
 
-    private HashMap<String , Object> params = new HashMap<>();
-
+    private HashMap<String, Object> params = new HashMap<>();
 
 
     @Override
@@ -33,13 +33,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(RotateBean rotateBean) {
                         System.out.println("--->" + Thread.currentThread());
-                        toast("请求成功");
+                        Gson gson = new Gson();
+                        String str = gson.toJson(rotateBean);
+                        toast(str);
                     }
 
                     @Override
                     public void onFailed(String string) {
                         System.out.println("--->" + Thread.currentThread());
-                        toast("请求失败");
+                        toast(string);
                     }
                 });
             }
@@ -47,15 +49,12 @@ public class MainActivity extends AppCompatActivity {
         // 在测试
 
 
-
     }
 
 
-    public void toast(String string){
-        Toast.makeText(this, string , Toast.LENGTH_SHORT).show();
+    public void toast(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
-
-
 
 
 }

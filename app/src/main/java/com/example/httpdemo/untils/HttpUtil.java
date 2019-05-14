@@ -8,7 +8,7 @@ package com.example.httpdemo.untils;
  * Date 2019/5/13 14:33
  */
 public final class HttpUtil {
-    private final static boolean isLine = false;
+    private final static boolean isLine = true;
 
     /**
      * 线下 还是正式
@@ -18,20 +18,17 @@ public final class HttpUtil {
         return isLine ? mainHost : testHost;
     }
 
-    private static final String mainHost = "http://api.you-fan.com/";
-    private static final String testHost = "http://112.74.182.187/";
-//    http://112.74.182.187/list/serial.json
-    /** 连载地址*/
-    public static final String GET_SERIAL = getMainHost() + "/list/serial.json?";
-    /** 连载分页 */
-    public static final String GET_SERIAL_MORE = getMainHost() + "/list/serial_more.json?";
-    /** 轮播图 */
-    public static final String GET_SERIAL_ROTATE = getMainHost() + "/list/rotate.json";
+//    http://www.weather.com.cn/data/sk/101010100.html
+//    http://www.weather.com.cn/data/cityinfo/101010100.html
 
-    /** 搜索热词 */
-    public static final String GET_SEARCH_HOT = getMainHost() + "/search/history.json?";
-    /** 搜索热词 */
-    public static final String GET_SEARCH = getMainHost() + "/search/get.json?";
+    private static final String mainHost = "http://www.weather.com.cn";
+    private static final String testHost = "http://112.74.182.187";
+
+
+
+    public static final String GET_CITY_INFO = getMainHost() + "/data/cityinfo/101010100.html";
+
+    public static final String GET_SK_ROTATE = getMainHost() + "/data/sk/101010100.html";
 
 
 
