@@ -1,7 +1,9 @@
-package com.example.httpdemo.http;
+package com.example.mylibrary;
 
-import com.example.httpdemo.http.base.ICallBack;
-import com.example.httpdemo.http.base.IHttpProcessor;
+
+
+import com.example.mylibrary.base.ICallBack;
+import com.example.mylibrary.base.IHttpProcessor;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

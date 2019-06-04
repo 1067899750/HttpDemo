@@ -1,4 +1,4 @@
-package com.example.httpdemo.http.base;
+package com.example.mylibrary.base;
 
 import java.util.Map;
 

@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.httpdemo.bean.RotateBean;
-import com.example.httpdemo.http.HttpCallback;
-import com.example.httpdemo.http.HttpHelper;
+import com.example.mylibrary.HttpCallback;
+import com.example.mylibrary.HttpHelper;
 import com.example.httpdemo.untils.HttpUtil;
 import com.google.gson.Gson;
 

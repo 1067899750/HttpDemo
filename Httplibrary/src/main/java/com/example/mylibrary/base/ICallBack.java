@@ -1,4 +1,4 @@
-package com.example.httpdemo.http.base;
+package com.example.mylibrary.base;
 
 /**
  * @Describe 网络层走的是byte 网络给我们的最终的String

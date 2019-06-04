@@ -1,11 +1,12 @@
-package com.example.httpdemo.http.net;
+package com.example.mylibrary.net.http;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.example.httpdemo.http.base.ICallBack;
-import com.example.httpdemo.http.base.IHttpProcessor;
+
+import com.example.mylibrary.base.ICallBack;
+import com.example.mylibrary.base.IHttpProcessor;
 
 import java.io.IOException;
 import java.util.Map;

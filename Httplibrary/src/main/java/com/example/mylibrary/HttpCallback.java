@@ -1,6 +1,7 @@
-package com.example.httpdemo.http;
+package com.example.mylibrary;
 
-import com.example.httpdemo.http.base.ICallBack;
+
+import com.example.mylibrary.base.ICallBack;
 import com.google.gson.Gson;
 
 import java.lang.reflect.ParameterizedType;

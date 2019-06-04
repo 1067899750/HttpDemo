@@ -1,4 +1,4 @@
-package com.example.httpdemo.http.net;
+package com.example.mylibrary.net.volley;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,8 +9,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.httpdemo.http.base.ICallBack;
-import com.example.httpdemo.http.base.IHttpProcessor;
+import com.example.mylibrary.base.ICallBack;
+import com.example.mylibrary.base.IHttpProcessor;
+
 
 import java.util.Map;
 
