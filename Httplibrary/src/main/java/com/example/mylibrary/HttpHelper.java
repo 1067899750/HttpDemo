@@ -67,6 +67,7 @@ public class HttpHelper implements IHttpProcessor {
             return url;
         }
         StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(url);
         if (urlBuilder.indexOf("?") <= 0) {
             urlBuilder.append("?");
 
