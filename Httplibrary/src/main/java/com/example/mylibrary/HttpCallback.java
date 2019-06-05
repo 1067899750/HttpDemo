@@ -18,14 +18,14 @@ import java.lang.reflect.Type;
 public abstract class HttpCallback<Result> implements ICallBack {
 
     @Override
-    public void onSuccess(String result) {
+    public void onSuccess(String result, int tag) {
         Gson gson = new Gson();
         Class<?> cls = analysisClzzInfo(this);
         Result objResult = (Result) gson.fromJson(result, cls);
-        onSuccess(objResult);
+        onSuccess(objResult, tag);
     }
 
-    public abstract void onSuccess(Result result);
+    public abstract void onSuccess(Result result, int tag);
 
     /**
      * 利用反射获得类的信息

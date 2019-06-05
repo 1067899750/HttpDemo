@@ -71,7 +71,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(result);
+                            callBack.onSuccess(result, 0);
                         }
                     });
 
@@ -124,7 +124,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(result);
+                            callBack.onSuccess(result, 0);
 
                         }
                     });
@@ -143,6 +143,12 @@ public class OkHttpProcessor implements IHttpProcessor {
 
 
     }
+
+    @Override
+    public <K> void setRequestHttp(Class<K> k, String url, Map<String, Object> params, ICallBack callBack, int tag) {
+
+    }
+
 
     /**
      * 快速构建参数

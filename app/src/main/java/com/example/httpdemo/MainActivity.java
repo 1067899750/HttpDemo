@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.httpdemo.bean.Login;
-import com.example.httpdemo.bean.RotateBean;
+import com.example.httpdemo.untils.HttpUtil;
 import com.example.mylibrary.HttpCallback;
 import com.example.mylibrary.HttpHelper;
-import com.example.httpdemo.untils.HttpUtil;
 import com.google.gson.Gson;
+
 
 import java.util.HashMap;
 
@@ -54,15 +54,17 @@ public class MainActivity extends AppCompatActivity {
                 params.put("mobile", mobile);
                 params.put("cid", cid);
 
-                HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
+                HttpHelper.getInstance().post(url, params, new HttpCallback<Login>() {
 
                     @Override
-                    public void onSuccess(Login login) {
+                    public void onSuccess(Login login, int tag) {
                         System.out.println("--->" + Thread.currentThread());
                         Gson gson = new Gson();
                         String str = gson.toJson(login);
                         toast(str);
                     }
+
+
 
                     @Override
                     public void onFailed(String string) {
@@ -70,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
                         toast(string);
                     }
                 });
+
+
+
+
+
+
+
+
+
 
 
             }

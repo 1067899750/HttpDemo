@@ -1,7 +1,6 @@
 package com.example.mylibrary;
 
 
-
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 
@@ -62,6 +61,14 @@ public class HttpHelper implements IHttpProcessor {
         mIHttpProcessor.post(finalUrl, params, callBack);
     }
 
+
+    @Override
+    public <K> void setRequestHttp(Class<K> k, String url, Map<String, Object> params, ICallBack callBack, int tag) {
+        String finalUrl = appendParams(url, params);
+        //实际进行网络请求
+        mIHttpProcessor.setRequestHttp(k, finalUrl, params, callBack, tag);
+    }
+
     private String appendParams(String url, Map<String, Object> params) {
         if (params == null || params.isEmpty()) {
             return url;
@@ -76,7 +83,7 @@ public class HttpHelper implements IHttpProcessor {
                 urlBuilder.append("&");
             }
         }
-        for (Map.Entry<String, Object> entry :params.entrySet()) {
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
             try {
                 urlBuilder.append("&" + entry.getKey())
                         .append("=")

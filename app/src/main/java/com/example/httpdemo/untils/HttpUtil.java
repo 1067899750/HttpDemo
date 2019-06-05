@@ -20,8 +20,8 @@ public final class HttpUtil {
 
 //    http://www.weather.com.cn/data/sk/101010100.html
 //    http://www.weather.com.cn/data/cityinfo/101010100.html
-    private static final String mainHost = "http://www.weather.com.cn";
-    private static final String testHost = " https://testpurang.purang.com/";
+    public static final String mainHost = "http://www.weather.com.cn";
+    public static final String testHost = " https://testpurang.purang.com/";
 
 
 

@@ -7,6 +7,6 @@ package com.example.mylibrary.base;
  * @create 2019/5/13 14:06
  */
 public interface ICallBack {
-    void onSuccess(String string);
+    void onSuccess(String string, int tag);
     void onFailed(String string);
 }
