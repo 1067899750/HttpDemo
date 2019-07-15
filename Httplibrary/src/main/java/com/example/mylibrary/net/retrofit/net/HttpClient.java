@@ -238,8 +238,6 @@ public class HttpClient {
         private String url;
         private Object tag;
         private Map<String, String> params = new HashMap<>();
-        /*解析类*/
-        private Class clazz;
 
         public Builder() {
         }
@@ -285,16 +283,6 @@ public class HttpClient {
             return this;
         }
 
-        /**
-         * 响应体类型设置,如果要响应体类型为STRING，请不要使用这个方法
-         *
-         * @param clazz    指定的解析类
-         * @param <T>      解析类
-         */
-        public <T> Builder bodyType( @NonNull Class<T> clazz) {
-            this.clazz = clazz;
-            return this;
-        }
 
         public HttpClient build() {
             if (!TextUtils.isEmpty(builderBaseUrl)) {
