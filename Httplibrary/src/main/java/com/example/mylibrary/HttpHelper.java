@@ -62,12 +62,6 @@ public class HttpHelper implements IHttpProcessor {
     }
 
 
-    @Override
-    public <K> void setRequestHttp(Class<K> k, String url, Map<String, Object> params, ICallBack callBack, int tag) {
-        String finalUrl = appendParams(url, params);
-        //实际进行网络请求
-        mIHttpProcessor.setRequestHttp(k, finalUrl, params, callBack, tag);
-    }
 
     private String appendParams(String url, Map<String, Object> params) {
         if (params == null || params.isEmpty()) {

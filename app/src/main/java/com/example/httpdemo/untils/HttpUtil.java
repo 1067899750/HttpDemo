@@ -8,7 +8,7 @@ package com.example.httpdemo.untils;
  * Date 2019/5/13 14:33
  */
 public final class HttpUtil {
-    private final static boolean isLine = false;
+    private final static boolean isLine = true;
 
     /**
      * 线下 还是正式

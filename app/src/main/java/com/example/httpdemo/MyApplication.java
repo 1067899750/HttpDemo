@@ -3,6 +3,11 @@ package com.example.httpdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.mylibrary.HttpHelper;
+import com.example.mylibrary.net.http.OkHttpProcessor;
+import com.example.mylibrary.net.retrofit.Retrofitprocessor;
+import com.example.mylibrary.net.volley.VolleyProcessor;
+
 
 /**
  * @Describe
@@ -18,7 +23,7 @@ public class MyApplication extends Application {
         mContext = this;
 //        HttpHelper.init(new VolleyProcessor(this));
 //        HttpHelper.init(new OkHttpProcessor());
-//        HttpHelper.init(new Retrofitprocessor(this));
+        HttpHelper.init(new Retrofitprocessor(this));
     }
 
     public static Context getContent() {

@@ -13,6 +13,7 @@
         android:background="#22ff0000"
         android:gravity="center"
         android:text="Hello World!"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

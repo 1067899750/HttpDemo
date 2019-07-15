@@ -2,10 +2,10 @@ package com.example.mylibrary.net.retrofit;
 
 import android.content.Context;
 
-import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
-import com.example.mylibrary.net.retrofit.net.HttpManager;
+
+import org.xutils.HttpManager;
 
 import java.util.Map;
 
@@ -33,10 +33,7 @@ public class Retrofitprocessor implements IHttpProcessor {
     }
 
 
-    @Override
-    public <K> void setRequestHttp(Class<K> k, String url, Map<String, Object> params, ICallBack callBack, int tag) {
-        HttpManager.getInstance(mContext).doHttp(k, url, params, callBack, tag);
-    }
+  
 
 
 }

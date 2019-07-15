@@ -83,10 +83,7 @@ public class VolleyProcessor implements IHttpProcessor {
         mQueue.add(stringRequest);
     }
 
-    @Override
-    public <K> void setRequestHttp(Class<K> k, String url, Map<String, Object> params, ICallBack callBack, int tag) {
 
-    }
 }
 
 
