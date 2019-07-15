@@ -36,7 +36,6 @@ import retrofit2.Retrofit;
  * <p>类说明</p>
  */
 public class HttpClient {
-
     /*The certificate's password*/
     private static final String STORE_PASS = "6666666";
     private static final String STORE_ALIAS = "666666";
@@ -49,6 +48,7 @@ public class HttpClient {
     private Retrofit retrofit;
     private Call<ResponseBody> mCall;
     private static final Map<String, Call> CALL_MAP = new HashMap<>();
+    private String urlTag; //URL 的标志
 
     /**
      * 获取HttpClient的单例
@@ -150,7 +150,7 @@ public class HttpClient {
                 if (200 == response.code()) {
                     try {
                         String result = response.body().string();
-                        iCallBack.onSuccess(0, result);
+                        iCallBack.onSuccess(urlTag, result);
                     } catch (IOException | IllegalStateException e) {
                         e.printStackTrace();
                     }
@@ -236,7 +236,7 @@ public class HttpClient {
     public static final class Builder {
         private String builderBaseUrl = "";
         private String url;
-        private Object tag;
+        private String tag;
         private Map<String, String> params = new HashMap<>();
 
         public Builder() {
@@ -268,7 +268,7 @@ public class HttpClient {
          *
          * @param tag 标签
          */
-        public Builder tag(Object tag) {
+        public Builder tag(String tag) {
             this.tag = tag;
             return this;
         }
@@ -291,6 +291,7 @@ public class HttpClient {
             HttpClient client = HttpClient.getIns();
             client.getRetrofit();
             client.setBuilder(this);
+            client.urlTag = (String) tag;
             return client;
         }
     }

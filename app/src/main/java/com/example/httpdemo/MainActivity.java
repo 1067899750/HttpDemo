@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
 
                     @Override
-                    public void onSuccess(Login rotateBean, int tag) {
+                    public void onSuccess(Login rotateBean, String tag) {
                         System.out.println("--->" + Thread.currentThread());
                         Gson gson = new Gson();
                         String str = gson.toJson(rotateBean);

@@ -13,7 +13,7 @@ public interface ICallBack{
      * @param tag     请求标志
      * @param message 成功信息
      */
-    void onSuccess(int tag, String message);
+    void onSuccess(String tag, String message);
 
     /**
      * 请求失败的情况

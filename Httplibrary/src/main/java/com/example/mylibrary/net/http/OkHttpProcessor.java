@@ -71,7 +71,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(0, result);
+                            callBack.onSuccess("0", result);
                         }
                     });
 
@@ -124,7 +124,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(0, result);
+                            callBack.onSuccess("0", result);
 
                         }
                     });

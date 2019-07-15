@@ -32,6 +32,7 @@ public class Retrofitprocessor implements IHttpProcessor {
                 .baseUrl(getBaseUrl(url))
                 .url(Uri.parse(url).getPath())
                 .params(params)
+                .tag(getUrlTag(url))
                 .build();
         client.get(callBack);
     }
@@ -42,14 +43,13 @@ public class Retrofitprocessor implements IHttpProcessor {
                 .baseUrl(getBaseUrl(url))
                 .url(Uri.parse(url).getPath())
                 .params(params)
+                .tag(getUrlTag(url))
                 .build();
         client.post(callBack);
     }
 
 
-
     /**
-     *
      * @param url
      * @return
      */
@@ -59,7 +59,7 @@ public class Retrofitprocessor implements IHttpProcessor {
             try {
                 String path = Uri.parse(url).getPath();
                 String host = Uri.parse(url).getHost();
-                domain = url.substring(0,url.indexOf("//")) + "//" + host;
+                domain = url.substring(0, url.indexOf("//")) + "//" + host;
             } catch (Exception ex) {
             }
         }
@@ -67,8 +67,19 @@ public class Retrofitprocessor implements IHttpProcessor {
     }
 
 
-
-
+    public String getUrlTag(String url) {
+        try {
+            String tag = Uri.parse(url).getPath().split("/")[Uri.parse(url).getPath().split("/").length -1];
+            if (tag.contains(".")){
+                return tag.substring(0, tag.indexOf("."));
+            } else {
+                return tag;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 
 }

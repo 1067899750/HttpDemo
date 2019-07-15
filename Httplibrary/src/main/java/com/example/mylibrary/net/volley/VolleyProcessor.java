@@ -39,7 +39,7 @@ public class VolleyProcessor implements IHttpProcessor {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onSuccess response==" + response);
-                        callBack.onSuccess(0, response);
+                        callBack.onSuccess("0", response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -66,7 +66,7 @@ public class VolleyProcessor implements IHttpProcessor {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onSuccess response==" + response);
-                callBack.onSuccess(0, response);
+                callBack.onSuccess("0", response);
             }
         }, new Response.ErrorListener() {
             @Override
