@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.net.HttpClient;
+import com.example.mylibrary.untils.StringUtils;
 import com.orhanobut.logger.Logger;
 
 import org.xutils.HttpManager;
@@ -32,7 +33,7 @@ public class Retrofitprocessor implements IHttpProcessor {
                 .baseUrl(getBaseUrl(url))
                 .url(Uri.parse(url).getPath())
                 .params(params)
-                .tag(getUrlTag(url))
+                .tag(StringUtils.getUrlTag(url))
                 .build();
         client.get(callBack);
     }
@@ -43,7 +44,7 @@ public class Retrofitprocessor implements IHttpProcessor {
                 .baseUrl(getBaseUrl(url))
                 .url(Uri.parse(url).getPath())
                 .params(params)
-                .tag(getUrlTag(url))
+                .tag(StringUtils.getUrlTag(url))
                 .build();
         client.post(callBack);
     }
@@ -67,19 +68,6 @@ public class Retrofitprocessor implements IHttpProcessor {
     }
 
 
-    public String getUrlTag(String url) {
-        try {
-            String tag = Uri.parse(url).getPath().split("/")[Uri.parse(url).getPath().split("/").length -1];
-            if (tag.contains(".")){
-                return tag.substring(0, tag.indexOf("."));
-            } else {
-                return tag;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
 
 }
