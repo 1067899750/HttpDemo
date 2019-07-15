@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     private String url = HttpUtil.GET_CITY_INFO;
 
-    private HashMap<String, Object> params = new HashMap<>();
+    private HashMap<String, String> params = new HashMap<>();
 
 
     private String password = "e10adc3949ba59abbe56e057f20f883e";
@@ -51,14 +51,17 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("--->" + Thread.currentThread());
                         toast(string);
                     }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        System.out.println("--->" + Thread.currentThread());
+                        toast(message);
+                    }
                 });
 
                 params.put("password", password);
                 params.put("mobile", mobile);
                 params.put("cid", cid);
-
-
-
 
 
 

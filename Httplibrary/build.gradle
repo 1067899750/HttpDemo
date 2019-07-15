@@ -25,31 +25,30 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-
-
-
-
     api 'org.xutils:xutils:3.5.0'
-    api 'com.google.code.gson:gson:2.8.1' //Gson 库
+    api 'com.google.code.gson:gson:2.8.1'
+    //Gson 库
     api 'com.github.erd:android-volley:1.0.0'
     api 'com.squareup.okhttp3:okhttp:3.8.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-
-
-    api 'com.squareup.retrofit2:retrofit:2.3.0'//导入retrofit
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    //导入retrofit
     //下面两个是RxJava 和 RxAndroid
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
     api 'io.reactivex.rxjava2:rxjava:2.x.y'
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'//转换器，请求结果转换成Model
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'//配合Rxjava 使用
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //转换器，请求结果转换成Model
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
-
+    api 'com.orhanobut:logger:2.2.0'
+    //配合Rxjava 使用
+    implementation files('libs/simple-xml-core.jar')
 }
 
 

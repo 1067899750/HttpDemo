@@ -12,12 +12,13 @@ public interface IHttpProcessor {
 
 
     //Get
-    void get(String url, Map<String, Object> params, ICallBack callBack);
+    void get(String url, Map<String, String> params, ICallBack callBack);
 
     //Post
-    void post(String url, Map<String, Object> params, ICallBack callBack);
+    void post(String url, Map<String, String> params, ICallBack callBack);
 
     //Update
+
 
     //Delete
 

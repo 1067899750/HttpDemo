@@ -4,7 +4,7 @@ package com.example.mylibrary.net.retrofit.interceptor;
 
 import android.content.Context;
 
-import com.example.mylibrary.net.retrofit.untils.SharePreferencesUtils;
+import com.example.mylibrary.untils.SharePreferencesUtils;
 
 import java.io.IOException;
 

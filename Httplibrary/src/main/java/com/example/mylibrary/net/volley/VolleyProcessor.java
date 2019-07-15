@@ -32,14 +32,14 @@ public class VolleyProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, final ICallBack callBack) {
+    public void get(String url, Map<String, String> params, final ICallBack callBack) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onSuccess response==" + response);
-                        callBack.onSuccess(response, 0);
+                        callBack.onSuccess(0, response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -59,14 +59,14 @@ public class VolleyProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, final ICallBack callBack) {
+    public void post(String url, Map<String, String> params, final ICallBack callBack) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onSuccess response==" + response);
-                callBack.onSuccess(response, 0);
+                callBack.onSuccess(0, response);
             }
         }, new Response.ErrorListener() {
             @Override

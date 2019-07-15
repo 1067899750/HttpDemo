@@ -40,7 +40,7 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, final ICallBack callBack) {
+    public void get(String url, Map<String, String> params, final ICallBack callBack) {
         final Request request = new Request.Builder()
                 .get()
                 .url(url)
@@ -71,7 +71,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(result, 0);
+                            callBack.onSuccess(0, result);
                         }
                     });
 
@@ -90,7 +90,7 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, final ICallBack callBack) {
+    public void post(String url, Map<String, String> params, final ICallBack callBack) {
         RequestBody requestbody = appendBody(params);
 
         final Request request = new Request.Builder()
@@ -124,7 +124,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess(result, 0);
+                            callBack.onSuccess(0, result);
 
                         }
                     });
@@ -150,13 +150,13 @@ public class OkHttpProcessor implements IHttpProcessor {
      * @param params
      * @return
      */
-    private RequestBody appendBody(Map<String, Object> params) {
+    private RequestBody appendBody(Map<String, String> params) {
         FormBody.Builder body = new FormBody.Builder();
         if (params == null || params.isEmpty()) {
             return body.build();
         }
 
-        for (Map.Entry<String, Object> entry:
+        for (Map.Entry<String, String> entry:
              params.entrySet()) {
             body.add(entry.getKey(), entry.getValue().toString());
         }

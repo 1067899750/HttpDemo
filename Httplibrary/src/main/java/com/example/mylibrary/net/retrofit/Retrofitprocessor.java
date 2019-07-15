@@ -1,9 +1,13 @@
 package com.example.mylibrary.net.retrofit;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
+import com.example.mylibrary.net.retrofit.net.HttpClient;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.HttpManager;
 
@@ -23,17 +27,46 @@ public class Retrofitprocessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, ICallBack callBack) {
-
+    public void get(String url, Map<String, String> params, final ICallBack callBack) {
+        HttpClient client = new HttpClient.Builder()
+                .baseUrl(getBaseUrl(url))
+                .url(Uri.parse(url).getPath())
+                .build();
+        client.get(callBack);
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, ICallBack callBack) {
-
+    public void post(String url, Map<String, String> params, final ICallBack callBack) {
+        HttpClient client = new HttpClient.Builder()
+                .baseUrl(getBaseUrl(url))
+                .url(Uri.parse(url).getPath())
+                .params(params)
+                .build();
+        client.post(callBack);
     }
 
 
-  
+
+    /**
+     *
+     * @param url
+     * @return
+     */
+    public String getBaseUrl(String url) {
+        String domain = "";
+        if (!TextUtils.isEmpty(url) && url.startsWith("http")) {
+            try {
+                String host = Uri.parse(url).getHost();
+                domain = url.substring(0,url.indexOf("//")) + "//" + host;
+            } catch (Exception ex) {
+            }
+        }
+        return domain;
+    }
+
+
+
+
 
 
 }

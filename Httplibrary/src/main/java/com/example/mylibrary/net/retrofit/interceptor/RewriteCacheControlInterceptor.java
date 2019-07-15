@@ -3,7 +3,7 @@ package com.example.mylibrary.net.retrofit.interceptor;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.example.mylibrary.net.retrofit.untils.Kits;
+import com.example.mylibrary.untils.Kits;
 
 import java.io.IOException;
 

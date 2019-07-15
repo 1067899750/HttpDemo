@@ -1,4 +1,4 @@
-package com.example.mylibrary.net.retrofit.untils;
+package com.example.mylibrary.untils;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;

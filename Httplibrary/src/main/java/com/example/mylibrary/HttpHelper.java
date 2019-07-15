@@ -48,14 +48,14 @@ public class HttpHelper implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, ICallBack callBack) {
+    public void get(String url, Map<String, String> params, ICallBack callBack) {
         String finalUrl = appendParams(url, params);
         //实际进行网络请求
         mIHttpProcessor.get(finalUrl, params, callBack);
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, ICallBack callBack) {
+    public void post(String url, Map<String, String> params, ICallBack callBack) {
         String finalUrl = appendParams(url, params);
         //实际进行网络请求
         mIHttpProcessor.post(finalUrl, params, callBack);
@@ -63,7 +63,7 @@ public class HttpHelper implements IHttpProcessor {
 
 
 
-    private String appendParams(String url, Map<String, Object> params) {
+    private String appendParams(String url, Map<String, String> params) {
         if (params == null || params.isEmpty()) {
             return url;
         }
@@ -77,7 +77,7 @@ public class HttpHelper implements IHttpProcessor {
                 urlBuilder.append("&");
             }
         }
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
+        for (Map.Entry<String, String> entry : params.entrySet()) {
             try {
                 urlBuilder.append("&" + entry.getKey())
                         .append("=")

@@ -6,7 +6,27 @@ package com.example.mylibrary.base;
  * @Email 1067899750@qq.com
  * @create 2019/5/13 14:06
  */
-public interface ICallBack {
-    void onSuccess(String string, int tag);
-    void onFailed(String string);
+public interface ICallBack{
+    /**
+     * 请求成功的情况
+     *
+     * @param tag     请求标志
+     * @param message 成功信息
+     */
+    void onSuccess(int tag, String message);
+
+    /**
+     * 请求失败的情况
+     *
+     * @param message 失败信息
+     */
+    void onFailed(String message);
+
+    /**
+     * 响应成功，但是出错的情况
+     *
+     * @param code    错误码
+     * @param message 错误信息
+     */
+    void onError(int code, String message);
 }

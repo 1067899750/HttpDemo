@@ -8,7 +8,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
- *
  * Description 利用泛型实现通用的回调接口
  * Author puyantao
  * Email 1067899750@qq.com
@@ -18,7 +17,7 @@ import java.lang.reflect.Type;
 public abstract class HttpCallback<Result> implements ICallBack {
 
     @Override
-    public void onSuccess(String result, int tag) {
+    public void onSuccess(int tag, String result) {
         Gson gson = new Gson();
         Class<?> cls = analysisClzzInfo(this);
         Result objResult = (Result) gson.fromJson(result, cls);
@@ -31,6 +30,7 @@ public abstract class HttpCallback<Result> implements ICallBack {
      * 利用反射获得类的信息
      * T 表示各种类型
      * Object 用着要得到class字节码的时候
+     *
      * @param object
      * @return Class<?> 需要实现的Json解析类
      */

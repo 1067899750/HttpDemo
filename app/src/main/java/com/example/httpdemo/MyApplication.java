@@ -7,6 +7,7 @@ import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.net.http.OkHttpProcessor;
 import com.example.mylibrary.net.retrofit.Retrofitprocessor;
 import com.example.mylibrary.net.volley.VolleyProcessor;
+import com.example.mylibrary.untils.Utils;
 
 
 /**
@@ -21,6 +22,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        Utils.init(this);
 //        HttpHelper.init(new VolleyProcessor(this));
 //        HttpHelper.init(new OkHttpProcessor());
         HttpHelper.init(new Retrofitprocessor(this));

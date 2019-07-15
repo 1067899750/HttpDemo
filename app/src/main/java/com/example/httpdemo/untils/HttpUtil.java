@@ -21,13 +21,13 @@ public final class HttpUtil {
 //    http://www.weather.com.cn/data/sk/101010100.html
 //    http://www.weather.com.cn/data/cityinfo/101010100.html
     public static final String mainHost = "http://www.weather.com.cn";
-    public static final String testHost = " https://testpurang.purang.com/";
+    public static final String testHost = "https://testpurang.purang.com";
 
 
 
     public static final String GET_CITY_INFO = getMainHost() + "/data/cityinfo/101010100.html";
 
-    public static final String GET_LOGIN = getMainHost() + "mobile/login.htm";
+    public static final String GET_LOGIN = getMainHost() + "/mobile/login.htm";
 
 
 

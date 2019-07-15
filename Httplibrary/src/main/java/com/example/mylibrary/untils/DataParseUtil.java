@@ -1,0 +1,143 @@
+package com.example.mylibrary.untils;
+
+import android.text.TextUtils;
+
+import com.example.mylibrary.base.ICallBack;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
+
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Description 服务器返回数据的解析工具；
+ * 支持XML,json对象,json数组
+ * Author puyantao
+ * Email 1067899750@qq.com
+ * Date 2019/7/15 14:17
+ */
+
+
+public class DataParseUtil {
+
+    private DataParseUtil() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
+    /**
+     * 解析json对象
+     *
+     * @param string 要解析的json
+     * @param clazz  解析类
+     */
+    public static <T> T parseObject(String string, Class<T> clazz) {
+        return new Gson().fromJson(string, clazz);
+    }
+
+    /**
+     * 解析json数组为ArrayList
+     *
+     * @param json  要解析的json
+     * @param clazz 解析类
+     * @return ArrayList
+     */
+    public static <T> ArrayList<T> parseToArrayList(String json, Class<T> clazz) {
+        Type type = new TypeToken<ArrayList<JsonObject>>() {
+        }.getType();
+        ArrayList<JsonObject> jsonObjects = new Gson().fromJson(json, type);
+        ArrayList<T> arrayList = new ArrayList<>();
+        for (JsonObject jsonObject : jsonObjects) {
+            arrayList.add(new Gson().fromJson(jsonObject, clazz));
+        }
+        return arrayList;
+    }
+
+    /**
+     * 解析json数组为List
+     *
+     * @param json  要解析的json
+     * @param clazz 解析类
+     * @return List
+     */
+    public static <T> List<T> parseToList(String json, Class<T[]> clazz) {
+        Gson gson = new Gson();
+        T[] array = gson.fromJson(json, clazz);
+        return Arrays.asList(array);
+    }
+
+
+    /**
+     * 解析Xml格式数据
+     *
+     * @param json  要解析的json
+     * @param clazz 解析类
+     */
+    public static Object parseXml(String json, Class<?> clazz) {
+        try {
+            if (!TextUtils.isEmpty(json) && clazz != null) {
+                Serializer serializer = new Persister();
+                InputStreamReader is = new InputStreamReader(new ByteArrayInputStream(json.getBytes("UTF-8")), "utf-8");
+                return serializer.read(clazz, is);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 数据解析方法
+     *
+     * @param data     要解析的数据
+     * @param clazz    解析类
+     * @param bodyType 解析数据类型
+     */
+    public Object parseData(String data, Class clazz, @DataType.Type int bodyType) {
+        switch (bodyType) {
+            case DataType.STRING:
+                return data;
+            case DataType.JSON_OBJECT:
+                return DataParseUtil.parseObject(data, clazz);
+            case DataType.JSON_ARRAY:
+                return DataParseUtil.parseToArrayList(data, clazz);
+            case DataType.XML:
+                return DataParseUtil.parseXml(data, clazz);
+            default:
+                Logger.e("http parse tip:", "if you want return object, please use bodyType() set data type");
+                break;
+        }
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
