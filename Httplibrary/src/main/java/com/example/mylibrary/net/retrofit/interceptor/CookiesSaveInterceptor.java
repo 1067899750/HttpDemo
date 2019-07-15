@@ -1,7 +1,6 @@
 package com.example.mylibrary.net.retrofit.interceptor;
 
 
-
 import android.content.Context;
 
 import com.example.mylibrary.untils.SharePreferencesUtils;
@@ -28,8 +27,10 @@ public class CookiesSaveInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
-            String header =originalResponse.header("Set-Cookie");
-            SharePreferencesUtils.setString(mContext,"cookiess",header);
+            String header = originalResponse.header("Set-Cookie");
+            String[] strAll = header.split(";");
+            String cooker = strAll[0].substring(strAll[0].indexOf("="));
+            SharePreferencesUtils.setString(mContext, "cookiess", cooker);
         }
         return originalResponse;
     }

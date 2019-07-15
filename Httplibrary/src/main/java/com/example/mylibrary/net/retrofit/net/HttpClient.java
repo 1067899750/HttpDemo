@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
+import com.example.mylibrary.net.retrofit.interceptor.CookieReadInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.CookiesSaveInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LoggerInterceptor;
 import com.example.mylibrary.untils.DataParseUtil;
 import com.example.mylibrary.untils.DataType;
@@ -18,6 +20,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,6 +40,11 @@ import retrofit2.Retrofit;
  * <p>类说明</p>
  */
 public class HttpClient {
+
+    //读超时长，单位：毫秒
+    public static final int READ_TIME_OUT = 30000;
+    //连接时长，单位：毫秒
+    public static final int CONNECT_TIME_OUT = 10000;
     /*The certificate's password*/
     private static final String STORE_PASS = "6666666";
     private static final String STORE_ALIAS = "666666";
@@ -69,12 +78,19 @@ public class HttpClient {
     private HttpClient() {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Utils.getContext()));
         //HttpsUtil.SSLParams sslParams = HttpsUtil.getSslSocketFactory(Utils.getContext(), R.raw.cer,STORE_PASS , STORE_ALIAS);
+        //缓存
+        File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 //.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
                 .addInterceptor(new LoggerInterceptor(null, true))
+                .addInterceptor(new CookieReadInterceptor(Utils.getContext()))
+                .addInterceptor(new CookiesSaveInterceptor(Utils.getContext()))
                 .cookieJar(cookieJar)
+                .cache(cache)
                 .build();
     }
 

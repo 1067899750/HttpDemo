@@ -11,6 +11,8 @@ import com.example.httpdemo.bean.RotateBean;
 import com.example.httpdemo.untils.HttpUtil;
 import com.example.mylibrary.HttpCallback;
 import com.example.mylibrary.HttpHelper;
+import com.example.mylibrary.untils.SharePreferencesUtils;
+import com.example.mylibrary.untils.Utils;
 import com.google.gson.Gson;
 
 
@@ -18,7 +20,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private String url = HttpUtil.GET_LOGIN;
-
+    private String url2 = HttpUtil.GIT_USER_MERCHANT;
     private HashMap<String, String> params = new HashMap<>();
 
 
@@ -67,6 +69,38 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+                HttpHelper.getInstance().get(url2, params, new HttpCallback<String>() {
+
+                    @Override
+                    public void onSuccess(String rotateBean, String tag) {
+                        System.out.println("--->" + Thread.currentThread());
+                        Gson gson = new Gson();
+                        String str = gson.toJson(rotateBean);
+                        toast(str);
+                    }
+
+
+                    @Override
+                    public void onFailed(String string) {
+                        System.out.println("--->" + Thread.currentThread());
+                        toast(string);
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        System.out.println("--->" + Thread.currentThread());
+                        toast(message);
+                    }
+                });
+
+
+
+
+
+
+
+
+
             }
         });
 
@@ -76,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toast(String string) {
+        String cooker = SharePreferencesUtils.getString(Utils.getContext(), "CookiePersistence", "");
         Log.d("---> http : " , string);
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }

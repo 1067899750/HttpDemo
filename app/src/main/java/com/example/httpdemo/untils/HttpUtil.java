@@ -30,5 +30,7 @@ public final class HttpUtil {
     public static final String GET_LOGIN = getMainHost() + "/mobile/login.htm";
 
 
+    public static final String GIT_USER_MERCHANT = getMainHost() + "/mobile/billRecord/getIncomeReport.htm";
+
 
 }
