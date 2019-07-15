@@ -31,6 +31,7 @@ public class Retrofitprocessor implements IHttpProcessor {
         HttpClient client = new HttpClient.Builder()
                 .baseUrl(getBaseUrl(url))
                 .url(Uri.parse(url).getPath())
+                .params(params)
                 .build();
         client.get(callBack);
     }
@@ -56,6 +57,7 @@ public class Retrofitprocessor implements IHttpProcessor {
         String domain = "";
         if (!TextUtils.isEmpty(url) && url.startsWith("http")) {
             try {
+                String path = Uri.parse(url).getPath();
                 String host = Uri.parse(url).getHost();
                 domain = url.substring(0,url.indexOf("//")) + "//" + host;
             } catch (Exception ex) {
