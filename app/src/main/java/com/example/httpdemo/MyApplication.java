@@ -22,10 +22,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        Utils.init(this);
+        Utils.init(this, new Retrofitprocessor(this));
+//        Utils.init(this, new VolleyProcessor(this));
+//        Utils.init(this, new OkHttpProcessor(this));
 //        HttpHelper.init(new VolleyProcessor(this));
-//        HttpHelper.init(new OkHttpProcessor());
-        HttpHelper.init(new Retrofitprocessor(this));
     }
 
     public static Context getContent() {
