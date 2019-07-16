@@ -24,8 +24,8 @@ public class MyApplication extends Application {
         mContext = this;
         Utils.init(this, new Retrofitprocessor(this));
 //        Utils.init(this, new VolleyProcessor(this));
-//        Utils.init(this, new OkHttpProcessor(this));
-//        HttpHelper.init(new VolleyProcessor(this));
+//        Utils.init(this, new OkHttpProcessor());
+
     }
 
     public static Context getContent() {

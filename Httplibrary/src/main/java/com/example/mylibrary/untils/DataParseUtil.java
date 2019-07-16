@@ -62,6 +62,16 @@ public class DataParseUtil {
         return arrayList;
     }
 
+
+    public static <T, clazz> ArrayList<T> parseToArrayList2(String json, final Class<T> clazz) {
+        ArrayList<T> arrayList = new ArrayList<>();
+        arrayList = new Gson().fromJson(json
+                , new TypeToken<ArrayList<clazz>>() {
+                }.getType());
+        return arrayList;
+    }
+
+
     /**
      * 解析json数组为List
      *

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
+import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,7 +21,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- *
  * Description
  * Author puyantao
  * Email 1067899750@qq.com
@@ -40,7 +40,7 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, String> params, final ICallBack callBack) {
+    public void get(final String url, Map<String, String> params, final ICallBack callBack) {
         final Request request = new Request.Builder()
                 .get()
                 .url(url)
@@ -66,21 +66,20 @@ public class OkHttpProcessor implements IHttpProcessor {
                 }
                 Log.d(TAG, "onSuccess response==" + response.toString());
                 if (response.isSuccessful()) {
-                   final String result = response.body().string();
+                    final String result = response.body().string();
                     Log.d(TAG, "onSuccess result==" + result);
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess("0", result);
+                            callBack.onSuccess(StringUtils.getUrlTag(url), result);
                         }
                     });
 
                 } else {
-
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onFailed(response.message());
+                            callBack.onError(response.code(), response.message());
                         }
                     });
 
@@ -90,7 +89,7 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, String> params, final ICallBack callBack) {
+    public void post(final String url, Map<String, String> params, final ICallBack callBack) {
         RequestBody requestbody = appendBody(params);
 
         final Request request = new Request.Builder()
@@ -99,7 +98,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call,final IOException e) {
+            public void onFailure(Call call, final IOException e) {
                 Log.d(TAG, "onFailure e ==" + e);
                 myHandler.post(new Runnable() {
                     @Override
@@ -124,15 +123,14 @@ public class OkHttpProcessor implements IHttpProcessor {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onSuccess("0", result);
-
+                            callBack.onSuccess(StringUtils.getUrlTag(url), result);
                         }
                     });
                 } else {
                     myHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onFailed(response.message().toString());
+                            callBack.onError(response.code(), response.message());
 
                         }
                     });
@@ -147,6 +145,7 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     /**
      * 快速构建参数
+     *
      * @param params
      * @return
      */
@@ -156,8 +155,8 @@ public class OkHttpProcessor implements IHttpProcessor {
             return body.build();
         }
 
-        for (Map.Entry<String, String> entry:
-             params.entrySet()) {
+        for (Map.Entry<String, String> entry :
+                params.entrySet()) {
             body.add(entry.getKey(), entry.getValue().toString());
         }
         return body.build();

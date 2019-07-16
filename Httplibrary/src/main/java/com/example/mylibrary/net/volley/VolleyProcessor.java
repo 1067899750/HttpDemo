@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
+import com.example.mylibrary.untils.StringUtils;
 
 
 import java.util.Map;
@@ -32,14 +33,14 @@ public class VolleyProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, String> params, final ICallBack callBack) {
+    public void get(final String url, Map<String, String> params, final ICallBack callBack) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onSuccess response==" + response);
-                        callBack.onSuccess("0", response);
+                        callBack.onSuccess(StringUtils.getUrlTag(url), response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -59,14 +60,14 @@ public class VolleyProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, String> params, final ICallBack callBack) {
+    public void post(final String url, Map<String, String> params, final ICallBack callBack) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onSuccess response==" + response);
-                callBack.onSuccess("0", response);
+                callBack.onSuccess(StringUtils.getUrlTag(url), response);
             }
         }, new Response.ErrorListener() {
             @Override
