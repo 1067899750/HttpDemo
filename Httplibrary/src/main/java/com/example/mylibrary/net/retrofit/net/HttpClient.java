@@ -1,15 +1,15 @@
 package com.example.mylibrary.net.retrofit.net;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
+import com.example.mylibrary.net.retrofit.cookie.CookieManger;
 import com.example.mylibrary.net.retrofit.interceptor.CookieReadInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.CookiesSaveInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.HeaderInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LoggerInterceptor;
-import com.example.mylibrary.untils.DataParseUtil;
-import com.example.mylibrary.untils.DataType;
+import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
 import com.example.mylibrary.untils.NetworkUtils;
 import com.example.mylibrary.untils.StringUtils;
 import com.example.mylibrary.untils.ToastUtils;
@@ -18,7 +18,6 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class HttpClient {
      * @return HttpClient的唯一对象
      */
     private static HttpClient getIns() {
-        return HttpClientHolder.sInstance;
+        return new HttpClient();
     }
 
     /**
@@ -81,17 +80,24 @@ public class HttpClient {
         //缓存
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-        okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder  = new OkHttpClient.Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 //.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
                 .addInterceptor(new LoggerInterceptor(null, true))
-                .addInterceptor(new CookieReadInterceptor(Utils.getContext()))
-                .addInterceptor(new CookiesSaveInterceptor(Utils.getContext()))
+                .addInterceptor(new TokenInterceptor())
+//                .addInterceptor(new CookieReadInterceptor(Utils.getContext()))
+//                .addInterceptor(new HeaderInterceptor())
+//                .addInterceptor(new CookiesSaveInterceptor(Utils.getContext()))
+//                .cookieJar(new CookieManger(Utils.getContext()))
                 .cookieJar(cookieJar)
-                .cache(cache)
-                .build();
+                .cache(cache);
+
+
+
+
+        okHttpClient = builder.build();
     }
 
     public Builder getBuilder() {
