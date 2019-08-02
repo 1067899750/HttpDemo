@@ -86,7 +86,7 @@ public class HttpClient {
                 //.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
                 .addInterceptor(new LoggerInterceptor(null, true))
-                .addInterceptor(new TokenInterceptor())
+//                .addInterceptor(new TokenInterceptor())
 //                .addInterceptor(new CookieReadInterceptor(Utils.getContext()))
 //                .addInterceptor(new HeaderInterceptor())
 //                .addInterceptor(new CookiesSaveInterceptor(Utils.getContext()))

@@ -33,9 +33,16 @@ public class CookiesSaveInterceptor implements Interceptor {
             ArrayList<String> cookies = new ArrayList<>();
 
             for (String header : originalResponse.headers("Set-Cookie")) {
-                cookies.add(header);
+                if (!header.contains("token=")){
+//                    String[] strArr = header.split(";");
+//                    cookies.add(strArr[0].substring(6));
+                    cookies.add(header);
+                }
+
             }
-            SharePreferencesUtils.setString(mContext, "Cookie", cookies.toString());
+            if (cookies.size() > 0) {
+                SharePreferencesUtils.setString(mContext, "Cookie", cookies.toString());
+            }
         }
         return originalResponse;
     }
