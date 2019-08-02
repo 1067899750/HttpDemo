@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private String password = "e10adc3949ba59abbe56e057f20f883e";
     private String mobile = "18503970627";
-    private String cid = "ba92a56494bdd4160209f96ad9dcea49";
+    private String cid = "f49c9ee13f04eeac5245b3350e90cee4";
 
     @Override
     protected void initView() {
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             case R.id.other_btn:
                 HashMap<String, String> otherMap = new HashMap<>();
-                HttpHelper.getInstance().get(url2, otherMap, this);
+                HttpHelper.getInstance().post(url2, otherMap, this);
                 break;
 
         }
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (tag.equals("login")) {
             System.out.println("--->" + Thread.currentThread());
             toast(message);
-        } else if (tag.equals("getIncomeReport")) {
+        } else if (tag.equals("billHomePage")) {
             System.out.println("--->" + Thread.currentThread());
             toast(message);
         }

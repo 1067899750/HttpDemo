@@ -17,11 +17,10 @@ public final class HttpUtil {
     public static String getMainHost() {
         return isLine ? mainHost : testHost;
     }
-
 //    http://www.weather.com.cn/data/sk/101010100.html
 //    http://www.weather.com.cn/data/cityinfo/101010100.html
     public static final String mainHost = "http://www.weather.com.cn";
-    public static final String testHost = "http://10.10.64.108:8010";
+    public static final String testHost = "https://yytuatbranch.purang.com";
 
 
 
@@ -30,7 +29,7 @@ public final class HttpUtil {
     public static final String GET_LOGIN = getMainHost() + "/mobile/login.htm";
 
 
-    public static final String GIT_USER_MERCHANT = getMainHost() + "/mobile/billRecord/getIncomeReport.htm";
+    public static final String GIT_USER_MERCHANT = getMainHost() + "/mobile/billRecord/billHomePage.htm";
 
 
 }
