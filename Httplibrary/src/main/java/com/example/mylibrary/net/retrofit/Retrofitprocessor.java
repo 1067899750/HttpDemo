@@ -8,9 +8,6 @@ import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.net.HttpClient;
 import com.example.mylibrary.untils.StringUtils;
-import com.orhanobut.logger.Logger;
-
-import org.xutils.HttpManager;
 
 import java.util.Map;
 
@@ -66,8 +63,6 @@ public class Retrofitprocessor implements IHttpProcessor {
         }
         return domain;
     }
-
-
 
 
 }
