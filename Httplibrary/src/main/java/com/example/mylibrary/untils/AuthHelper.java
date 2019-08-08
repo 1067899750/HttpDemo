@@ -44,7 +44,7 @@ public class AuthHelper {
         String request = sbRequest.substring(0, sbRequest.length() - 1);
         try {
             //创建URL
-            URL url = new URL("http://10.10.64.108:8010/mobile/login.htm");
+            URL url = new URL("https://yytuatbranch.purang.com/mobile/login.htm");
             //由URL的openConnection方法得到一个HttpURLConnection（需要强转）
             HttpURLConnection httpURLConnection =
                     (HttpURLConnection) url.openConnection();
@@ -67,7 +67,7 @@ public class AuthHelper {
             }
             //重新注入Cookie
             List<String> cookieList = headerMap.get("Set-Cookie");
-            HttpUrl httpUrl = HttpUrl.parse("http://10.10.64.108:8010");
+            HttpUrl httpUrl = HttpUrl.parse("https://yytuatbranch.purang.com");
             List<Cookie> cookies = new ArrayList<>();
             for (int i = 0; i < cookieList.size(); i++) {
                 Log.d("OkHttp", "Response---headers:key:Set-Cookie   value:" + cookieList.get(i));

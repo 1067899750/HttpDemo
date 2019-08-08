@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * @author: Allen.
- * @date: 2018/7/25
- * @description: 覆盖模式的SharePreference
+ *
+ * Description 覆盖模式的SharePreference
+ * Author puyantao
+ * Email 1067899750@qq.com
+ * Date 2019/8/8 11:40
  */
 public class SharePreferencesUtils {
     private final static String SP_NAME = "sp_cache";

@@ -5,11 +5,9 @@ import android.text.TextUtils;
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.net.retrofit.cookie.CookieManger;
-import com.example.mylibrary.net.retrofit.interceptor.CookieReadInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.CookiesSaveInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.HeaderInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LoggerInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.untils.NetworkUtils;
 import com.example.mylibrary.untils.StringUtils;
 import com.example.mylibrary.untils.ToastUtils;
@@ -76,22 +74,25 @@ public class HttpClient {
 
     private HttpClient() {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Utils.getContext()));
-        //HttpsUtil.SSLParams sslParams = HttpsUtil.getSslSocketFactory(Utils.getContext(), R.raw.cer,STORE_PASS , STORE_ALIAS);
+        ///HttpsUtil.SSLParams sslParams = HttpsUtil.getSslSocketFactory(Utils.getContext(), R.raw.cer,STORE_PASS , STORE_ALIAS);
         //缓存
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+        //100Mb
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);
         OkHttpClient.Builder builder  = new OkHttpClient.Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 //.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
-                .addInterceptor(new LoggerInterceptor(null, true))
+                .addInterceptor(new LoggerInterceptor("---> http", true))
+
 //                .addInterceptor(new TokenInterceptor())
-//                .addInterceptor(new CookieReadInterceptor(Utils.getContext()))
 //                .addInterceptor(new HeaderInterceptor())
-//                .addInterceptor(new CookiesSaveInterceptor(Utils.getContext()))
 //                .cookieJar(new CookieManger(Utils.getContext()))
-                .cookieJar(cookieJar)
+//                .cookieJar(cookieJar)
+
+                .addInterceptor(new AddCookiesInterceptor()) //这部分
+                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
                 .cache(cache);
 
 
@@ -202,8 +203,9 @@ public class HttpClient {
      * 添加某个请求
      */
     private synchronized void putCall(Builder builder, Call call) {
-        if (builder.tag == null)
+        if (builder.tag == null) {
             return;
+        }
         synchronized (CALL_MAP) {
             CALL_MAP.put(builder.tag.toString() + builder.url, call);
         }
@@ -217,8 +219,9 @@ public class HttpClient {
      * @param tag 请求标签
      */
     public synchronized void cancel(Object tag) {
-        if (tag == null)
+        if (tag == null) {
             return;
+        }
         List<String> list = new ArrayList<>();
         synchronized (CALL_MAP) {
             for (String key : CALL_MAP.keySet()) {
