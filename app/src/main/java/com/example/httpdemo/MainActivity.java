@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private String password = "e10adc3949ba59abbe56e057f20f883e";
     private String mobile = "18503970627";
-    private String cid = "f49c9ee13f04eeac5245b3350e90cee4";
+    private String cid = "09164b5a280eda07839aabbd9e3c5961";
 
     @Override
     protected void initView() {
@@ -104,7 +104,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public void toast(String string) {
         String cooker = SharePreferencesUtils.getString(Utils.getContext(), "CookiePersistence", "");
-        Log.d("---> http : ", string);
         ((TextView) findViewById(R.id.text_tv)).setText(string);
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }

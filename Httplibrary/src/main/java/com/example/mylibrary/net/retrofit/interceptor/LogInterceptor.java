@@ -15,7 +15,7 @@ import okio.Buffer;
 
 
 public class LogInterceptor implements Interceptor {
-    public static final String TAG = "GjMetal_Net";
+    public static final String TAG = "---> Http";
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -29,19 +29,19 @@ public class LogInterceptor implements Interceptor {
             String url = request.url().toString();
             Headers headers = request.headers();
 
-            Log.e(TAG, "url : " + url);
-            Log.e(TAG, "method : " + request.method());
+            Log.d(TAG, "url : " + url);
+            Log.d(TAG, "method : " + request.method());
             if (headers != null && headers.size() > 0) {
-                Log.e(TAG, "headers : " + headers.toString());
+                Log.d(TAG, "headers : " + headers.toString());
             }
             RequestBody requestBody = request.body();
             if (requestBody != null) {
                 MediaType mediaType = requestBody.contentType();
                 if (mediaType != null) {
                     if (isText(mediaType)) {
-                        Log.e(TAG, "params : " + bodyToString(request));
+                        Log.d(TAG, "params : " + bodyToString(request));
                     } else {
-                        Log.e(TAG, "params : " + " maybe [file part] , too large too print , ignored!");
+                        Log.d(TAG, "params : " + " maybe [file part] , too large too print , ignored!");
                     }
                 }
             }
@@ -60,12 +60,12 @@ public class LogInterceptor implements Interceptor {
                 if (mediaType != null) {
                     if (isText(mediaType)) {
                         String resp = body.string();
-                        Log.e(TAG, resp + "");
+                        Log.d(TAG, resp + "");
 
                         body = ResponseBody.create(mediaType, resp);
                         return response.newBuilder().body(body).build();
                     } else {
-                        Log.e(TAG, "data : " + " maybe [file part] , too large too print , ignored!");
+                        Log.d(TAG, "data : " + " maybe [file part] , too large too print , ignored!");
                     }
                 }
             }
