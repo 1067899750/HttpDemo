@@ -91,10 +91,10 @@ public class HttpClient {
 //                .addInterceptor(new TokenInterceptor())
 //                .addInterceptor(new HeaderInterceptor())
 //                .cookieJar(new CookieManger(Utils.getContext()))
-//                .cookieJar(cookieJar)
+                .cookieJar(cookieJar)
 
-                .addInterceptor(new AddCookiesInterceptor()) //这部分
-                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
+//                .addInterceptor(new AddCookiesInterceptor()) //这部分
+//                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
                 .cache(cache);
 
 

@@ -1,5 +1,7 @@
 package com.example.httpdemo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +14,16 @@ import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.untils.SharePreferencesUtils;
 import com.example.mylibrary.untils.Utils;
+import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import okhttp3.Cookie;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String url = HttpUtil.GET_LOGIN;
@@ -103,11 +112,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     public void toast(String string) {
-        String cooker = SharePreferencesUtils.getString(Utils.getContext(), "CookiePersistence", "");
+        ArrayList<String> cookies = new ArrayList<>();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("CookiePersistence", Context.MODE_PRIVATE);
+        Map<String, ?> map = sharedPreferences.getAll();
+        Set<String> keySet = map.keySet();
+        for (String key : keySet) {
+            cookies.add(new SerializableCookie().decode((String) map.get(key)).value());
+        }
         ((TextView) findViewById(R.id.text_tv)).setText(string);
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
-
 
 
 }
