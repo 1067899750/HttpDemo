@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Dns;
 
 /**
- * @describe Dns 拦截
+ * @describe Dns 用于拦截返回信息
  * @euthor puyantao
  * @email puyantao@purang.com
  * @create 2019/8/23 14:36
@@ -32,8 +32,8 @@ public class OKHttpDns implements Dns {
                 FutureTask<List<InetAddress>> task = new FutureTask<>(new Callable<List<InetAddress>>() {
                     @Override
                     public List<InetAddress> call() throws Exception {
-                        //可以把 s 替换成新的域名
-                        String ip = "github.com";
+                        //可以把 s 替换成新的域名, 用于拦截返回信息
+                        String ip = "yanyangtian.purang.com";
                         if (ip != null && !ip.equals("")) {
                             return Arrays.asList(InetAddress.getAllByName(ip));
                         } else {

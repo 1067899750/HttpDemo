@@ -11,6 +11,7 @@ import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
@@ -46,6 +47,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
                 .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
                 .addInterceptor(new LogInterceptor())
+                .addInterceptor(new TokenInterceptor())
                 .dns(new OKHttpDns(100))
                 .build();
 //        mOkHttpClient = new OkHttpClient();
