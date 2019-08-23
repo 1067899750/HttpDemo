@@ -4,10 +4,8 @@ import android.text.TextUtils;
 
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
-import com.example.mylibrary.net.retrofit.cookie.CookieManger;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.LoggerInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.untils.NetworkUtils;
 import com.example.mylibrary.untils.StringUtils;
@@ -85,16 +83,15 @@ public class HttpClient {
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 //.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
-//                .addInterceptor(new LoggerInterceptor("---> http", true))
                 .addInterceptor(new LogInterceptor())
 
 //                .addInterceptor(new TokenInterceptor())
 //                .addInterceptor(new HeaderInterceptor())
 //                .cookieJar(new CookieManger(Utils.getContext()))
-                .cookieJar(cookieJar)
+//                .cookieJar(cookieJar)
 
-//                .addInterceptor(new AddCookiesInterceptor()) //这部分
-//                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
+                .addInterceptor(new AddCookiesInterceptor()) //这部分
+                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
                 .cache(cache);
 
 

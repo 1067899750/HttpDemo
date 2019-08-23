@@ -24,14 +24,19 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             HashSet<String> cookies = new HashSet<>();
 
+            //只用ssionId,不用token
             for (String header : originalResponse.headers("Set-Cookie")) {
-                cookies.add(header);
+                if (header.contains("JSESSIONID")){
+                    cookies.add(header);
+                }
             }
 
-            SharedPreferences.Editor config = Utils.getContext().getSharedPreferences("config",
-                    Utils.getContext().MODE_PRIVATE).edit();
-            config.putStringSet("cookie", cookies);
-            config.commit();
+            if (!cookies.isEmpty()) {
+                SharedPreferences.Editor config = Utils.getContext().getSharedPreferences("config",
+                        Utils.getContext().MODE_PRIVATE).edit();
+                config.putStringSet("cookie", cookies);
+                config.commit();
+            }
         }
 
         return originalResponse;

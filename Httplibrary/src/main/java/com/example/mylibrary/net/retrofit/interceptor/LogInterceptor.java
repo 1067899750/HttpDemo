@@ -52,6 +52,10 @@ public class LogInterceptor implements Interceptor {
 
     private Response logResponse(Response response) {
         try {
+            for (String header : response.headers("Set-Cookie")) {
+                Log.d(TAG, "Set-Cookie : " + header);
+            }
+
             Response.Builder builder = response.newBuilder();
             Response clone = builder.build();
             ResponseBody body = clone.body();
@@ -60,7 +64,7 @@ public class LogInterceptor implements Interceptor {
                 if (mediaType != null) {
                     if (isText(mediaType)) {
                         String resp = body.string();
-                        Log.d(TAG, resp + "");
+                        Log.d(TAG, "data : " + resp);
 
                         body = ResponseBody.create(mediaType, resp);
                         return response.newBuilder().body(body).build();
