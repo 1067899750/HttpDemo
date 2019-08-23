@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
+import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
@@ -35,7 +37,11 @@ public class OkHttpProcessor implements IHttpProcessor {
     private Handler myHandler;
 
     public OkHttpProcessor() {
-        mOkHttpClient = new OkHttpClient();
+        mOkHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new AddCookiesInterceptor()) //这部分
+                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
+                .build();
+//        mOkHttpClient = new OkHttpClient();
         myHandler = new Handler(Looper.getMainLooper());
     }
 
@@ -45,47 +51,48 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .get()
                 .url(url)
                 .build();
-        mOkHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, final IOException e) {
-                Log.d(TAG, "onFailure e ==" + e);
-                myHandler.post(new Runnable() {
+        mOkHttpClient.newCall(request)
+                .enqueue(new Callback() {
                     @Override
-                    public void run() {
-                        callBack.onFailed(e.toString());
+                    public void onFailure(Call call, final IOException e) {
+                        Log.d(TAG, "onFailure e ==" + e);
+                        myHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callBack.onFailed(e.toString());
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) throws IOException {
+                        if (response == null) {
+                            Log.d(TAG, "onSuccess response== null");
+                            return;
+                        }
+                        Log.d(TAG, "onSuccess response==" + response.toString());
+                        if (response.isSuccessful()) {
+                            final String result = response.body().string();
+                            Log.d(TAG, "onSuccess result==" + result);
+                            myHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    callBack.onSuccess(StringUtils.getUrlTag(url), result);
+                                }
+                            });
+
+                        } else {
+                            myHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    callBack.onError(response.code(), response.message());
+                                }
+                            });
+
+                        }
                     }
                 });
-
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                if (response == null) {
-                    Log.d(TAG, "onSuccess response== null");
-                    return;
-                }
-                Log.d(TAG, "onSuccess response==" + response.toString());
-                if (response.isSuccessful()) {
-                    final String result = response.body().string();
-                    Log.d(TAG, "onSuccess result==" + result);
-                    myHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callBack.onSuccess(StringUtils.getUrlTag(url), result);
-                        }
-                    });
-
-                } else {
-                    myHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callBack.onError(response.code(), response.message());
-                        }
-                    });
-
-                }
-            }
-        });
     }
 
     @Override

@@ -22,9 +22,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        Utils.init(this, new Retrofitprocessor(this));
+//        Utils.init(this, new Retrofitprocessor(this));
 //        Utils.init(this, new VolleyProcessor(this));
-//        Utils.init(this, new OkHttpProcessor());
+        Utils.init(this, new OkHttpProcessor());
 
     }
 
