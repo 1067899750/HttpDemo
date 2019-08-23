@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
+import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
@@ -23,6 +25,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
+ * https://www.cnblogs.com/JamesWang1993/p/8593494.html
+ * https://blog.csdn.net/Double2hao/article/details/83744659
+ *
  * Description
  * Author puyantao
  * Email 1067899750@qq.com
@@ -38,8 +43,10 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     public OkHttpProcessor() {
         mOkHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new AddCookiesInterceptor()) //这部分
-                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
+                .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
+                .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
+                .addInterceptor(new LogInterceptor())
+                .dns(new OKHttpDns(100))
                 .build();
 //        mOkHttpClient = new OkHttpClient();
         myHandler = new Handler(Looper.getMainLooper());

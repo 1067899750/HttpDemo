@@ -90,8 +90,8 @@ public class HttpClient {
 //                .cookieJar(new CookieManger(Utils.getContext()))
 //                .cookieJar(cookieJar)
 
-                .addInterceptor(new AddCookiesInterceptor()) //这部分
-                .addInterceptor(new ReceivedCookiesInterceptor()) //这部分
+                .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
+                .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
                 .cache(cache);
 
 

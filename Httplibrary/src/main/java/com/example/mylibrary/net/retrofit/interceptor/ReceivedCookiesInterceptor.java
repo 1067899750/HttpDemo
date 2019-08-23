@@ -11,7 +11,7 @@ import okhttp3.Interceptor;
 import okhttp3.Response;
 
 /**
- * @describe
+ * @describe 读取 cookie
  * @euthor puyantao
  * @email 1067899750@qq.com
  * @create 2019/8/8 14:17
