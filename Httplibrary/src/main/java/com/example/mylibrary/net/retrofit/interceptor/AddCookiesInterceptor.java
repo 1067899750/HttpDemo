@@ -18,6 +18,8 @@ import okhttp3.Response;
  * @create 2019/8/8 14:18
  */
 public class AddCookiesInterceptor implements Interceptor {
+    public static final String TAG = "---> Http";
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
@@ -27,7 +29,7 @@ public class AddCookiesInterceptor implements Interceptor {
             for (String cookie : preferences) {
                 builder.addHeader("Cookie", cookie);
                 // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
-                Log.v("OkHttp", "Adding Header: " + cookie);
+                Log.d("TAG", "Adding Header: " + cookie);
             }
         }
         return chain.proceed(builder.build());

@@ -12,10 +12,10 @@ import okio.GzipSink;
 import okio.Okio;
 
 /**
- * Description：对请求数据压缩
- * Author: star
- * Email: guimingxing@163.com
- * Date: 2018-5-4 16:56
+ * Description 对请求数据压缩
+ * Author puyantao
+ * Email puyantao@purang.com
+ * Date 2019/8/26 10:59
  */
 public class GzipRequestInterceptor implements Interceptor {
     @Override

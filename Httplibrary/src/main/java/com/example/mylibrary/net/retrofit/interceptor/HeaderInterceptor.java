@@ -24,6 +24,7 @@ public class HeaderInterceptor implements Interceptor {
         final String appVersion = String.valueOf(AppPageUtil.getAppVersionName(Utils.getContext()));
         final String mobileType = AppPageUtil.getClientModel();
         final String mobileSystem = AppPageUtil.getOSVersionCode();
+
         String token = SharePreferencesUtils.getString(Utils.getContext(), "Cookie", "");
         Request originalRequest = chain.request();
         Request.Builder requestBuilder = originalRequest.newBuilder()

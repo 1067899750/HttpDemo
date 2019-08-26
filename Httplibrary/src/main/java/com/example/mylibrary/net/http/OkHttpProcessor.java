@@ -9,6 +9,7 @@ import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
@@ -48,6 +49,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
                 .addInterceptor(new LogInterceptor())
                 .addInterceptor(new TokenInterceptor())
+                .addInterceptor(new GzipRequestInterceptor())
                 .dns(new OKHttpDns(100))
                 .build();
 //        mOkHttpClient = new OkHttpClient();
