@@ -16,6 +16,7 @@ import android.view.View;
 import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.Retrofitprocessor;
+import com.example.mylibrary.net.retrofit.dns.HttpDns;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
@@ -40,10 +41,12 @@ public class Utils {
      *
      * @param context 上下文
      */
-    public static void init(Context context, IHttpProcessor httpProcessor) {
+    public static void init(Context context, IHttpProcessor httpProcessor, String baseUrl) {
         Utils.context = context.getApplicationContext();
         //初始化网络 httpHelper
         HttpHelper.init(httpProcessor);
+        //初始化域名
+        HttpDns.init(baseUrl);
         //初始化logger
         initLogger();
     }

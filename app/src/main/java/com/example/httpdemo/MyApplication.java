@@ -3,11 +3,14 @@ package com.example.httpdemo;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.httpdemo.untils.HttpUtil;
 import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.net.http.OkHttpProcessor;
 import com.example.mylibrary.net.retrofit.Retrofitprocessor;
 import com.example.mylibrary.net.volley.VolleyProcessor;
 import com.example.mylibrary.untils.Utils;
+
+import okhttp3.HttpUrl;
 
 
 /**
@@ -22,9 +25,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-//        Utils.init(this, new Retrofitprocessor(this));
-//        Utils.init(this, new VolleyProcessor(this));
-        Utils.init(this, new OkHttpProcessor(this));
+//        Utils.init(this, new Retrofitprocessor(this), HttpUtil.getMainHost());
+//        Utils.init(this, new VolleyProcessor(this), HttpUtil.getMainHost());
+        Utils.init(this, new OkHttpProcessor(this), HttpUtil.getMainHost());
 
     }
 

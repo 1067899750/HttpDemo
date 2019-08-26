@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
+import com.example.mylibrary.net.retrofit.dns.OkDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
@@ -54,6 +55,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new GzipRequestInterceptor())
                 .addInterceptor(new RewriteCacheControlInterceptor(context))
                 .dns(new OKHttpDns(100))
+//                .dns(new OkDns())
                 .build();
 //        mOkHttpClient = new OkHttpClient();
         myHandler = new Handler(Looper.getMainLooper());

@@ -1,6 +1,7 @@
 package com.example.mylibrary.net.retrofit.dns;
 
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,9 @@ public class OKHttpDns implements Dns {
                     @Override
                     public List<InetAddress> call() throws Exception {
                         //可以把 s 替换成新的域名, 用于拦截返回信息
-                        String ip = "yanyangtian.purang.com";
+                        URL url = new URL(HttpDns.getInstance().getIp());
+                        String ip = url.getHost();
+//                        String ip = "yanyangtian.purang.com";
                         if (ip != null && !ip.equals("")) {
                             return Arrays.asList(InetAddress.getAllByName(ip));
                         } else {

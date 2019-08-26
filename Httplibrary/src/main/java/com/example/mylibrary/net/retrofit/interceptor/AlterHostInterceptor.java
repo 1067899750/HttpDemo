@@ -2,6 +2,8 @@ package com.example.mylibrary.net.retrofit.interceptor;
 
 import android.provider.Settings;
 
+import com.example.mylibrary.net.retrofit.dns.HttpDns;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -25,7 +27,7 @@ public class AlterHostInterceptor implements Interceptor {
         HttpUrl oldHttpUrl = request.url();
 
 
-        HttpUrl newBaseUrl = HttpUrl.parse("Http://www.baidu.com");
+        HttpUrl newBaseUrl = HttpUrl.parse(HttpDns.getInstance().getIp());
         //重建新的HttpUrl，修改需要修改的url部分
         HttpUrl newFellUrl = oldHttpUrl
                 .newBuilder()
