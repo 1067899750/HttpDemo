@@ -20,7 +20,7 @@ import okhttp3.Response;
  * @create 2019/7/16 11:40
  */
 public class TokenInterceptor implements Interceptor {
-    private static final String TAG = "TokenInterceptor";
+    private static final String TAG = "---> Http";
 
     @Override
     public Response intercept(Chain chain) throws IOException {

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.example.mylibrary.untils.Kits;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -19,28 +20,28 @@ import okhttp3.Response;
  * @create 2019/6/4 15:48
  */
 public class RewriteCacheControlInterceptor implements Interceptor {
-    private Context mContext;
+    private WeakReference<Context> mReference;
     /**
      * 设缓存有效期为两天
      */
     private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
 
     public RewriteCacheControlInterceptor(Context context) {
-        mContext = context;
+        mReference = new WeakReference<>(context);
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         String cacheControl = request.cacheControl().toString();
-        if (!Kits.NetWork.isNetConnected(mContext)) {
+        if (!Kits.NetWork.isNetConnected(mReference.get())) {
             request = request.newBuilder()
                     .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl
                             .FORCE_NETWORK : CacheControl.FORCE_CACHE)
                     .build();
         }
         Response originalResponse = chain.proceed(request);
-        if (Kits.NetWork.isNetConnected(mContext)) {
+        if (Kits.NetWork.isNetConnected(mReference.get())) {
             return originalResponse.newBuilder()
                     .header("Cache-Control", cacheControl)
                     .removeHeader("Pragma")

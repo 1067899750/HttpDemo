@@ -1,5 +1,6 @@
 package com.example.mylibrary.net.http;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.RewriteCacheControlInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
@@ -43,13 +45,14 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     private Handler myHandler;
 
-    public OkHttpProcessor() {
+    public OkHttpProcessor(Context context) {
         mOkHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
                 .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
                 .addInterceptor(new LogInterceptor())
                 .addInterceptor(new TokenInterceptor())
                 .addInterceptor(new GzipRequestInterceptor())
+                .addInterceptor(new RewriteCacheControlInterceptor(context))
                 .dns(new OKHttpDns(100))
                 .build();
 //        mOkHttpClient = new OkHttpClient();

@@ -71,7 +71,7 @@ public class AuthHelper {
             HttpUrl httpUrl = HttpUrl.parse("https://yanyangtian.purang.com");
             HashSet<String> cookies = new HashSet<>();
             for (int i = 0; i < cookieList.size(); i++) {
-                Log.d("OkHttp", "Response---headers:key:Set-Cookie   value:" + cookieList.get(i));
+                Log.d("---> Http", "Response---headers:key:Set-Cookie   value:" + cookieList.get(i));
 //                Cookie cookie = Cookie.parse(httpUrl, cookieList.get(i));
 //                cookies.add(cookie);
 
