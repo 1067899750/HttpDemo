@@ -1,5 +1,6 @@
 package com.example.mylibrary.net.retrofit.interceptor;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.mylibrary.untils.Utils;
@@ -32,8 +33,7 @@ public class ReceivedCookiesInterceptor implements Interceptor {
             }
 
             if (!cookies.isEmpty()) {
-                SharedPreferences.Editor config = Utils.getContext().getSharedPreferences("config",
-                        Utils.getContext().MODE_PRIVATE).edit();
+                SharedPreferences.Editor config = Utils.getContext().getSharedPreferences("config", Context.MODE_PRIVATE).edit();
                 config.putStringSet("cookie", cookies);
                 config.commit();
             }

@@ -1,5 +1,6 @@
 package com.example.mylibrary.net.retrofit.interceptor;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.mylibrary.untils.Utils;
@@ -24,7 +25,7 @@ public class AddCookiesInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
         HashSet<String> preferences = (HashSet) Utils.getContext().getSharedPreferences("config",
-                Utils.getContext().MODE_PRIVATE).getStringSet("cookie", null);
+                Context.MODE_PRIVATE).getStringSet("cookie", null);
         if (preferences != null) {
             for (String cookie : preferences) {
                 builder.addHeader("Cookie", cookie);
