@@ -30,7 +30,7 @@ public class AddCookiesInterceptor implements Interceptor {
             for (String cookie : preferences) {
                 builder.addHeader("Cookie", cookie);
                 // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
-                Log.d("TAG", "Adding Header: " + cookie);
+                Log.d(TAG, "Adding Header: " + cookie);
             }
         }
         return chain.proceed(builder.build());
