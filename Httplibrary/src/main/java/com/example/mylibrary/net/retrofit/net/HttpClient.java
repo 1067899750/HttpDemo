@@ -85,7 +85,7 @@ public class HttpClient {
                 // .hostnameVerifier(HttpsUtil.getHostnameVerifier())
                 .addInterceptor(new LogInterceptor())
 
-//                .addInterceptor(new TokenInterceptor())
+//                .addInterceptor(new LoginInterceptor())
 //                .addInterceptor(new HeaderInterceptor())
 //                .cookieJar(new CookieManger(Utils.getContext()))
 //                .cookieJar(cookieJar)

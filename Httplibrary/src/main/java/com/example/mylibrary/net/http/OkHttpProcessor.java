@@ -9,13 +9,12 @@ import android.util.Log;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
-import com.example.mylibrary.net.retrofit.dns.OkDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.LoginInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.RewriteCacheControlInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.TokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
@@ -51,7 +50,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
                 .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
                 .addInterceptor(new LogInterceptor())
-                .addInterceptor(new TokenInterceptor())
+                .addInterceptor(new LoginInterceptor())
                 .addInterceptor(new GzipRequestInterceptor())
                 .addInterceptor(new RewriteCacheControlInterceptor(context))
                 .dns(new OKHttpDns(100))
