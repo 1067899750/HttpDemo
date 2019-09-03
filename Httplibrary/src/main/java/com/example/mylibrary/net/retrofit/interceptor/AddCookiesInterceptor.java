@@ -13,7 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @describe
+ * @describe 写入cookie
  * @euthor puyantao
  * @email 1067899750@qq.com
  * @create 2019/8/8 14:18
