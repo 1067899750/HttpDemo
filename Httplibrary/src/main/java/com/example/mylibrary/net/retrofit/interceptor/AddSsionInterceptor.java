@@ -13,12 +13,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @describe 写入cookie
+ * @describe 写入ssionId
  * @euthor puyantao
  * @email 1067899750@qq.com
  * @create 2019/8/8 14:18
  */
-public class AddCookiesInterceptor implements Interceptor {
+public class AddSsionInterceptor implements Interceptor {
     public static final String TAG = "---> Http";
 
     @Override

@@ -26,13 +26,18 @@ import java.util.Set;
 import okhttp3.Cookie;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    private String url = HttpUtil.GET_LOGIN;
+    private String url = HttpUtil.GET_LOGIN1;
     private String url2 = HttpUtil.GIT_USER_MERCHANT;
 
 
     private String password = "e10adc3949ba59abbe56e057f20f883e";
     private String mobile = "18503970627";
     private String cid = "09164b5a280eda07839aabbd9e3c5961";
+
+
+//    private String password = "e10adc3949ba59abbe56e057f20f883e";
+//    private String mobile = "18503970627";
+//    private String cid = "591b8d3c615160c2890bdb1e8fa4415d";
 
     @Override
     protected void initView() {
@@ -74,6 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 loginMap.put("password", password);
                 loginMap.put("mobile", mobile);
                 loginMap.put("cid", cid);
+                loginMap.put("loginType", "1");
                 HttpHelper.getInstance().get(url, loginMap, this);
                 break;
 

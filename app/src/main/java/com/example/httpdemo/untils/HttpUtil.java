@@ -15,19 +15,19 @@ public final class HttpUtil {
      * @return
      */
     public static String getMainHost() {
-        return isLine ? mainHost : testHost;
+        return isLine ? mainHost : testHost1;
     }
 //    http://www.weather.com.cn/data/sk/101010100.html
 //    http://www.weather.com.cn/data/cityinfo/101010100.html
     public static final String mainHost = "http://www.weather.com.cn";
-    public static final String testHost = "https://yanyangtian.purang.com";
-
+    public static final String testHost1 = "https://yanyangtian.purang.com";
+    public static final String testHost2 = "https://yytuatbranch.purang.com";
 
 
     public static final String GET_CITY_INFO = getMainHost() + "/data/cityinfo/101010100.html";
 
-    public static final String GET_LOGIN = getMainHost() + "/mobile/login.htm";
-
+    public static final String GET_LOGIN1 = getMainHost() + "/mobile/login.htm";
+    public static final String GET_LOGIN2 = getMainHost() + "/mobile/auth/login.htm";
 
     public static final String GIT_USER_MERCHANT = getMainHost() + "/mobile/billRecord/billHomePage.htm";
 

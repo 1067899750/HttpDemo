@@ -9,12 +9,12 @@ import android.util.Log;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
-import com.example.mylibrary.net.retrofit.interceptor.AddCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.AddSsionInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.LoginInterceptor;
-import com.example.mylibrary.net.retrofit.interceptor.ReceivedCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.ReadCookiesInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.RewriteCacheControlInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.AddTokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
@@ -47,12 +47,13 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     public OkHttpProcessor(Context context) {
         mOkHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new AddCookiesInterceptor()) //向HTTP中写入cookie
-                .addInterceptor(new ReceivedCookiesInterceptor()) //从HTTP中读取cookie
+                .addInterceptor(new AddSsionInterceptor()) //向HTTP中写入ssionId
+                .addInterceptor(new ReadCookiesInterceptor()) //从HTTP中读取cookie
                 .addInterceptor(new LogInterceptor())
-                .addInterceptor(new LoginInterceptor())
+//                .addInterceptor(new LoginInterceptor())
                 .addInterceptor(new GzipRequestInterceptor())
                 .addInterceptor(new RewriteCacheControlInterceptor(context))
+                .addInterceptor(new AddTokenInterceptor()) //向HTTP中写入token
                 .dns(new OKHttpDns(100))
 //                .dns(new OkDns())
                 .build();
