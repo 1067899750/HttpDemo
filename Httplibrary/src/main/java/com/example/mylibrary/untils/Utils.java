@@ -15,7 +15,6 @@ import android.view.View;
 
 import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.base.IHttpProcessor;
-import com.example.mylibrary.net.retrofit.Retrofitprocessor;
 import com.example.mylibrary.net.retrofit.dns.HttpDns;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;

@@ -17,10 +17,10 @@ import java.util.Map;
  * @Email 1067899750@qq.com
  * @create 2019/6/4 13:39
  */
-public class Retrofitprocessor implements IHttpProcessor {
+public class RetrofitProcessor implements IHttpProcessor {
     private Context mContext;
 
-    public Retrofitprocessor(Context context) {
+    public RetrofitProcessor(Context context) {
         this.mContext = context;
     }
 
