@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.net.retrofit.interceptor.AddSsionInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.HeaderInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReadCookiesInterceptor;
 import com.example.mylibrary.untils.NetworkUtils;
@@ -86,12 +87,11 @@ public class HttpClient {
                 .addInterceptor(new LogInterceptor())
 
 //                .addInterceptor(new LoginInterceptor())
-//                .addInterceptor(new HeaderInterceptor())
+                .addInterceptor(new HeaderInterceptor())
 //                .cookieJar(new CookieManger(Utils.getContext()))
 //                .cookieJar(cookieJar)
-
-                .addInterceptor(new AddSsionInterceptor()) //向HTTP中写入cookie
                 .addInterceptor(new ReadCookiesInterceptor()) //从HTTP中读取cookie
+//                .addInterceptor(new AddSsionInterceptor()) //向HTTP中写入cookie
                 .cache(cache);
 
 
