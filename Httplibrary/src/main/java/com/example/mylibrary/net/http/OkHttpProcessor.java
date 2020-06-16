@@ -18,6 +18,7 @@ import com.example.mylibrary.net.retrofit.interceptor.AddTokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -164,7 +165,6 @@ public class OkHttpProcessor implements IHttpProcessor {
 
 
     }
-
 
     /**
      * 快速构建参数
