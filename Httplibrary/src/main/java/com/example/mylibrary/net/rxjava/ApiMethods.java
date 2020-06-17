@@ -1,7 +1,5 @@
 package com.example.mylibrary.net.rxjava;
 
-import android.os.Handler;
-
 import com.example.mylibrary.base.ICallBack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,9 +15,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 
-/**
- * Created by ZhangJie on 2019/2/12.
- */
 
 public class ApiMethods {
     //方法名
@@ -32,7 +27,8 @@ public class ApiMethods {
     private Object[] objParams;
     //回调
     private ICallBack mICallBack;
-
+    //header
+    private List<Map<String, Object>> headers = new ArrayList<>();
 
     /**
      * 通过工厂统一创建
@@ -104,6 +100,29 @@ public class ApiMethods {
 
 
     /**
+     * 添加header
+     */
+    public ApiMethods addHeader(String key, String value) {
+        if (key != null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put(key, value);
+            headers.add(map);
+        }
+        return this;
+    }
+
+    /**
+     * 添加headers
+     */
+    public ApiMethods addHeaders(List<Map<String, Object>> headerMap) {
+        if (headerMap != null) {
+            headers.addAll(headerMap);
+        }
+        return this;
+    }
+
+
+    /**
      * 封装线程管理和订阅的过程
      */
     public void ApiSubscribe(Observable observable, Observer observer) {
@@ -136,6 +155,7 @@ public class ApiMethods {
         }
         try {
             BaseHttp baseHttp = new BaseHttp();
+            baseHttp.addHeaders(headers);
             //添加自定义拦截器
             for (int i = 0; i < mInterceptors.size(); i++) {
                 baseHttp = baseHttp.addInterceptor(mInterceptors.get(i));

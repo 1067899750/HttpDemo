@@ -1,22 +1,14 @@
 package com.example.mylibrary.net.rxjava;
 
-import android.os.Handler;
-import android.os.Message;
 
 import com.example.mylibrary.base.ICallBack;
 
-import java.net.ProtocolException;
 import java.net.UnknownHostException;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
 
-/**
- * Create by ZhangJie on 2019/2/12
- *
- * @param <T>
- */
 public class MyObserver<T> implements Observer<T> {
 
     private ICallBack mCallBack;

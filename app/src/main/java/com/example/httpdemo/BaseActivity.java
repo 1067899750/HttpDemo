@@ -28,20 +28,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallBac
 
     protected abstract void initView();
     protected abstract int getLayoutId();
-    protected abstract void onSuccess(String tag, JsonObject jsonObject); //返回 json 数据
-
-
-    @Override
-    public void onSuccess(String tag, String message) {
-        JsonObject jsonObject = new JsonParser().parse(message).getAsJsonObject();
-        onSuccess(tag, jsonObject);
-    }
-
-
-
-
-
-
 
 
 

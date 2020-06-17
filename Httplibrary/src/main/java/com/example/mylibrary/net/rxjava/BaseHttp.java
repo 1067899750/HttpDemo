@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.example.mylibrary.BuildConfig;
 import com.example.mylibrary.net.retrofit.interceptor.AddSsionInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReadCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.RequestInterceptor;
 import com.example.mylibrary.untils.Utils;
 
 import java.io.File;
@@ -34,9 +35,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by ZhangJie on 2019/2/12.
- */
+
 public class BaseHttp {
     //网络请求出错
     public final static int HTTP_REQUEST_ERROR_PROCEL_EXCEPTION = 101;//PROCEL_EXCEPTION图片上传异常
@@ -45,7 +44,8 @@ public class BaseHttp {
     public static final int READ_TIME_OUT = 10000;
     //连接时长，单位：毫秒
     public static final int CONNECT_TIME_OUT = 10000;
-
+    //请求拦截
+    private static RequestInterceptor requestInterceptor = new RequestInterceptor();
     /**
      * 获取retrofit对象
      *
@@ -63,6 +63,9 @@ public class BaseHttp {
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS);
         builder.addInterceptor(new ReadCookiesInterceptor())
                 .addInterceptor(new AddSsionInterceptor())
+                .addInterceptor(mRewriteCacheControlInterceptor)
+                .addNetworkInterceptor(mRewriteCacheControlInterceptor)
+                .addInterceptor(requestInterceptor)
                 .cache(cache);
         if (BuildConfig.DEBUG) {
             //信任所有M服务器地址
@@ -133,6 +136,59 @@ public class BaseHttp {
         return this;
     }
 
+    /**
+     * 添加header
+     *
+     * @param key
+     * @param value
+     */
+    public BaseHttp addHeader(String key, String value) {
+        requestInterceptor.addHeader(key, value);
+        return this;
+    }
+
+    /**
+     * 添加headers
+     *
+     * @param headerMaps
+     */
+    public BaseHttp addHeaders(List<Map<String, Object>> headerMaps) {
+        requestInterceptor.addHeaders(headerMaps);
+        return this;
+    }
+    /**
+     * 设缓存有效期为两天
+     */
+    private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
+    /**
+     * 云端响应头拦截器，用来配置缓存策略
+     */
+    private final Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            String cacheControl = request.cacheControl().toString();
+            if (!isNetConnected(Utils.getContext())) {
+                request = request.newBuilder()
+                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl
+                                .FORCE_NETWORK : CacheControl.FORCE_CACHE)
+                        .build();
+            }
+            Response originalResponse = chain.proceed(request);
+            if (isNetConnected(Utils.getContext())) {
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma")
+                        .build();
+            } else {
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" +
+                                CACHE_STALE_SEC)
+                        .removeHeader("Pragma")
+                        .build();
+            }
+        }
+    };
 
     public static boolean isNetConnected(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context

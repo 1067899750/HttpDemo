@@ -92,8 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onSuccess(String tag, JsonObject jsonObject) {
-        String message = jsonObject.toString();
+    public void onSuccess(String tag, String message) {
         if (tag.equals("login")) {
             System.out.println("--->" + Thread.currentThread());
             toast(message);
@@ -102,7 +101,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             toast(message);
         }
     }
-
 
     @Override
     public void onFailed(String message) {
