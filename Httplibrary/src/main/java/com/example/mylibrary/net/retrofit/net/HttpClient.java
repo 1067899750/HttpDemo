@@ -32,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * <p>类说明</p>
@@ -118,6 +120,10 @@ public class HttpClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(okHttpClient)
+                    //请求的结果转为实体类
+                    .addConverterFactory(GsonConverterFactory.create())
+                    //适配RxJava2.0,RxJava1.x则为RxJavaCallAdapterFactory.create()
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
     }
