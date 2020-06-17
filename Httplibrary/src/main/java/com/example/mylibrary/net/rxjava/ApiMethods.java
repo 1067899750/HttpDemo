@@ -30,8 +30,6 @@ public class ApiMethods {
     private String tag;
     //自定义拦截器
     private List<Interceptor> mInterceptors = new ArrayList<>();
-    //参数
-    private Object[] objParams;
     //回调
     private ICallBack mICallBack;
     //header
@@ -56,17 +54,6 @@ public class ApiMethods {
      */
     public ApiMethods setMethodName(String methodName) {
         this.methodName = methodName;
-        return this;
-    }
-
-    /**
-     * 添加参数
-     *
-     * @param objParams
-     * @return
-     */
-    public ApiMethods setParams(Object... objParams) {
-        this.objParams = objParams;
         return this;
     }
 
@@ -157,20 +144,7 @@ public class ApiMethods {
      * @param <K>
      */
     public <K> void doHttp(Class<K> cls) {
-        Class[] keyObjs = null;
-        if (objParams != null) {
-            //参数变换
-            keyObjs = new Class[objParams.length];
-            //获取参数的变量类型，反射机制执行方法体时需要
-            for (int i = 0; i < objParams.length; i++) {
-                if (objParams[i] == null) {
-                    keyObjs[i] = null;
-                } else {
-                    keyObjs[i] = objParams[i].getClass();
-                }
-            }
-        }
-//        try {
+        try {
             BaseHttp baseHttp = new BaseHttp();
             baseHttp.addHeaders(headers)
                     .addUrl(getBaseUrl(url));
@@ -178,19 +152,20 @@ public class ApiMethods {
             for (int i = 0; i < mInterceptors.size(); i++) {
                 baseHttp = baseHttp.addInterceptor(mInterceptors.get(i));
             }
-            RxJavaService k = baseHttp.getBaseService(RxJavaService.class);
+            K k = baseHttp.getBaseService(cls);
             //利用反射执行对应方法体
-//            Method method = k.getClass().getMethod(methodName, keyObjs);
-//            Observable observable = (Observable) method.invoke(k, Uri.parse(url).getPath(), objParams);
+            Method method = k.getClass().getMethod(methodName, String.class, Map.class);
+            Observable observable = (Observable) method.invoke(k, Uri.parse(url).getPath(), params);
             //执行订阅
-            ApiSubscribe(k.executePost(Uri.parse(url).getPath(), params), new MyObserver<>(mICallBack, tag));
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
+            ApiSubscribe(observable, new MyObserver<>(mICallBack, tag));
+//            ApiSubscribe(k.executePost(Uri.parse(url).getPath(), params), new MyObserver<>(mICallBack, tag));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 

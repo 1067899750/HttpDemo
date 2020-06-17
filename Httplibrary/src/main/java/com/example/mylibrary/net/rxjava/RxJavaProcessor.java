@@ -36,8 +36,7 @@ public class RxJavaProcessor implements IHttpProcessor {
                 .setUrl(url)
                 .setMethodName("executePost");//设置方法名
         if (params != null){
-            api.setParams(params)
-                    .addParams(params);
+            api.addParams(params);
         }
         api.setOnRequestCallBackListener(callBack)
                 .doHttp(RxJavaService.class);
@@ -59,8 +58,7 @@ public class RxJavaProcessor implements IHttpProcessor {
                 .setUrl(url)
                 .setMethodName("executePost");//设置方法名
         if (params != null){
-            api.setParams(params)
-            .addParams(params);
+            api.addParams(params);
         }
         api.setOnRequestCallBackListener(callBack)
                 .doHttp(RxJavaService.class);
