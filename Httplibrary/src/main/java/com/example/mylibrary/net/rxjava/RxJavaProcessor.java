@@ -33,9 +33,11 @@ public class RxJavaProcessor implements IHttpProcessor {
         methodName = methodName.substring(0,methodName.indexOf("."));
         ApiMethods api = ApiMethods.createMethodFactory()
                 .setTag(methodName)
-                .setMethodName(methodName);//设置方法名
+                .setUrl(url)
+                .setMethodName("executePost");//设置方法名
         if (params != null){
-            api.setParams(params);
+            api.setParams(params)
+                    .addParams(params);
         }
         api.setOnRequestCallBackListener(callBack)
                 .doHttp(RxJavaService.class);
@@ -54,9 +56,11 @@ public class RxJavaProcessor implements IHttpProcessor {
         methodName = methodName.substring(0,methodName.indexOf("."));
         ApiMethods api = ApiMethods.createMethodFactory()
                 .setTag(methodName)
-                .setMethodName(methodName);//设置方法名
+                .setUrl(url)
+                .setMethodName("executePost");//设置方法名
         if (params != null){
-            api.setParams(params);
+            api.setParams(params)
+            .addParams(params);
         }
         api.setOnRequestCallBackListener(callBack)
                 .doHttp(RxJavaService.class);

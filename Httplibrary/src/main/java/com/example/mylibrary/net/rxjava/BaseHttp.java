@@ -46,6 +46,7 @@ public class BaseHttp {
     public static final int CONNECT_TIME_OUT = 10000;
     //请求拦截
     private static RequestInterceptor requestInterceptor = new RequestInterceptor();
+    private String url;
     /**
      * 获取retrofit对象
      *
@@ -113,7 +114,7 @@ public class BaseHttp {
         //创建retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
-                .baseUrl("https://yanyangtian.purang.com")
+                .baseUrl(url)
                 //请求的结果转为实体类
                 .addConverterFactory(GsonConverterFactory.create())
                 //适配RxJava2.0,RxJava1.x则为RxJavaCallAdapterFactory.create()
@@ -133,6 +134,11 @@ public class BaseHttp {
         if (interceptor != null) {
             interceptors.add(interceptor);
         }
+        return this;
+    }
+
+    public BaseHttp addUrl(String url){
+        this.url = url;
         return this;
     }
 

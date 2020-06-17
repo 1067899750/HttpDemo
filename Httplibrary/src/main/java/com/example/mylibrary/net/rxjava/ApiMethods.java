@@ -1,5 +1,8 @@
 package com.example.mylibrary.net.rxjava;
 
+import android.net.Uri;
+import android.text.TextUtils;
+
 import com.example.mylibrary.base.ICallBack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +18,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 
-
+/**
+ * @author puyantao
+ * @description
+ * @date 2020/6/17 9:04
+ */
 public class ApiMethods {
     //方法名
     private String methodName;
@@ -29,6 +36,8 @@ public class ApiMethods {
     private ICallBack mICallBack;
     //header
     private List<Map<String, Object>> headers = new ArrayList<>();
+    private String url;
+    Map<String, String> params;
 
     /**
      * 通过工厂统一创建
@@ -98,6 +107,10 @@ public class ApiMethods {
         return this;
     }
 
+    public ApiMethods setUrl(String url) {
+        this.url = url;
+        return this;
+    }
 
     /**
      * 添加header
@@ -121,6 +134,10 @@ public class ApiMethods {
         return this;
     }
 
+    public ApiMethods addParams(Map<String, String> params) {
+        this.params = params;
+        return this;
+    }
 
     /**
      * 封装线程管理和订阅的过程
@@ -153,25 +170,45 @@ public class ApiMethods {
                 }
             }
         }
-        try {
+//        try {
             BaseHttp baseHttp = new BaseHttp();
-            baseHttp.addHeaders(headers);
+            baseHttp.addHeaders(headers)
+                    .addUrl(getBaseUrl(url));
             //添加自定义拦截器
             for (int i = 0; i < mInterceptors.size(); i++) {
                 baseHttp = baseHttp.addInterceptor(mInterceptors.get(i));
             }
-            K k = baseHttp.getBaseService(cls);
+            RxJavaService k = baseHttp.getBaseService(RxJavaService.class);
             //利用反射执行对应方法体
-            Method method = k.getClass().getMethod(methodName, keyObjs);
-            Observable observable = (Observable) method.invoke(k, objParams);
+//            Method method = k.getClass().getMethod(methodName, keyObjs);
+//            Observable observable = (Observable) method.invoke(k, Uri.parse(url).getPath(), objParams);
             //执行订阅
-            ApiSubscribe(observable, new MyObserver<>(mICallBack, tag));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+            ApiSubscribe(k.executePost(Uri.parse(url).getPath(), params), new MyObserver<>(mICallBack, tag));
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
     }
+
+
+    /**
+     * @param url
+     * @return
+     */
+    public String getBaseUrl(String url) {
+        String domain = "";
+        if (!TextUtils.isEmpty(url) && url.startsWith("http")) {
+            try {
+                String path = Uri.parse(url).getPath();
+                String host = Uri.parse(url).getHost();
+                domain = url.substring(0, url.indexOf("//")) + "//" + host;
+            } catch (Exception ex) {
+            }
+        }
+        return domain;
+    }
+
 }
