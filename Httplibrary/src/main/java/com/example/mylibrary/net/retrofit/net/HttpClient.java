@@ -51,7 +51,8 @@ public class HttpClient {
     private static String BASE_URL = "";
     /*本地使用的baseUrl*/
     private String baseUrl = "";
-    private static OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient;
+    private static HttpClient mInstance;
     private Builder mBuilder;
     private Retrofit retrofit;
     private Call<ResponseBody> mCall;
@@ -63,8 +64,15 @@ public class HttpClient {
      *
      * @return HttpClient的唯一对象
      */
-    private static HttpClient getIns() {
-        return new HttpClient();
+    private static HttpClient getInstance() {
+        if (mInstance == null){
+            synchronized (HttpClient.class){
+                if (mInstance == null){
+                    mInstance = new HttpClient();
+                }
+            }
+        }
+        return mInstance;
     }
 
     /**
@@ -318,7 +326,7 @@ public class HttpClient {
             if (!TextUtils.isEmpty(builderBaseUrl)) {
                 BASE_URL = builderBaseUrl;
             }
-            HttpClient client = HttpClient.getIns();
+            HttpClient client = HttpClient.getInstance();
             client.getRetrofit();
             client.setBuilder(this);
             client.urlTag = (String) tag;
