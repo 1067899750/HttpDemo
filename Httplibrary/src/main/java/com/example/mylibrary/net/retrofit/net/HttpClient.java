@@ -220,7 +220,7 @@ public class HttpClient {
             return;
         }
         synchronized (CALL_MAP) {
-            CALL_MAP.put(builder.tag.toString() + builder.url, call);
+            CALL_MAP.put(builder.url, call);
         }
     }
 

@@ -22,8 +22,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        Utils.init(this, new RxJavaProcessor(this), HttpUtil.getMainHost());
-//        Utils.init(this, new RetrofitProcessor(this), HttpUtil.getMainHost());
+//        Utils.init(this, new RxJavaProcessor(this), HttpUtil.getMainHost());
+        Utils.init(this, new RetrofitProcessor(this), HttpUtil.getMainHost());
 //        Utils.init(this, new VolleyProcessor(this), HttpUtil.getMainHost());
 //        Utils.init(this, new OkHttpProcessor(this), HttpUtil.getMainHost());
 
