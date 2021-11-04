@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.example.mylibrary.R;
 import com.example.mylibrary.base.ICallBack;
 import com.example.mylibrary.net.retrofit.interceptor.AddSsionInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.HeaderInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReadCookiesInterceptor;
 import com.example.mylibrary.untils.NetworkUtils;
@@ -31,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * <p>类说明</p>
@@ -48,7 +51,8 @@ public class HttpClient {
     private static String BASE_URL = "";
     /*本地使用的baseUrl*/
     private String baseUrl = "";
-    private static OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient;
+    private static HttpClient mInstance;
     private Builder mBuilder;
     private Retrofit retrofit;
     private Call<ResponseBody> mCall;
@@ -60,8 +64,15 @@ public class HttpClient {
      *
      * @return HttpClient的唯一对象
      */
-    private static HttpClient getIns() {
-        return new HttpClient();
+    private static HttpClient getInstance() {
+        if (mInstance == null){
+            synchronized (HttpClient.class){
+                if (mInstance == null){
+                    mInstance = new HttpClient();
+                }
+            }
+        }
+        return mInstance;
     }
 
     /**
@@ -73,7 +84,7 @@ public class HttpClient {
 
     private HttpClient() {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Utils.getContext()));
-        ///HttpsUtil.SSLParams sslParams = HttpsUtil.getSslSocketFactory(Utils.getContext(), R.raw.cer,STORE_PASS , STORE_ALIAS);
+//        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(Utils.getContext(), R.raw.cer,STORE_PASS , STORE_ALIAS);
         //缓存
         File cacheFile = new File(Utils.getContext().getCacheDir(), "cache");
         //100Mb
@@ -86,12 +97,11 @@ public class HttpClient {
                 .addInterceptor(new LogInterceptor())
 
 //                .addInterceptor(new LoginInterceptor())
-//                .addInterceptor(new HeaderInterceptor())
+                .addInterceptor(new HeaderInterceptor())
 //                .cookieJar(new CookieManger(Utils.getContext()))
 //                .cookieJar(cookieJar)
-
-                .addInterceptor(new AddSsionInterceptor()) //向HTTP中写入cookie
                 .addInterceptor(new ReadCookiesInterceptor()) //从HTTP中读取cookie
+//                .addInterceptor(new AddSsionInterceptor()) //向HTTP中写入cookie
                 .cache(cache);
 
 
@@ -118,6 +128,10 @@ public class HttpClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(okHttpClient)
+                    //请求的结果转为实体类
+                    .addConverterFactory(GsonConverterFactory.create())
+                    //适配RxJava2.0,RxJava1.x则为RxJavaCallAdapterFactory.create()
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
     }
@@ -206,7 +220,7 @@ public class HttpClient {
             return;
         }
         synchronized (CALL_MAP) {
-            CALL_MAP.put(builder.tag.toString() + builder.url, call);
+            CALL_MAP.put(builder.url, call);
         }
     }
 
@@ -312,7 +326,7 @@ public class HttpClient {
             if (!TextUtils.isEmpty(builderBaseUrl)) {
                 BASE_URL = builderBaseUrl;
             }
-            HttpClient client = HttpClient.getIns();
+            HttpClient client = HttpClient.getInstance();
             client.getRetrofit();
             client.setBuilder(this);
             client.urlTag = (String) tag;

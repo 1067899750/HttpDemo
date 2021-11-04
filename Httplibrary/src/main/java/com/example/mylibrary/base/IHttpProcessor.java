@@ -1,6 +1,9 @@
 package com.example.mylibrary.base;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.RequestBody;
 
 /**
  * @Describe 代理接口 代理和真正干活的类  的 共同实现的接口
@@ -16,12 +19,6 @@ public interface IHttpProcessor {
 
     //Post
     void post(String url, Map<String, String> params, ICallBack callBack);
-
-    //Update
-
-
-    //Delete
-
 
 }
 

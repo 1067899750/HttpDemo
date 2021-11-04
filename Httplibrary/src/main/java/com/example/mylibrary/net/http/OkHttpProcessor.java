@@ -18,8 +18,10 @@ import com.example.mylibrary.net.retrofit.interceptor.AddTokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -63,9 +65,12 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     @Override
     public void get(final String url, Map<String, String> params, final ICallBack callBack) {
+        CacheControl cc = new CacheControl.Builder()
+                .noCache().build();
         final Request request = new Request.Builder()
                 .get()
                 .url(url)
+                .cacheControl(cc)
                 .build();
         mOkHttpClient.newCall(request)
                 .enqueue(new Callback() {
@@ -114,9 +119,11 @@ public class OkHttpProcessor implements IHttpProcessor {
     @Override
     public void post(final String url, Map<String, String> params, final ICallBack callBack) {
         RequestBody requestbody = appendBody(params);
-
+        CacheControl cc = new CacheControl.Builder()
+                .noCache().build();
         final Request request = new Request.Builder()
                 .post(requestbody)
+                .cacheControl(cc)
                 .url(url)
                 .build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
@@ -164,7 +171,6 @@ public class OkHttpProcessor implements IHttpProcessor {
 
 
     }
-
 
     /**
      * 快速构建参数

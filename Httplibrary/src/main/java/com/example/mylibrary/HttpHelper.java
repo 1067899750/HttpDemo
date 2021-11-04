@@ -21,22 +21,22 @@ public class HttpHelper implements IHttpProcessor {
 
     //需求得到请求参数
     private Map<String, Object> params;
-    private static HttpHelper mInatance;
+    private static HttpHelper mInstance;
 
     private HttpHelper() {
         params = new HashMap<>();
     }
 
     public static HttpHelper getInstance() {
-        if (mInatance == null) {
+        if (mInstance == null) {
             synchronized (HttpHelper.class) {
-                if (mInatance == null) {
-                    mInatance = new HttpHelper();
+                if (mInstance == null) {
+                    mInstance = new HttpHelper();
                 }
             }
 
         }
-        return mInatance;
+        return mInstance;
     }
 
     /**
