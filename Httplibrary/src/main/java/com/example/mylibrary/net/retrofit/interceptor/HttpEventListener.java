@@ -59,7 +59,7 @@ public class HttpEventListener extends EventListener {
     public void report(Long callEndTime, Call call, Response response){
         Log.i("----->2", callEndTime - callStartTime + "");
         int code = response.code();
-
+        String url = call.request().url().url().toString();
     }
 
     @Override
