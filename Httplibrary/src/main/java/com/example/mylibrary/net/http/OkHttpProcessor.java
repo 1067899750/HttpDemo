@@ -11,8 +11,10 @@ import com.example.mylibrary.base.IHttpProcessor;
 import com.example.mylibrary.net.retrofit.dns.OKHttpDns;
 import com.example.mylibrary.net.retrofit.interceptor.AddSsionInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.GzipRequestInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.HttpEventListener;
 import com.example.mylibrary.net.retrofit.interceptor.LogInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.ReadCookiesInterceptor;
+import com.example.mylibrary.net.retrofit.interceptor.ReportInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.RewriteCacheControlInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.AddTokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
@@ -56,7 +58,9 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new GzipRequestInterceptor())
                 .addInterceptor(new RewriteCacheControlInterceptor(context))
                 .addInterceptor(new AddTokenInterceptor()) //向HTTP中写入token
+                .addInterceptor(new ReportInterceptor())
                 .dns(new OKHttpDns(100))
+                .eventListenerFactory(HttpEventListener.FACTORY)
 //                .dns(new OkDns())
                 .build();
 //        mOkHttpClient = new OkHttpClient();
