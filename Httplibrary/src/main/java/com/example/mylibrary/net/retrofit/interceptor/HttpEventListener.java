@@ -60,6 +60,7 @@ public class HttpEventListener extends EventListener {
         Log.i("----->2", callEndTime - callStartTime + "");
         int code = response.code();
         String url = call.request().url().toString();
+        String method = call.request().method();
     }
 
     @Override
