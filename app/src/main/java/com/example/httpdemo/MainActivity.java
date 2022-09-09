@@ -2,18 +2,13 @@ package com.example.httpdemo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.httpdemo.untils.HttpUtil;
 import com.example.mylibrary.HttpHelper;
-import com.example.mylibrary.base.ICallBack;
-import com.example.mylibrary.untils.SharePreferencesUtils;
-import com.example.mylibrary.untils.Utils;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

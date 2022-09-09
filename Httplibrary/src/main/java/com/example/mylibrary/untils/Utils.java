@@ -8,10 +8,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mylibrary.HttpHelper;
 import com.example.mylibrary.base.IHttpProcessor;
@@ -21,7 +22,6 @@ import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
 
 /**
- *
  * Description Utils初始化相关
  * Author puyantao
  * Email 1067899750@qq.com
