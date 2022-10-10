@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#./run.sh           	fullyBuild 全量编译
-#./run.sh           	buildDebugInc 增量编译debug
-#./run.sh           	buildReleaseInc 增量编译 release
+#./appRun.sh           	fullyBuild 全量编译
+#./appRun.sh           	buildDebugInc 增量编译debug
+#./appRun.sh           	buildReleaseInc 增量编译 release
 #./install.sh         	只安装、不编译 debug 版本
 #./installReleash.sh  	只安装、不编译 release 版本
 if [ ! -f "pluginCompile.properties" ]; then
