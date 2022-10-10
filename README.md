@@ -4,3 +4,4 @@
 1、volley
 2、okhttp
 3、okhttp + rxjava + retrofit
+4、shell 脚本自动打包运行
