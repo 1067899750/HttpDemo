@@ -27,6 +27,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ICallBac
 
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
+
     protected abstract void initView();
     protected abstract int getLayoutId();
 
