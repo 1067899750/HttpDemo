@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#./run.sh           	fullyBuild 全量编译
+#./run.sh           	buildDebugInc 增量编译debug
+#./run.sh           	buildReleaseInc 增量编译 release
+#./install.sh         	只安装、不编译 debug 版本
+#./installReleash.sh  	只安装、不编译 release 版本
 if [ ! -f "pluginCompile.properties" ]; then
 	#把enablePluginCompile=false输入到文件中
 	echo "enablePluginCompile=false">pluginCompile.properties
@@ -57,7 +62,7 @@ fi
 toFirstLetterUpper $channel
 echo "input channel is $channel to toFirstLetterUpper is $firstUpChannel"
 
-
+#构建 module
 function buildPlugins() {
   for module in 'PluginQQFav'  'PluginPhotoplus'  'PluginQZone' 'PluginTroop' 'PluginTroopMemberCard'  'PluginTroopManage'  'PluginQlink' 
     do
@@ -114,10 +119,56 @@ fi
 if [ "$1" == "-help" ];then
 	echoHelp
 	
+elif [ "$1" == "fullyBuild" ];then	
+	replacePluginCompile true
+	echo "$gradleCmd clean"
+	$gradleCmd clean
 	
+	if [ $? -ne 0 ];then
+		echo "/gradlew clean failed"
+		exit 0
+	fi
+	
+	echo ""
+	echo "fullyBuild...start"
+	
+	if [ "all" == "$2" ];then
+		echo "assemble all channels"
+		$gradleCmd assemble
+	elif [ "$isMultiChannel" == "true"];then
+		echo "assemble all channels"
+		$gradleCmd assemble
+	else
+		echo "assemble$firstUpChannel"
+		$gradleCmd assemble$firstUpChannel
+	fi
+	
+	if [ $? -ne 0 ];then
+		echo "$gradleCmd assemble$firstUpChannel failed"
+		exit 0
+	fi
+	
+	echo "build all application module finish"
+	
+elif [[ "$1" == "minBuild" ]];then
+	replacePluginCompile true
+	echo "build application module app"
+	$gradleCmd app:clean
+	#用于多渠道打包
+	#$gradleCmd app:assemble$firstUpChannel
+	$gradleCmd app:assemble
+	echo "build application module app finish"
+	
+elif [[ "$1" == "incBuild" ]];then
+	replacePluginCompile true
+	echo "build application module app without clean"
+	#用于多渠道打包
+	#$gradleCmd app:assemble$firstUpChannel
+	$gradleCmd app:assemble
+    echo "build application module app finish"
 	
 elif [ "$1" == "buildDebugInc" ];then
-	#replacePluginCompile false
+	replacePluginCompile false
 	echo "buildDebugInc"
 	#用于多渠道打包
 	#taskName="app:assemble${firstUpChannel}Debug"
@@ -128,13 +179,24 @@ elif [ "$1" == "buildDebugInc" ];then
 	#用于多渠道打包安装
 	#installApk AAProject/QQLite/build/outputs/apk/$channel/debug/QQLite-$channel-debug.apk
 	installApk app/build/outputs/apk/debug/app-debug.apk
+elif [[ "$1" == "buildReleaseInc" ]]
+	then
+	replacePluginCompile true	
+	echo "buildReleaseInc"
+	#taskName="app:assemble${firstUpChannel}Release"
+	taskName="app:assembleRelease"
+	echo "execute task "$taskName
 	
+	$gradleCmd $taskName
+	installApk app/build/outputs/apk/release/app-release-unsigned.apk
 	
-	
-	
-	
+else
+	echoHelp
 fi
 
+replacePluginCompile false
+endtime=$(date +%s)
+echo "$1 spent time "$((endtime-startTime))"s"
 
 
 
