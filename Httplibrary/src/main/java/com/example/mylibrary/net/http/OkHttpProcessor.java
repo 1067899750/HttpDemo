@@ -58,7 +58,7 @@ public class OkHttpProcessor implements IHttpProcessor {
                 .addInterceptor(new GzipRequestInterceptor())
                 .addInterceptor(new RewriteCacheControlInterceptor(context))
                 .addInterceptor(new AddTokenInterceptor()) //向HTTP中写入token
-                .addInterceptor(new ReportInterceptor())
+                .addInterceptor(new ReportInterceptor("okhttp"))
                 .dns(new OKHttpDns(100))
                 .eventListenerFactory(HttpEventListener.FACTORY)
 //                .dns(new OkDns())
