@@ -1,6 +1,7 @@
 package com.example.mylibrary.net.retrofit.interceptor;
 
 
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class HttpEventListener extends EventListener {
         @Override
         public EventListener create(Call call) {
             long callId = nextCallId.getAndIncrement();
-            return new HttpEventListener(callId, call.request().url(), System.currentTimeMillis());
+            return new HttpEventListener(callId, call.request().url(), SystemClock.uptimeMillis());
         }
     };
 
@@ -136,7 +137,7 @@ public class HttpEventListener extends EventListener {
     @Override
     public void responseHeadersEnd(Call call, Response response) {
         super.responseHeadersEnd(call, response);
-        report(System.currentTimeMillis(), call, response);
+        report(SystemClock.uptimeMillis(), call, response);
     }
 
 
