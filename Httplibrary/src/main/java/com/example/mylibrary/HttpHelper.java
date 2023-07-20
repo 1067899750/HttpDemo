@@ -58,7 +58,7 @@ public class HttpHelper implements IHttpProcessor {
     public void post(String url, Map<String, String> params, ICallBack callBack) {
         String finalUrl = appendParams(url, params);
         //实际进行网络请求
-        mIHttpProcessor.post(finalUrl, params, callBack);
+        mIHttpProcessor.post(url, params, callBack);
     }
 
 

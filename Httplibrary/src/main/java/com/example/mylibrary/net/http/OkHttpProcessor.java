@@ -18,6 +18,7 @@ import com.example.mylibrary.net.retrofit.interceptor.ReportInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.RewriteCacheControlInterceptor;
 import com.example.mylibrary.net.retrofit.interceptor.AddTokenInterceptor;
 import com.example.mylibrary.untils.StringUtils;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -178,6 +180,7 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     /**
      * 快速构建参数
+     * post传 x-www-form-urlencoded
      *
      * @param params
      * @return
@@ -193,5 +196,17 @@ public class OkHttpProcessor implements IHttpProcessor {
             body.add(entry.getKey(), entry.getValue().toString());
         }
         return body.build();
+    }
+
+
+    /**
+     * application/json
+     *
+     * @param params
+     * @return
+     */
+    private RequestBody toJson(Map<String, String> params) {
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                new Gson().toJson(params));
     }
 }
