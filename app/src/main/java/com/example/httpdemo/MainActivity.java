@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.httpdemo.untils.HttpUtil;
+import com.example.keyboard.KeyBoardDialogUtils;
 import com.example.mylibrary.HttpHelper;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.google.gson.JsonObject;
@@ -38,6 +41,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String mobile = "18503970627";
     private String cid = "09164b5a280eda07839aabbd9e3c5961";
 
+    private KeyBoardDialogUtils keyBoardDialogUtils;
+
+    private EditText mEditText;
 
 //    private String password = "e10adc3949ba59abbe56e057f20f883e";
 //    private String mobile = "18503970627";
@@ -45,10 +51,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
+        keyBoardDialogUtils = new KeyBoardDialogUtils(this);
 
         //测试提交数据
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
+        mEditText = findViewById(R.id.key_board);
+        mEditText.setOnClickListener(this);
 
 
         //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
@@ -124,6 +133,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.other_btn:
                 HashMap<String, String> otherMap = new HashMap<>();
                 HttpHelper.getInstance().post(url2, otherMap, this);
+                break;
+
+            case R.id.key_board:
+                keyBoardDialogUtils.show(mEditText);
                 break;
 
         }
