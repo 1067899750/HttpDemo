@@ -38,6 +38,7 @@ public class KhKeyboardView {
         mNumberKeyboard = new Keyboard(mContext, R.xml.keyboard_numbers);
         mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
         mSymbolKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol);
+
         mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
         mLetterView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_2);
 
@@ -45,10 +46,12 @@ public class KhKeyboardView {
         mNumberView.setEnabled(true);
         mNumberView.setPreviewEnabled(false);
         mNumberView.setOnKeyboardActionListener(listener);
+
         mLetterView.setKeyboard(mLetterKeyboard);
         mLetterView.setEnabled(true);
         mLetterView.setPreviewEnabled(true);
         mLetterView.setOnKeyboardActionListener(listener);
+
         headerView = parentView.findViewById(R.id.keyboard_header);
 
     }

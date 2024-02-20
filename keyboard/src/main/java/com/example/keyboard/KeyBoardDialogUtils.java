@@ -25,19 +25,14 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     protected Dialog popWindow;
     protected Activity mContext;
     private EditText contentView;
-    private List<String> contentList;
     private KhKeyboardView keyboardUtil;
 
     public KeyBoardDialogUtils(Activity mContext) {
         try {
             this.mContext = mContext;
-            if (contentList == null) {
-                contentList = new ArrayList<>();
-            }
 
             if (popWindow == null) {
                 view = LayoutInflater.from(mContext).inflate(R.layout.keyboard_key_board_popu, null);
-//				view.getBackground().setAlpha(68);
                 popWindow = new Dialog(mContext, R.style.keyboard_popupAnimation);
                 view.findViewById(R.id.keyboard_finish).setOnClickListener(this);
                 view.findViewById(R.id.keyboard_back_hide).setOnClickListener(this);
@@ -107,15 +102,11 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
         // 如果软键盘已经显示，则隐藏
         InputMethodManager imm = (InputMethodManager) mContext.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-
-
-
     }
 
 
 
     public void show(final EditText editText) {
-//        		popWindow.show(showParentView, Gravity.CENTER, 0, 0);
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
@@ -127,9 +118,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     public void dismiss() {
         if (popWindow != null && popWindow.isShowing()) {
             popWindow.dismiss();
-
         }
-
     }
 
     @Override
