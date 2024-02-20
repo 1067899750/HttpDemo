@@ -12,18 +12,44 @@ import android.widget.EditText;
 
 import java.util.List;
 
+/**
+ * 键盘类
+ */
 public class KhKeyboardView {
     private Activity mContext;
     private View parentView;
-    private KeyboardView mLetterView;   //字母键盘view
-    private KeyboardView mNumberView;   //数字键盘View
-    private Keyboard mNumberKeyboard;   // 数字键盘
-    private Keyboard mLetterKeyboard;   // 字母键盘
-    private Keyboard mSymbolKeyboard;   // 符号键盘
-
-    private boolean isNumber = true;    // 是否数字键盘
-    public static   boolean isUpper = false;    // 是否大写
-    private boolean isSymbol = false;   // 是否是符号
+    /**
+     * 字母键盘view
+     */
+    private KeyboardView mLetterView;
+    /**
+     * 数字键盘View
+     */
+    private KeyboardView mNumberView;
+    /**
+     * 数字键盘
+     */
+    private Keyboard mNumberKeyboard;
+    /**
+     * 字母键盘
+     */
+    private Keyboard mLetterKeyboard;
+    /**
+     * 符号键盘
+     */
+    private Keyboard mSymbolKeyboard;
+    /**
+     * 是否数字键盘
+     */
+    private boolean isNumber = true;
+    /**
+     * 是否大写
+     */
+    public static boolean isUpper = false;
+    /**
+     * 是否是符号
+     */
+    private boolean isSymbol = false;
     private EditText mEditText;
     private View headerView;
 
@@ -42,11 +68,13 @@ public class KhKeyboardView {
         mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
         mLetterView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_2);
 
+        //初始化数字键盘
         mNumberView.setKeyboard(mNumberKeyboard);
         mNumberView.setEnabled(true);
         mNumberView.setPreviewEnabled(false);
         mNumberView.setOnKeyboardActionListener(listener);
 
+        //初始化字母键盘
         mLetterView.setKeyboard(mLetterKeyboard);
         mLetterView.setEnabled(true);
         mLetterView.setPreviewEnabled(true);
@@ -59,7 +87,7 @@ public class KhKeyboardView {
     private KeyboardView.OnKeyboardActionListener listener = new KeyboardView.OnKeyboardActionListener() {
         @Override
         public void onPress(int primaryCode) {
-            Log.d("primaryCode","onPress--"+primaryCode);
+            Log.d("primaryCode", "onPress--" + primaryCode);
             if (primaryCode == Keyboard.KEYCODE_SHIFT) {
                 List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
 
@@ -76,7 +104,7 @@ public class KhKeyboardView {
 
         @Override
         public void onRelease(int primaryCode) {
-            Log.d("primaryCode","onRelease--"+primaryCode);
+            Log.d("primaryCode", "onRelease--" + primaryCode);
 
 //            if(primaryCode== -1){
 //                if(isUpper){
@@ -89,7 +117,7 @@ public class KhKeyboardView {
 
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
-            Log.d("primaryCode","onKey--"+primaryCode);
+            Log.d("primaryCode", "onKey--" + primaryCode);
             try {
                 if (mEditText == null)
                     return;
@@ -108,7 +136,7 @@ public class KhKeyboardView {
                     }
                 } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
                     // 大小写切换
-                    changeKeyboart();
+                    changeKeyboard();
                     mLetterView.setKeyboard(mLetterKeyboard);
 
                 } else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE) {
@@ -121,7 +149,7 @@ public class KhKeyboardView {
                     }
 
                 } else if (primaryCode == 90001) {
-//                  字母与符号切换
+                    //字母与符号切换
                     if (isSymbol) {
                         showLetterView2();
                     } else {
@@ -164,7 +192,9 @@ public class KhKeyboardView {
         }
     };
 
-    //  字母-符号,显示字母
+    /**
+     * 字母-符号,显示字母
+     */
     private void showLetterView2() {
         if (mLetterView != null) {
             isSymbol = false;
@@ -172,7 +202,9 @@ public class KhKeyboardView {
         }
     }
 
-    //  字母-符号,显示符号
+    /**
+     * 字母-符号,显示符号
+     */
     private void showSymbolView() {
         try {
             if (mLetterKeyboard != null) {
@@ -183,7 +215,9 @@ public class KhKeyboardView {
         }
     }
 
-    //  数字-字母,显示字母键盘
+    /**
+     * 数字-字母,显示字母键盘
+     */
     private void showLetterView() {
         try {
             if (mLetterView != null && mNumberView != null) {
@@ -197,7 +231,9 @@ public class KhKeyboardView {
 
     }
 
-    // 数字-字母, 显示数字键盘
+    /**
+     * 数字-字母, 显示数字键盘
+     */
     private void showNumberView() {
         try {
             if (mLetterView != null && mNumberView != null) {
@@ -214,7 +250,7 @@ public class KhKeyboardView {
     /**
      * 切换大小写
      */
-    private void changeKeyboart() {
+    private void changeKeyboard() {
         List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
         if (isUpper) {
             // 大写切换小写
@@ -247,6 +283,9 @@ public class KhKeyboardView {
         return wordStr.contains(str.toLowerCase());
     }
 
+    /**
+     * 隐藏键盘
+     */
     public void hideKeyboard() {
         try {
             int visibility = mLetterView.getVisibility();
@@ -278,11 +317,7 @@ public class KhKeyboardView {
             headerView.setVisibility(View.VISIBLE);
             switch (inputText) {
                 case InputType.TYPE_CLASS_NUMBER:
-                    showNumberView();
-                    break;
                 case InputType.TYPE_CLASS_PHONE:
-                    showNumberView();
-                    break;
                 case InputType.TYPE_NUMBER_FLAG_DECIMAL:
                     showNumberView();
                     break;
@@ -293,8 +328,6 @@ public class KhKeyboardView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 

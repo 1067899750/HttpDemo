@@ -34,9 +34,10 @@
         android:layout_height="50dp"
         android:background="#22ff0000"
         android:gravity="center"
-        android:hint="自定义键盘"
-        android:textColorHint="#756B6B"
-        android:layout_marginTop="20dp"/>
+        android:text="自定义键盘"
+        android:textCursorDrawable="@drawable/shape_cursor_color"
+        android:imeOptions="normal"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/text_tv"

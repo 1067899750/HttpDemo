@@ -28,7 +28,6 @@ public class CustomKeyboardView extends KeyboardView {
         try {
             List<Keyboard.Key> keys = getKeyboard().getKeys();
             for (Keyboard.Key key : keys) {
-                //            Log.e("KEY", "Drawing key with code " + key.codes[0]);
                 if (key.codes[0] == -5) {
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist);
                     dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
@@ -108,8 +107,7 @@ public class CustomKeyboardView extends KeyboardView {
                     paint.setTypeface(Typeface.DEFAULT);
                 }
 
-                paint.getTextBounds(key.label.toString(), 0, key.label.toString()
-                        .length(), bounds);
+                paint.getTextBounds(key.label.toString(), 0, key.label.toString().length(), bounds);
                 canvas.drawText(key.label.toString(), key.x + (key.width / 2),
                         (key.y + key.height / 2) + bounds.height() / 2, paint);
             } else if (key.icon != null) {

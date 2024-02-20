@@ -1,13 +1,16 @@
 package com.example.keyboard;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.text.InputType;
+import android.text.Selection;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,20 +19,26 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
-
+/**
+ * 键盘工具类
+ */
 public class KeyBoardDialogUtils implements View.OnClickListener {
     protected View view;
     protected Dialog popWindow;
     protected Activity mContext;
-    private EditText contentView;
     private KhKeyboardView keyboardUtil;
 
-    public KeyBoardDialogUtils(Activity mContext) {
+    /**
+     * 和键盘绑定的 EditText
+     */
+    private EditText mBoardEt;
+
+    public KeyBoardDialogUtils(Activity context, EditText et) {
         try {
-            this.mContext = mContext;
+            this.mContext = context;
+
+            this.mBoardEt = et;
 
             if (popWindow == null) {
                 view = LayoutInflater.from(mContext).inflate(R.layout.keyboard_key_board_popu, null);
@@ -43,14 +52,13 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
             mWindow.setWindowAnimations(R.style.keyboard_popupAnimation);
             mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             mWindow.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL);
-            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             popWindow.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    if (contentView != null && contentView.isFocused()) {
-                        contentView.clearFocus();
+                    if (mBoardEt != null && mBoardEt.isFocused()) {
+                        mBoardEt.clearFocus();
                     }
                 }
             });
@@ -63,15 +71,28 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         try {
-            if (keyboardUtil == null)
+            if (keyboardUtil == null) {
                 keyboardUtil = new KhKeyboardView(mContext, view);
+            }
+
+            mBoardEt.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int inputType = mBoardEt.getInputType();
+                    mBoardEt.setInputType(inputType);
+                    //设定光标位置
+                    Selection.setSelection(mBoardEt.getText(), mBoardEt.getText().length());
+                    showKeyBoard(mBoardEt);
+                    return false;
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -79,7 +100,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
      *
      * @param editText
      */
-    public void hideSystemSofeKeyboard(EditText editText) {
+    public void hideSystemSoftKeyboard(EditText editText) {
         int sdkInt = Build.VERSION.SDK_INT;
         if (sdkInt >= 11) {
             try {
@@ -104,18 +125,25 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
-
-
-    public void show(final EditText editText) {
+    /**
+     * 显示键盘
+     *
+     * @param editText
+     */
+    public void showKeyBoard(final EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
-//        hideSystemSofeKeyboard(editText);
+        hideSystemSoftKeyboard(editText);
         popWindow.show();
         keyboardUtil.showKeyboard(editText);
     }
 
-    public void dismiss() {
+    /**
+     * 隐藏键盘
+     */
+    public void dismissKeyBoard() {
+        keyboardUtil.hideKeyboard();
         if (popWindow != null && popWindow.isShowing()) {
             popWindow.dismiss();
         }
@@ -126,13 +154,11 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
         try {
             int i = v.getId();
             if (i == R.id.keyboard_finish) {
-                keyboardUtil.hideKeyboard();
-                dismiss();
+                //完成按键
+                dismissKeyBoard();
 
             } else if (i == R.id.keyboard_back_hide) {
-                keyboardUtil.hideKeyboard();
-                dismiss();
-
+                dismissKeyBoard();
             }
 
         } catch (Exception e) {

@@ -3,12 +3,7 @@ package com.example.httpdemo;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import android.text.InputType;
-import android.text.Selection;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +12,6 @@ import com.example.httpdemo.untils.HttpUtil;
 import com.example.keyboard.KeyBoardDialogUtils;
 import com.example.mylibrary.HttpHelper;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +22,10 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Cookie;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String url = HttpUtil.GET_LOGIN1;
@@ -61,21 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
         mEditText = findViewById(R.id.key_board);
-        mEditText.setOnClickListener(this);
-        keyBoardDialogUtils = new KeyBoardDialogUtils(this);
-
-        mEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inputType = mEditText.getInputType();
-                mEditText.setInputType(InputType.TYPE_NULL);// 让系统键盘不弹出
-                mEditText.setInputType(inputType);
-                //设定光标位置
-                Selection.setSelection(mEditText.getText(), mEditText.getText().length());
-                keyBoardDialogUtils.show(mEditText);
-                return false;
-            }
-        });
+        keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText);
 
         //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
 //            @Override
