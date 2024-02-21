@@ -22,6 +22,7 @@
         </activity>
 
         <activity android:name=".KeyBoardActivity"/>
+        <activity android:name=".KeyBoardActivity2"/>
     </application>
 
 </manifest>

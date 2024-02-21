@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 HttpHelper.getInstance().post(url2, otherMap, this);
                 break;
             case R.id.other_keyboard:
-                startActivity(new Intent(this, KeyBoardActivity.class));
+                startActivity(new Intent(this, KeyBoardActivity2.class));
                 break;
 
         }

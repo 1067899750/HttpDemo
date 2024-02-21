@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:horizontalGap="1%p"
+    android:keyWidth="25%p"
+    android:keyHeight="100dp"
+    android:verticalGap="10dp">
+    <Row>
+        <Key
+            android:codes="49"
+            android:horizontalGap="2%p"
+            android:keyEdgeFlags="left"
+            android:keyLabel="1" />
+        <Key
+            android:codes="50"
+            android:horizontalGap="1%p"
+            android:keyLabel="2" />
+        <Key
+            android:codes="51"
+            android:horizontalGap="1%p"
+            android:keyLabel="3" />
+        <Key
+            android:codes="-5"
+            android:horizontalGap="1%p"
+            android:isRepeatable="true"
+            android:keyLabel="删除" />
+    </Row>
+
+    <Row>
+        <Key
+            android:codes="52"
+            android:horizontalGap="1.81%p"
+            android:keyEdgeFlags="left"
+            android:keyLabel="4" />
+        <Key
+            android:codes="53"
+            android:keyLabel="5" />
+        <Key
+            android:codes="54"
+            android:keyLabel="6" />
+        <Key
+            android:codes="48"
+            android:keyLabel="0" />
+    </Row>
+    <Row>
+        <Key
+            android:codes="55"
+            android:horizontalGap="1.81%p"
+            android:keyEdgeFlags="left"
+            android:keyLabel="7" />
+        <Key
+            android:codes="56"
+            android:keyLabel="8" />
+        <Key
+            android:codes="57"
+            android:keyLabel="9" />
+        <Key
+            android:codes="-2"
+            android:keyLabel="ABC" />
+    </Row>
+</Keyboard>

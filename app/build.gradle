@@ -35,6 +35,7 @@ dependencies {
     implementation project(':Httplibrary')
     implementation project(':keyboard')
     implementation project(':keyboard2')
+    implementation project(':keyboard3')
 
 }
 
