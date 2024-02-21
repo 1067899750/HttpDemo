@@ -28,6 +28,16 @@
         android:layout_marginTop="20dp"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/other_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#22ff0000"
+        android:gravity="center"
+        android:text="其他键盘"
+        android:layout_marginTop="20dp"
+        android:textAllCaps="false" />
+
     <EditText
         android:id="@+id/key_board"
         android:layout_width="match_parent"

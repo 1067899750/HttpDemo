@@ -1,6 +1,7 @@
 package com.example.httpdemo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.view.View;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //测试提交数据
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
+        findViewById(R.id.other_keyboard).setOnClickListener(this);
         mEditText = findViewById(R.id.key_board);
         keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText);
 
@@ -127,6 +129,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.other_btn:
                 HashMap<String, String> otherMap = new HashMap<>();
                 HttpHelper.getInstance().post(url2, otherMap, this);
+                break;
+            case R.id.other_keyboard:
+                startActivity(new Intent(this, KeyBoardActivity.class));
                 break;
 
         }

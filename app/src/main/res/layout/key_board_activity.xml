@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingDefaultResource">
+
+
+    <com.example.keyboard2.PayEditText
+        android:id="@+id/payEditText_pay"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="23dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" />
+
+
+    <com.example.keyboard2.Keyboard
+        android:id="@+id/keyboardView_pay"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+</RelativeLayout>
