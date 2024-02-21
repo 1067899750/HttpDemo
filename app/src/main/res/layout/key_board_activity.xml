@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
 
-
-    <com.example.keyboard2.PayEditText
-        android:id="@+id/payEditText_pay"
+    <EditText
+        android:id="@+id/edittext1"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="23dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp" />
+        android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickView"
+        android:text="show" />
 
-    <com.example.keyboard2.Keyboard
-        android:id="@+id/keyboardView_pay"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickView"
+        android:text="hide" />
+
+</LinearLayout>
