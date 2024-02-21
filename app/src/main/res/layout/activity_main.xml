@@ -39,6 +39,16 @@
         android:imeOptions="normal"
         android:layout_marginTop="20dp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#22ff0000"
+        android:gravity="center"
+        android:text="系统键盘"
+        android:textCursorDrawable="@drawable/shape_cursor_color"
+        android:imeOptions="normal"
+        android:layout_marginTop="20dp" />
+
     <TextView
         android:id="@+id/text_tv"
         android:layout_width="match_parent"

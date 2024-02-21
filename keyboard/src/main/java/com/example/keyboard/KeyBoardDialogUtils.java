@@ -49,6 +49,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
             popWindow.setContentView(view);
             popWindow.setCanceledOnTouchOutside(true);
             Window mWindow = popWindow.getWindow();
+            if (mWindow == null) return;
             mWindow.setWindowAnimations(R.style.keyboard_popupAnimation);
             mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             mWindow.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL);
