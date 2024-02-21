@@ -78,7 +78,7 @@ public class PopupKeyboardUtil {
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.BOTTOM;
-        lp.bottomMargin = BarUtils.getStatusBarHeight();
+        lp.bottomMargin = BarUtils.getNavBarHeight();
         frameLayout.addView(viewContainer, lp);
         viewContainer.setAnimation(AnimationUtils.loadAnimation(mActivity, R.anim.down_to_up));
     }
