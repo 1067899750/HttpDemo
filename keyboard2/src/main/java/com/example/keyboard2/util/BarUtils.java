@@ -1,15 +1,7 @@
 package com.example.keyboard2.util;
 
-import android.app.Activity;
 import android.content.res.Resources;
-import android.os.Build;
-import android.provider.Settings;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 
-import androidx.annotation.NonNull;
 
 public final class BarUtils {
 
