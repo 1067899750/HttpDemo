@@ -4,7 +4,7 @@
     <dimen name="keyboard_activity_vertical_margin">16dp</dimen>
 
     <!--键盘-->
-    <dimen name="keyboard_key_height">45dp</dimen>
+    <dimen name="keyboard_key_height">47dp</dimen>
     <dimen name="keyboard_horizontalGap">10dp</dimen>
     <dimen name="keyboard_verticalGap">10dp</dimen>
     <dimen name="keyboard_key_height_double">120dp</dimen>

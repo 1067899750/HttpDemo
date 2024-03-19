@@ -27,7 +27,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     protected View view;
     protected Dialog popWindow;
     protected Activity mContext;
-    private KhKeyboardView keyboardUtil;
+    private KhKeyboardView keyboardViw;
 
     /**
      * 和键盘绑定的 EditText
@@ -53,7 +53,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
             mWindow.setWindowAnimations(R.style.keyboard_popupAnimation);
             mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             mWindow.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL);
-            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             popWindow.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
                 @Override
@@ -75,8 +75,8 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         try {
-            if (keyboardUtil == null) {
-                keyboardUtil = new KhKeyboardView(mContext, view);
+            if (keyboardViw == null) {
+                keyboardViw = new KhKeyboardView(mContext, view);
             }
 
             mBoardEt.setOnTouchListener(new View.OnTouchListener() {
@@ -137,14 +137,14 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
         editText.requestFocus();
         hideSystemSoftKeyboard(editText);
         popWindow.show();
-        keyboardUtil.showKeyboard(editText);
+        keyboardViw.showKeyboard(editText);
     }
 
     /**
      * 隐藏键盘
      */
     public void dismissKeyBoard() {
-        keyboardUtil.hideKeyboard();
+        keyboardViw.hideKeyboard();
         if (popWindow != null && popWindow.isShowing()) {
             popWindow.dismiss();
         }
