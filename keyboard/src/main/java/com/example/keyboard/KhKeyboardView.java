@@ -77,6 +77,7 @@ public class KhKeyboardView {
         //初始化字母键盘
         mLetterView.setKeyboard(mLetterKeyboard);
         mLetterView.setEnabled(true);
+        //设置是否显示浮框
         mLetterView.setPreviewEnabled(true);
         mLetterView.setOnKeyboardActionListener(listener);
 
