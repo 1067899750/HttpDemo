@@ -89,23 +89,27 @@ public class KhKeyboardView {
         @Override
         public void onPress(int primaryCode) {
             Log.d("primaryCode", "onPress--" + primaryCode);
-            if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-                List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
-
-                mLetterView.setPreviewEnabled(false);
-            } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
-                mLetterView.setPreviewEnabled(false);
-            } else if (primaryCode == 32) {
-                mLetterView.setPreviewEnabled(false);
-            } else {
-                mLetterView.setPreviewEnabled(true);
+            switch (primaryCode) {
+                case Keyboard.KEYCODE_SHIFT:
+                    List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
+                    mLetterView.setPreviewEnabled(false);
+                    break;
+                case Keyboard.KEYCODE_DELETE:
+                case Keyboard.KEYCODE_MODE_CHANGE:
+                case 32:
+                case 90001:
+                    mLetterView.setPreviewEnabled(false);
+                    break;
+                default:
+                    mLetterView.setPreviewEnabled(true);
+                    break;
             }
 
         }
 
         @Override
         public void onRelease(int primaryCode) {
-            Log.d("primaryCode", "onRelease--" + primaryCode);
+            Log.d("=====>", "onRelease--" + primaryCode);
 
 //            if(primaryCode== -1){
 //                if(isUpper){
@@ -118,7 +122,7 @@ public class KhKeyboardView {
 
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
-            Log.d("primaryCode", "onKey--" + primaryCode);
+            Log.d("=====>", "onKey--" + primaryCode);
             try {
                 if (mEditText == null)
                     return;
@@ -169,27 +173,27 @@ public class KhKeyboardView {
 
         @Override
         public void onText(CharSequence text) {
-
+            Log.d("=====>", "onText");
         }
 
         @Override
         public void swipeLeft() {
-
+            Log.d("=====>", "swipeLeft");
         }
 
         @Override
         public void swipeRight() {
-
+            Log.d("=====>", "swipeRight");
         }
 
         @Override
         public void swipeDown() {
-
+            Log.d("=====>", "swipeDown");
         }
 
         @Override
         public void swipeUp() {
-
+            Log.d("=====>", "swipeUp");
         }
     };
 
