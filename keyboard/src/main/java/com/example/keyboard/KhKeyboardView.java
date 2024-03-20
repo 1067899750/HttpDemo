@@ -143,14 +143,15 @@ public class KhKeyboardView {
                 if (primaryCode == Keyboard.KEYCODE_CANCEL) {
                     // 隐藏键盘
                     hideKeyboard();
-                } else if (primaryCode == Keyboard.KEYCODE_DELETE || primaryCode == -35) {
 
+                } else if (primaryCode == Keyboard.KEYCODE_DELETE || primaryCode == KeyboardUtil.DELETE) {
                     // 回退键,删除字符
                     if (editable != null && editable.length() > 0) {
                         if (start > 0) {
                             editable.delete(start - 1, start);
                         }
                     }
+
                 } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
                     // 大小写切换
                     changeKeyboard();
@@ -165,7 +166,7 @@ public class KhKeyboardView {
                         showNumberView();
                     }
 
-                } else if (primaryCode == 90001) {
+                } else if (primaryCode == KeyboardUtil.SYMBOL_WORD) {
                     //字母与符号切换
                     if (isSymbol) {
                         showLetterView2();
@@ -218,7 +219,7 @@ public class KhKeyboardView {
             // 这里以数字键盘为例  获取到键盘原有的按键 随机排列 然后在重新赋值
             for (Keyboard.Key item : keyboard.getKeys()) {
                 int code = item.codes[0];
-                if (code != -5 && code != -2 && code != -35) {
+                if (isRandomKey(code)) {
                     keyCodes.add((char) code);
                 }
             }
@@ -231,7 +232,7 @@ public class KhKeyboardView {
             for (Keyboard.Key key : keys) {
                 int code = key.codes[0];
                 // 如果按键是数字 去除左下角和右下角的非数字键
-                if (code != -5 && code != -2 && code != -35) {
+                if (isRandomKey(code)) {
                     char keyCode = keyCodes.get(index++);
                     key.codes[0] = keyCode;
                     key.label = Character.toString(keyCode);
@@ -239,6 +240,15 @@ public class KhKeyboardView {
             }
         }
         return keyboard;
+    }
+
+    /**
+     * @param code
+     * @return 是否过滤随机键
+     */
+    boolean isRandomKey(int code) {
+        return code != Keyboard.KEYCODE_DELETE && code != Keyboard.KEYCODE_MODE_CHANGE
+                && code != KeyboardUtil.DELETE;
     }
 
 

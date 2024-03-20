@@ -14,6 +14,9 @@ import android.util.AttributeSet;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * 键盘类
+ */
 public class CustomKeyboardView extends KeyboardView {
     private Context context;
 
@@ -28,27 +31,33 @@ public class CustomKeyboardView extends KeyboardView {
         try {
             List<Keyboard.Key> keys = getKeyboard().getKeys();
             for (Keyboard.Key key : keys) {
-                if (key.codes[0] == -5) {
+                if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
+                    //字符和特殊字符删除键
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist);
                     dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                     dr.draw(canvas);
-                } else if (key.codes[0] == -35) {
+                } else if (key.codes[0] == KeyboardUtil.DELETE) {
+                    //字母和身份证删除键
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist2);
                     dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                     dr.draw(canvas);
-                } else if (key.codes[0] == -1) {
+                } else if (key.codes[0] == Keyboard.KEYCODE_SHIFT) {
+                    //大小写字母切换
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist);
                     Drawable dr_da = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_da);
                     dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                     dr_da.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
 
                     if (KhKeyboardView.isUpper) {
+                        //大写字母
                         dr_da.draw(canvas);
                     } else {
+                        //小写字母
                         dr.draw(canvas);
                     }
 
-                } else if (key.codes[0] == -2 || key.codes[0] == 90001) {
+                } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE || key.codes[0] == KeyboardUtil.SYMBOL_WORD) {
+                    //大小写字母和特殊字符切换键
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_blue_bg);
                     dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
                     dr.draw(canvas);
