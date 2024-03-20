@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,13 +55,23 @@ public class KhKeyboardView {
     private EditText mEditText;
     private View headerView;
 
+    /**
+     * 设置字母键盘是否随机
+     */
+    private boolean isRandom;
+
     public void setEditText(EditText text) {
         mEditText = text;
     }
 
     public KhKeyboardView(Activity context, View view) {
-        mContext = context;
-        parentView = view;
+        this(context, view, false);
+    }
+
+    public KhKeyboardView(Activity context, View view, boolean isRandom) {
+        this.mContext = context;
+        this.parentView = view;
+        this.isRandom = isRandom;
 
         mNumberKeyboard = new Keyboard(mContext, R.xml.keyboard_numbers);
         mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
@@ -198,6 +210,39 @@ public class KhKeyboardView {
     };
 
     /**
+     * 设置随机键盘
+     */
+    private Keyboard setRandomNumberKeyboard(Keyboard keyboard, boolean isRandom) {
+        if (isRandom) {
+            ArrayList<Character> keyCodes = new ArrayList<>();
+            // 这里以数字键盘为例  获取到键盘原有的按键 随机排列 然后在重新赋值
+            for (Keyboard.Key item : keyboard.getKeys()) {
+                int code = item.codes[0];
+                if (code != -5 && code != -2 && code != -35) {
+                    keyCodes.add((char) code);
+                }
+            }
+            // 随机排序数字
+            Collections.shuffle(keyCodes);
+
+            // 遍历所有的按键
+            List<Keyboard.Key> keys = keyboard.getKeys();
+            int index = 0;
+            for (Keyboard.Key key : keys) {
+                int code = key.codes[0];
+                // 如果按键是数字 去除左下角和右下角的非数字键
+                if (code != -5 && code != -2 && code != -35) {
+                    char keyCode = keyCodes.get(index++);
+                    key.codes[0] = keyCode;
+                    key.label = Character.toString(keyCode);
+                }
+            }
+        }
+        return keyboard;
+    }
+
+
+    /**
      * 字母-符号,显示字母
      */
     private void showLetterView2() {
@@ -228,7 +273,7 @@ public class KhKeyboardView {
             if (mLetterView != null && mNumberView != null) {
                 isNumber = false;
                 mLetterView.setVisibility(View.VISIBLE);
-                mNumberView.setVisibility(View.INVISIBLE);
+                mNumberView.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,8 +288,9 @@ public class KhKeyboardView {
         try {
             if (mLetterView != null && mNumberView != null) {
                 isNumber = true;
-                mLetterView.setVisibility(View.INVISIBLE);
+                mLetterView.setVisibility(View.GONE);
                 mNumberView.setVisibility(View.VISIBLE);
+                mNumberView.setKeyboard(setRandomNumberKeyboard(mNumberKeyboard, isRandom));
             }
         } catch (Exception e) {
             e.printStackTrace();

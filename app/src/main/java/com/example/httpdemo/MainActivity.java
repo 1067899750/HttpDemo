@@ -47,14 +47,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
-
-
         //测试提交数据
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
         mEditText = findViewById(R.id.key_board);
-        keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText);
+        keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText, true);
 
         //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
 //            @Override
@@ -74,18 +72,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        });
         Observable.interval(500, TimeUnit.MINUTES).subscribe();
         Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                emitter.onNext("1 next");
-                emitter.onNext("2 next");
-                emitter.onComplete();
-            }
-        }).map(new Function<String, String>() {
-            @Override
-            public String apply(String s) throws Exception {
-                return s + "Rxjava";
-            }
-        }).observeOn(AndroidSchedulers.mainThread())
+                    @Override
+                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                        emitter.onNext("1 next");
+                        emitter.onNext("2 next");
+                        emitter.onComplete();
+                    }
+                }).map(new Function<String, String>() {
+                    @Override
+                    public String apply(String s) throws Exception {
+                        return s + "Rxjava";
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {

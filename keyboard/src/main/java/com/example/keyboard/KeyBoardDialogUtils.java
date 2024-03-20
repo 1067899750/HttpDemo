@@ -34,9 +34,19 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
      */
     private EditText mBoardEt;
 
+    /**
+     * 设置字母键盘是否随机
+     */
+    private boolean isRandom;
+
     public KeyBoardDialogUtils(Activity context, EditText et) {
+        this(context, et, false);
+    }
+
+    public KeyBoardDialogUtils(Activity context, EditText et, boolean isRandom) {
         try {
             this.mContext = context;
+            this.isRandom = isRandom;
 
             this.mBoardEt = et;
 
@@ -76,7 +86,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     private void initView() {
         try {
             if (keyboardViw == null) {
-                keyboardViw = new KhKeyboardView(mContext, view);
+                keyboardViw = new KhKeyboardView(mContext, view, isRandom);
             }
 
             mBoardEt.setOnTouchListener(new View.OnTouchListener() {
