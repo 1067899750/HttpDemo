@@ -1,6 +1,7 @@
 package com.example.keyboard;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -18,7 +19,7 @@ import java.util.List;
  * 键盘类
  */
 public class KhKeyboardView {
-    private Activity mContext;
+    private Context mContext;
     private View parentView;
     /**
      * 字母键盘view
@@ -64,11 +65,11 @@ public class KhKeyboardView {
         mEditText = text;
     }
 
-    public KhKeyboardView(Activity context, View view) {
+    public KhKeyboardView(Context context, View view) {
         this(context, view, false);
     }
 
-    public KhKeyboardView(Activity context, View view, boolean isRandom) {
+    public KhKeyboardView(Context context, View view, boolean isRandom) {
         this.mContext = context;
         this.parentView = view;
         this.isRandom = isRandom;

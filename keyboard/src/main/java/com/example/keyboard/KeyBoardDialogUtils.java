@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 public class KeyBoardDialogUtils implements View.OnClickListener {
     protected View view;
     protected Dialog popWindow;
-    protected Activity mContext;
+    protected Context mContext;
     private KhKeyboardView keyboardViw;
 
     /**
@@ -39,11 +39,11 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
      */
     private boolean isRandom;
 
-    public KeyBoardDialogUtils(Activity context, EditText et) {
+    public KeyBoardDialogUtils(Context context, EditText et) {
         this(context, et, false);
     }
 
-    public KeyBoardDialogUtils(Activity context, EditText et, boolean isRandom) {
+    public KeyBoardDialogUtils(Context context, EditText et, boolean isRandom) {
         try {
             this.mContext = context;
             this.isRandom = isRandom;
