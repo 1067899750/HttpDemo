@@ -82,10 +82,14 @@ public class CustomKeyboardView extends KeyboardView {
                     }
                 } else if (key.codes[0] == KeyboardUtil.BLANK) {
                     // 空格键
-                    if (isClickUP) {
-                        onBufferDrawOne(canvas, key);
+                    if (key.codes[0] == KhKeyboardView.boardKey) {
+                        if (isClickUP) {
+                            onBufferDrawOne(canvas, key);
+                        } else {
+                            onBufferDrawTwo(canvas, key);
+                        }
                     } else {
-                        onBufferDrawTwo(canvas, key);
+                        onBufferDrawOne(canvas, key);
                     }
                     drawText(canvas, key, Color.parseColor("#000000"));
                 } else {
