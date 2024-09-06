@@ -49,6 +49,7 @@
             android:keyLabel="0" />
         <Key
             android:codes="-35"
-            android:isRepeatable="true" />
+            android:isRepeatable="true"
+            android:keyIcon="@drawable/icon_keyboard_del_default"/>
     </Row>
 </Keyboard>

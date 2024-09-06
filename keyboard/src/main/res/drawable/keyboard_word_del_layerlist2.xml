@@ -22,9 +22,9 @@
         </selector>
     </item>
     <item
-        android:bottom="15dp"
+        android:bottom="11dp"
         android:drawable="@drawable/icon_keyboard_del_default"
-        android:left="30dp"
-        android:right="30dp"
-        android:top="15dp" />
+        android:left="40dp"
+        android:right="40dp"
+        android:top="11dp" />
 </layer-list>

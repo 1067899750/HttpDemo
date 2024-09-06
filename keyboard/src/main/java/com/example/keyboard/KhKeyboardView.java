@@ -86,6 +86,16 @@ public class KhKeyboardView {
     public static boolean isUpper = false;
 
     /**
+     * 键盘点击的key值
+     */
+    public static int boardKey = -19991888;
+
+    /**
+     * 键盘是否点击
+     */
+    public static boolean isClickBoard = false;
+
+    /**
      * 是否是符号
      */
     private boolean isSymbol = false;
@@ -148,6 +158,8 @@ public class KhKeyboardView {
     private KeyboardView.OnKeyboardActionListener listener = new KeyboardView.OnKeyboardActionListener() {
         @Override
         public void onPress(int primaryCode) {
+            isClickBoard = true;
+            boardKey = primaryCode;
             switch (primaryCode) {
                 case Keyboard.KEYCODE_SHIFT:
                     List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
@@ -168,13 +180,11 @@ public class KhKeyboardView {
 
         @Override
         public void onRelease(int primaryCode) {
-//            if(primaryCode== -1){
-//                if(isUpper){
-//                    isUpper=false;
-//                }else {
-//                    isUpper=true;
-//                }
-//            }
+            isClickBoard = false;
+            boardKey = primaryCode;
+            switch (primaryCode) {
+
+            }
         }
 
         /**

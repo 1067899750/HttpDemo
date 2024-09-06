@@ -23,11 +23,13 @@ public class CustomKeyboardView extends KeyboardView {
     public CustomKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+
     }
+
 
     @Override
     public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+//        super.onDraw(canvas);
         try {
             Keyboard keyboard = getKeyboard();
             if (keyboard == null) return;
@@ -60,13 +62,12 @@ public class CustomKeyboardView extends KeyboardView {
 
                 } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE || key.codes[0] == KeyboardUtil.SYMBOL_WORD) {
                     //大小写字母和特殊字符切换键
-                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_blue_bg);
-                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-                    dr.draw(canvas);
-                    drawText(canvas, key);
+                    setBoardBackgroundTwo(canvas, key);
+                    drawText(canvas, key, Color.WHITE);
                 } else {
                     // 其他文字
-//                    drawText(canvas, key);
+                    setBoardBackgroundOne(canvas, key);
+                    drawText(canvas, key, Color.parseColor("#000000"));
                 }
             }
         } catch (Exception e) {
@@ -74,13 +75,62 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
+    private void setBoardBackgroundOne(Canvas canvas, Keyboard.Key key) {
+        if (key.codes[0] == KhKeyboardView.boardKey) {
+            if (KhKeyboardView.isClickBoard) {
+                onBufferDrawTwo(canvas, key);
+            } else {
+                onBufferDrawOne(canvas, key);
+            }
+        } else {
+            onBufferDrawOne(canvas, key);
+        }
+    }
+
+
+    private void setBoardBackgroundTwo(Canvas canvas, Keyboard.Key key) {
+        if (key.codes[0] == KhKeyboardView.boardKey) {
+            if (KhKeyboardView.isClickBoard) {
+                onBufferDrawOne(canvas, key);
+            } else {
+                onBufferDrawTwo(canvas, key);
+            }
+        } else {
+            onBufferDrawTwo(canvas, key);
+        }
+    }
+
+
+    /**
+     * 绘制背景
+     */
+    private void onBufferDrawOne(Canvas canvas, Keyboard.Key key) {
+        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);
+        int[] drawableState = key.getCurrentDrawableState();
+        keyBackground.setState(drawableState);
+        keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        keyBackground.draw(canvas);
+    }
+
+    /**
+     * 绘制背景
+     */
+    private void onBufferDrawTwo(Canvas canvas, Keyboard.Key key) {
+        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_two);
+        int[] drawableState = key.getCurrentDrawableState();
+        keyBackground.setState(drawableState);
+        keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        keyBackground.draw(canvas);
+    }
+
     /**
      * 绘制文字
      *
      * @param canvas
-     * @param key
+     * @param key    字体的键值
+     * @param color  字体颜色
      */
-    private void drawText(Canvas canvas, Keyboard.Key key) {
+    private void drawText(Canvas canvas, Keyboard.Key key, int color) {
         try {
             Rect bounds = new Rect();
             Paint paint = new Paint();
@@ -88,7 +138,7 @@ public class CustomKeyboardView extends KeyboardView {
 
             paint.setAntiAlias(true);
             paint.setDither(true);
-            paint.setColor(Color.WHITE);
+            paint.setColor(color);
 
             if (key.label != null) {
                 String label = key.label.toString();
@@ -99,12 +149,13 @@ public class CustomKeyboardView extends KeyboardView {
                     int labelTextSize = (int) field.get(this);
                     paint.setTextSize(labelTextSize);
                     paint.setTypeface(Typeface.DEFAULT_BOLD);
+
                 } else {
                     field = KeyboardView.class.getDeclaredField("mLabelTextSize");
                     field.setAccessible(true);
                     int keyTextSize = (int) field.get(this);
                     paint.setTextSize(keyTextSize);
-                    paint.setTypeface(Typeface.DEFAULT);
+                    paint.setTypeface(Typeface.DEFAULT_BOLD);
                 }
 
                 paint.getTextBounds(label, 0, key.label.toString().length(), bounds);
