@@ -10,6 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -20,6 +23,9 @@ import java.util.List;
 public class CustomKeyboardView extends KeyboardView {
     private Context context;
 
+    // 是否抬起按键
+    private boolean isClickUP = true;
+
     public CustomKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -29,7 +35,7 @@ public class CustomKeyboardView extends KeyboardView {
 
     @Override
     public void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
+        super.onDraw(canvas);
         try {
             Keyboard keyboard = getKeyboard();
             if (keyboard == null) return;
@@ -37,14 +43,14 @@ public class CustomKeyboardView extends KeyboardView {
             for (Keyboard.Key key : keys) {
                 if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
                     //字符和特殊字符删除键
-                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist);
-                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-                    dr.draw(canvas);
+//                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist);
+//                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+//                    dr.draw(canvas);
                 } else if (key.codes[0] == KeyboardUtil.DELETE) {
                     //字母和身份证删除键
-                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist2);
-                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-                    dr.draw(canvas);
+//                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist2);
+//                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+//                    dr.draw(canvas);
                 } else if (key.codes[0] == Keyboard.KEYCODE_SHIFT) {
                     //大小写字母切换
                     Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_lower); //小写字母
@@ -65,13 +71,23 @@ public class CustomKeyboardView extends KeyboardView {
                     if (key.codes[0] == KhKeyboardView.boardKey) {
                         if (KhKeyboardView.isClickBoard) {
                             onBufferDrawOne(canvas, key);
+                            drawText(canvas, key, Color.parseColor("#000000"));
                         } else {
                             onBufferDrawTwo(canvas, key);
+                            drawText(canvas, key, Color.WHITE);
                         }
                     } else {
                         onBufferDrawTwo(canvas, key);
+                        drawText(canvas, key, Color.WHITE);
                     }
-                    drawText(canvas, key, Color.WHITE);
+                } else if (key.codes[0] == KeyboardUtil.BLANK) {
+                    // 空格键
+                    if (isClickUP) {
+                        onBufferDrawOne(canvas, key);
+                    } else {
+                        onBufferDrawTwo(canvas, key);
+                    }
+                    drawText(canvas, key, Color.parseColor("#000000"));
                 } else {
                     // 其他文字
                     if (key.codes[0] == KhKeyboardView.boardKey) {
@@ -91,11 +107,26 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        switch (me.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isClickUP = false;
+                break;
+            case MotionEvent.ACTION_UP:
+                isClickUP = true;
+                break;
+        }
+        invalidate();
+        return super.onTouchEvent(me);
+    }
+
     /**
      * 绘制背景
      */
     private void onBufferDrawOne(Canvas canvas, Keyboard.Key key) {
-        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);;
+        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);
+        ;
         keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         keyBackground.draw(canvas);
     }

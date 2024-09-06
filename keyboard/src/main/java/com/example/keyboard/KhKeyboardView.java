@@ -156,6 +156,10 @@ public class KhKeyboardView {
     }
 
     private KeyboardView.OnKeyboardActionListener listener = new KeyboardView.OnKeyboardActionListener() {
+
+        /**
+         * 当按下键盘上的键并且是长按时调用
+         */
         @Override
         public void onPress(int primaryCode) {
             isClickBoard = true;
@@ -178,6 +182,9 @@ public class KhKeyboardView {
             }
         }
 
+        /**
+         * 当释放键盘上的键时调用
+         */
         @Override
         public void onRelease(int primaryCode) {
             isClickBoard = false;
@@ -189,9 +196,11 @@ public class KhKeyboardView {
 
         /**
          * 根据 key 切换键盘
+         * 当按下键盘上的键时调用
          */
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
+            // keyCodes 是按下键的UNICODE值
             try {
                 if (mEditText == null)
                     return;
@@ -251,26 +260,45 @@ public class KhKeyboardView {
 
         }
 
+        /**
+         * 当输入文本时调用
+         */
         @Override
         public void onText(CharSequence text) {
             int i = 0;
         }
 
+
+        /**
+         * 当滑动键盘向左时调用
+         */
         @Override
         public void swipeLeft() {
             int i = 0;
         }
 
+
+        /**
+         * 当滑动键盘向右时调用
+         */
         @Override
         public void swipeRight() {
             int i = 0;
         }
 
+
+        /**
+         * 当滑动键盘向下时调用
+         */
         @Override
         public void swipeDown() {
             int i = 0;
         }
 
+
+        /**
+         * 当滑动键盘向上时调用
+         */
         @Override
         public void swipeUp() {
             int i = 0;
