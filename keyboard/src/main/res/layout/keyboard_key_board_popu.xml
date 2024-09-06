@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FFCFD4DA"
+        android:background="@color/keyboard_bg"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="1dp"
-            android:background="#FFCFD4DA" />
+            android:background="@color/keyboard_bg" />
 
         <FrameLayout
             android:id="@+id/keyboard_layer"
@@ -79,21 +79,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="#FFCFD4DA"
+                android:background="@color/keyboard_bg"
                 android:elevation="0dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:keyBackground="@drawable/keyboard_number_selector_bg"
                 android:keyPreviewLayout="@null"
-                android:keyTextColor="#000000"
-                android:keyTextSize="18dp"
+                android:keyTextColor="@color/keyboard_black"
+                android:keyTextSize="20dp"
                 android:visibility="gone" />
 
             <com.example.keyboard.CustomKeyboardView
                 android:id="@+id/keyboard_view_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCFD4DA"
+                android:background="@color/keyboard_bg"
                 android:elevation="0dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -101,8 +101,8 @@
                 android:keyPreviewHeight="90dp"
                 android:keyPreviewLayout="@layout/keyboard_key_preview_layout"
                 android:keyPreviewOffset="45dp"
-                android:keyTextColor="#000000"
-                android:keyTextSize="18dp"
+                android:keyTextColor="@color/keyboard_black"
+                android:keyTextSize="20dp"
                 android:visibility="gone" />
         </FrameLayout>
 

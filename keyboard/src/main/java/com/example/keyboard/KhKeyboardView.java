@@ -253,27 +253,27 @@ public class KhKeyboardView {
 
         @Override
         public void onText(CharSequence text) {
-
+            int i = 0;
         }
 
         @Override
         public void swipeLeft() {
-
+            int i = 0;
         }
 
         @Override
         public void swipeRight() {
-
+            int i = 0;
         }
 
         @Override
         public void swipeDown() {
-
+            int i = 0;
         }
 
         @Override
         public void swipeUp() {
-
+            int i = 0;
         }
     };
 
