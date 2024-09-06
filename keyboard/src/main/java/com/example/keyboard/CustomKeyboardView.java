@@ -62,11 +62,27 @@ public class CustomKeyboardView extends KeyboardView {
 
                 } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE || key.codes[0] == KeyboardUtil.SYMBOL_WORD) {
                     //大小写字母和特殊字符切换键
-                    setBoardBackgroundTwo(canvas, key);
+                    if (key.codes[0] == KhKeyboardView.boardKey) {
+                        if (KhKeyboardView.isClickBoard) {
+                            onBufferDrawOne(canvas, key);
+                        } else {
+                            onBufferDrawTwo(canvas, key);
+                        }
+                    } else {
+                        onBufferDrawTwo(canvas, key);
+                    }
                     drawText(canvas, key, Color.WHITE);
                 } else {
                     // 其他文字
-                    setBoardBackgroundOne(canvas, key);
+                    if (key.codes[0] == KhKeyboardView.boardKey) {
+                        if (KhKeyboardView.isClickBoard) {
+                            onBufferDrawTwo(canvas, key);
+                        } else {
+                            onBufferDrawOne(canvas, key);
+                        }
+                    } else {
+                        onBufferDrawOne(canvas, key);
+                    }
                     drawText(canvas, key, Color.parseColor("#000000"));
                 }
             }
@@ -75,39 +91,11 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
-    private void setBoardBackgroundOne(Canvas canvas, Keyboard.Key key) {
-        if (key.codes[0] == KhKeyboardView.boardKey) {
-            if (KhKeyboardView.isClickBoard) {
-                onBufferDrawTwo(canvas, key);
-            } else {
-                onBufferDrawOne(canvas, key);
-            }
-        } else {
-            onBufferDrawOne(canvas, key);
-        }
-    }
-
-
-    private void setBoardBackgroundTwo(Canvas canvas, Keyboard.Key key) {
-        if (key.codes[0] == KhKeyboardView.boardKey) {
-            if (KhKeyboardView.isClickBoard) {
-                onBufferDrawOne(canvas, key);
-            } else {
-                onBufferDrawTwo(canvas, key);
-            }
-        } else {
-            onBufferDrawTwo(canvas, key);
-        }
-    }
-
-
     /**
      * 绘制背景
      */
     private void onBufferDrawOne(Canvas canvas, Keyboard.Key key) {
-        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);
-        int[] drawableState = key.getCurrentDrawableState();
-        keyBackground.setState(drawableState);
+        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);;
         keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         keyBackground.draw(canvas);
     }
@@ -117,8 +105,6 @@ public class CustomKeyboardView extends KeyboardView {
      */
     private void onBufferDrawTwo(Canvas canvas, Keyboard.Key key) {
         Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_two);
-        int[] drawableState = key.getCurrentDrawableState();
-        keyBackground.setState(drawableState);
         keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         keyBackground.draw(canvas);
     }
