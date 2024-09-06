@@ -1,7 +1,6 @@
 package com.example.keyboard;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,7 +26,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     protected View view;
     protected Dialog popWindow;
     protected Context mContext;
-    private KhKeyboardView keyboardViw;
+    private KhKeyboardView mKeyboardView;
 
     /**
      * 和键盘绑定的 EditText
@@ -43,12 +42,26 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
         this(context, et, false);
     }
 
+    public KeyBoardDialogUtils(Context context, EditText et, @KhKeyboardView.NumberType String type) {
+        this(context, et, type, false);
+    }
+
+
     public KeyBoardDialogUtils(Context context, EditText et, boolean isRandom) {
+        this(context, et, KhKeyboardView.OTHER_TYPE, false);
+    }
+
+    /**
+     * @param context
+     * @param et       绑定的输入框
+     * @param type   显示生份证键盘或显示数字键盘
+     * @param isRandom 是否是随机键盘
+     */
+    public KeyBoardDialogUtils(Context context, EditText et, @KhKeyboardView.NumberType String type, boolean isRandom) {
         try {
             this.mContext = context;
-            this.isRandom = isRandom;
-
             this.mBoardEt = et;
+            this.isRandom = isRandom;
 
             if (popWindow == null) {
                 view = LayoutInflater.from(mContext).inflate(R.layout.keyboard_key_board_popu, null);
@@ -63,7 +76,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
             mWindow.setWindowAnimations(R.style.keyboard_popupAnimation);
             mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             mWindow.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL);
-            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             popWindow.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
                 @Override
@@ -73,9 +86,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
                     }
                 }
             });
-            initView();
-
-
+            initView(type);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,10 +94,10 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void initView() {
+    private void initView(@KhKeyboardView.NumberType final String type) {
         try {
-            if (keyboardViw == null) {
-                keyboardViw = new KhKeyboardView(mContext, view, isRandom);
+            if (mKeyboardView == null) {
+                mKeyboardView = new KhKeyboardView(mContext, view, isRandom);
             }
 
             mBoardEt.setOnTouchListener(new View.OnTouchListener() {
@@ -96,7 +107,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
                     mBoardEt.setInputType(inputType);
                     //设定光标位置
                     Selection.setSelection(mBoardEt.getText(), mBoardEt.getText().length());
-                    showKeyBoard(mBoardEt);
+                    showKeyBoard(mBoardEt, type);
                     return false;
                 }
             });
@@ -111,7 +122,7 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
      *
      * @param editText
      */
-    public void hideSystemSoftKeyboard(EditText editText) {
+    private void hideSystemSoftKeyboard(EditText editText) {
         int sdkInt = Build.VERSION.SDK_INT;
         if (sdkInt >= 11) {
             try {
@@ -141,34 +152,46 @@ public class KeyBoardDialogUtils implements View.OnClickListener {
      *
      * @param editText
      */
-    public void showKeyBoard(final EditText editText) {
+    private void showKeyBoard(final EditText editText, @KhKeyboardView.NumberType String type) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
+        //隐藏系统键盘
         hideSystemSoftKeyboard(editText);
         popWindow.show();
-        keyboardViw.showKeyboard(editText);
+        mKeyboardView.showKeyboard(editText, type);
     }
 
     /**
      * 隐藏键盘
      */
-    public void dismissKeyBoard() {
-        keyboardViw.hideKeyboard();
+    private void dismissKeyBoard() {
+        mKeyboardView.hideKeyboard();
         if (popWindow != null && popWindow.isShowing()) {
             popWindow.dismiss();
         }
     }
+
+    /**
+     * 更新输入框
+     * @param et
+     */
+    public void updateEditTextView(EditText et){
+        this.mBoardEt = et;
+        mKeyboardView.setEditText(et);
+    }
+
 
     @Override
     public void onClick(View v) {
         try {
             int i = v.getId();
             if (i == R.id.keyboard_finish) {
-                //完成按键
+                //完成按键，隐藏键盘
                 dismissKeyBoard();
 
             } else if (i == R.id.keyboard_back_hide) {
+                // 隐藏键盘
                 dismissKeyBoard();
             }
 

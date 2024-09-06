@@ -15,17 +15,17 @@
                 android:state_checked="false"
                 android:state_pressed="true">
                 <shape android:shape="rectangle">
-                    <solid android:color="#FFFFFF" />
+                    <solid android:color="#ABAFBA" />
                     <corners android:radius="4dp" />
                 </shape>
             </item>
         </selector>
     </item>
     <item
-        android:bottom="15dp"
-        android:drawable="@drawable/icon_keyboard_del_default"
-        android:left="15dp"
-        android:right="15dp"
-        android:top="15dp" />
+        android:bottom="13dp"
+        android:drawable="@drawable/icon_keyboard_capital_selected"
+        android:left="16dp"
+        android:right="16dp"
+        android:top="13dp" />
 </layer-list>
 

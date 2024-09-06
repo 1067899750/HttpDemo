@@ -11,13 +11,14 @@
         android:id="@+id/keyboard_back_hide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_above="@id/keyboard_ll" />
 
     <LinearLayout
+        android:id="@+id/keyboard_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#7d7d7d"
+        android:background="#FFCFD4DA"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -26,13 +27,26 @@
             android:layout_height="wrap_content"
             android:visibility="visible">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="智能安全加密键盘"
-                android:textColor="#bfbfbf"
-                android:textSize="15sp" />
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="17dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_keyboard_logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="xxxx安全输入"
+                    android:textColor="#666666"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/keyboard_finish"
@@ -41,17 +55,17 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:padding="14dp"
+                android:padding="13dp"
                 android:text="完成"
-                android:textColor="#ffffff"
+                android:textColor="#017BFF"
                 android:textSize="15sp" />
         </RelativeLayout>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="10dp"
-            android:background="#555457" />
+            android:layout_marginBottom="1dp"
+            android:background="#FFCFD4DA" />
 
         <FrameLayout
             android:id="@+id/keyboard_layer"
@@ -63,26 +77,30 @@
                 android:id="@+id/keyboard_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#7d7d7d"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFCFD4DA"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:keyBackground="@drawable/keyboard_number_selector_bg"
                 android:keyPreviewLayout="@null"
-                android:keyTextColor="#ffffff"
+                android:keyTextColor="#000000"
+                android:keyTextSize="18dp"
                 android:visibility="gone" />
 
             <com.example.keyboard.CustomKeyboardView
                 android:id="@+id/keyboard_view_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#7d7d7d"
+                android:background="#FFCFD4DA"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:keyBackground="@drawable/keyboard_selector_bg"
                 android:keyPreviewHeight="90dp"
                 android:keyPreviewLayout="@layout/keyboard_key_preview_layout"
                 android:keyPreviewOffset="45dp"
-                android:keyTextColor="#ffffff"
+                android:keyTextColor="#000000"
+                android:keyTextSize="18dp"
                 android:visibility="gone" />
         </FrameLayout>
 

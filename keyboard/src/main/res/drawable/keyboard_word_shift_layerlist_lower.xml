@@ -6,7 +6,7 @@
                 android:state_checked="false"
                 android:state_pressed="false">
                 <shape android:shape="rectangle">
-                    <solid android:color="#ABAFBA" />
+                    <solid android:color="#FFFFFF" />
                     <corners android:radius="4dp" />
                 </shape>
             </item>
@@ -22,10 +22,11 @@
         </selector>
     </item>
     <item
-        android:bottom="15dp"
-        android:drawable="@drawable/icon_keyboard_del_default"
-        android:left="15dp"
-        android:right="15dp"
-        android:top="15dp" />
+        android:left="16dp"
+        android:right="16dp"
+        android:top="13dp"
+        android:bottom="13dp"
+        android:drawable="@drawable/icon_keyboard_capital_default"
+        />
 </layer-list>
 

@@ -133,7 +133,7 @@
             android:horizontalGap="3.5%p"
             android:isRepeatable="true"
             android:keyWidth="13%p"
-            android:keyIcon="@drawable/icon_yingwen_fuhao_keyboard_del_default" />
+            android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>
 
     <Row android:rowEdgeFlags="bottom">

@@ -49,6 +49,7 @@
             android:keyEdgeFlags="right"
             android:keyLabel="0" />
     </Row>
+
     <Row>
         <Key
             android:codes="113"
@@ -178,7 +179,7 @@
             android:horizontalGap="2%p"
             android:isRepeatable="true"
             android:keyWidth="13%p"
-            android:keyIcon="@drawable/icon_yingwen_fuhao_keyboard_del_default" />
+            android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>
 
     <Row android:rowEdgeFlags="bottom">
