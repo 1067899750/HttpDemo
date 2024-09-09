@@ -41,69 +41,74 @@ public class CustomKeyboardView extends KeyboardView {
             if (keyboard == null) return;
             List<Keyboard.Key> keys = keyboard.getKeys();
             for (Keyboard.Key key : keys) {
-                if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
-                    //字符和特殊字符删除键
-//                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist);
-//                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-//                    dr.draw(canvas);
-                } else if (key.codes[0] == KeyboardUtil.DELETE) {
-                    //字母和身份证删除键
-//                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_del_layerlist2);
-//                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-//                    dr.draw(canvas);
-                } else if (key.codes[0] == Keyboard.KEYCODE_SHIFT) {
-                    //大小写字母切换
-                    Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_lower); //小写字母
-                    Drawable dr_da = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_upper);//大写字母
-                    dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-                    dr_da.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-
-                    if (KhKeyboardView.isUpper) {
-                        //大写字母
-                        dr_da.draw(canvas);
-                    } else {
-                        //小写字母
-                        dr.draw(canvas);
+                switch (key.codes[0]) {
+                    case Keyboard.KEYCODE_DELETE:
+                    case KeyboardUtil.DELETE: {
+                        setDeleteIcon(canvas, key);
+                        break;
                     }
+                    case Keyboard.KEYCODE_SHIFT: {
+                        //大小写字母切换
+                        Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_lower); //小写字母
+                        Drawable dr_da = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_word_shift_layerlist_upper);//大写字母
+                        dr.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+                        dr_da.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
 
-                } else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE || key.codes[0] == KeyboardUtil.SYMBOL_WORD) {
-                    //大小写字母和特殊字符切换键
-                    if (key.codes[0] == KhKeyboardView.boardKey) {
-                        if (KhKeyboardView.isClickBoard) {
-                            onBufferDrawOne(canvas, key);
-                            drawText(canvas, key, Color.parseColor("#000000"));
+                        if (KhKeyboardView.isUpper) {
+                            //大写字母
+                            dr_da.draw(canvas);
+                        } else {
+                            //小写字母
+                            dr.draw(canvas);
+                        }
+                        break;
+                    }
+                    case Keyboard.KEYCODE_MODE_CHANGE:
+                    case KeyboardUtil.SYMBOL_WORD: {
+                        //大小写字母和特殊字符切换键
+                        if (key.codes[0] == KhKeyboardView.boardKey) {
+                            if (KhKeyboardView.isClickBoard) {
+                                onBufferDrawOne(canvas, key);
+                                drawText(canvas, key, Color.parseColor("#000000"));
+                            } else {
+                                onBufferDrawTwo(canvas, key);
+                                drawText(canvas, key, Color.WHITE);
+                            }
                         } else {
                             onBufferDrawTwo(canvas, key);
                             drawText(canvas, key, Color.WHITE);
                         }
-                    } else {
-                        onBufferDrawTwo(canvas, key);
-                        drawText(canvas, key, Color.WHITE);
+                        break;
                     }
-                } else if (key.codes[0] == KeyboardUtil.BLANK) {
-                    // 空格键
-                    if (key.codes[0] == KhKeyboardView.boardKey) {
-                        if (isClickUP) {
-                            onBufferDrawOne(canvas, key);
-                        } else {
-                            onBufferDrawTwo(canvas, key);
-                        }
-                    } else {
-                        onBufferDrawOne(canvas, key);
-                    }
-                    drawText(canvas, key, Color.parseColor("#000000"));
-                } else {
-                    // 其他文字
-                    if (key.codes[0] == KhKeyboardView.boardKey) {
-                        if (KhKeyboardView.isClickBoard) {
-                            onBufferDrawTwo(canvas, key);
+                    case KeyboardUtil.BLANK: {
+                        // 空格键
+                        if (key.codes[0] == KhKeyboardView.boardKey) {
+                            if (isClickUP) {
+                                onBufferDrawOne(canvas, key);
+                            } else {
+                                onBufferDrawTwo(canvas, key);
+                            }
                         } else {
                             onBufferDrawOne(canvas, key);
                         }
-                    } else {
-                        onBufferDrawOne(canvas, key);
+                        drawText(canvas, key, Color.parseColor("#000000"));
+                        break;
                     }
-                    drawText(canvas, key, Color.parseColor("#000000"));
+                    default: {
+                        // 其他文字
+                        if (key.codes[0] == KhKeyboardView.boardKey) {
+                            if (KhKeyboardView.isClickBoard) {
+                                onBufferDrawTwo(canvas, key);
+                            } else {
+                                onBufferDrawOne(canvas, key);
+                            }
+                        } else {
+                            onBufferDrawOne(canvas, key);
+                        }
+                        drawText(canvas, key, Color.parseColor("#000000"));
+                        break;
+                    }
+
                 }
             }
         } catch (Exception e) {
@@ -123,6 +128,17 @@ public class CustomKeyboardView extends KeyboardView {
         }
         invalidate();
         return super.onTouchEvent(me);
+    }
+
+    /**
+     * 设置删除 icon
+     */
+    private void setDeleteIcon(Canvas canvas, Keyboard.Key key) {
+        Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_shuzi_keyboard_del_default);
+        if (isClickUP) {
+            dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_selected);
+        }
+        key.icon = dr;
     }
 
     /**

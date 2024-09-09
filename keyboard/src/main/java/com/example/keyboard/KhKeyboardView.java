@@ -176,8 +176,8 @@ public class KhKeyboardView {
                     mLetterView.setPreviewEnabled(false);
                     break;
                 default:
-//                    mLetterView.setPreviewEnabled(true);
-                    mLetterView.setPreviewEnabled(false);
+                    mLetterView.setPreviewEnabled(true);
+//                    mLetterView.setPreviewEnabled(false);
                     break;
             }
         }
@@ -206,53 +206,63 @@ public class KhKeyboardView {
                     return;
                 Editable editable = mEditText.getText();
                 int start = mEditText.getSelectionStart();
-                if (primaryCode == Keyboard.KEYCODE_CANCEL) {
-                    // 隐藏键盘
-                    hideKeyboard();
-
-                } else if (primaryCode == Keyboard.KEYCODE_DELETE || primaryCode == KeyboardUtil.DELETE) {
-                    // 回退键,删除字符
-                    // -35：字母和身份证删除键；-5：字符和特殊字符删除键
-                    if (editable != null && editable.length() > 0) {
-                        if (start > 0) {
-                            editable.delete(start - 1, start);
+                switch (primaryCode) {
+                    case Keyboard.KEYCODE_CANCEL: {
+                        // 隐藏键盘
+                        hideKeyboard();
+                        break;
+                    }
+                    case Keyboard.KEYCODE_DELETE:
+                    case KeyboardUtil.DELETE: {
+                        // 回退键,删除字符
+                        // -35：字母和身份证删除键；-5：字符和特殊字符删除键
+                        if (editable != null && editable.length() > 0) {
+                            if (start > 0) {
+                                editable.delete(start - 1, start);
+                            }
                         }
+                        break;
                     }
-
-                } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-                    // 大小写切换
-                    changeKeyboard();
-                    //设置字母键盘
-                    mLetterView.setKeyboard(mLetterKeyboard);
-
-                } else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE) {
-                    // 数字与字母键盘互换
-                    if (isNumber) {
-                        showLetterView();
-                        //显示字母键盘
-                        showLetterView2();
-                    } else {
-                        //显示数字键盘
-                        showNumberView();
+                    case Keyboard.KEYCODE_SHIFT: {
+                        // 大小写切换
+                        changeKeyboard();
+                        //设置字母键盘
+                        mLetterView.setKeyboard(mLetterKeyboard);
+                        break;
                     }
-
-                } else if (primaryCode == KeyboardUtil.SYMBOL_WORD) {
-                    //字母与符号切换
-                    if (isSymbol) {
-                        //显示字母键盘
-                        showLetterView2();
-                    } else {
-                        //显示符号键盘
-                        showSymbolView();
+                    case Keyboard.KEYCODE_MODE_CHANGE: {
+                        // 数字与字母键盘互换
+                        if (isNumber) {
+                            showLetterView();
+                            //显示字母键盘
+                            showLetterView2();
+                        } else {
+                            //显示数字键盘
+                            showNumberView();
+                        }
+                        break;
                     }
-
-                } else if (primaryCode == KeyboardUtil.CLEAR) {
-                    //清除
-                    editable.clear();
-
-                } else {
-                    // 输入键盘值
-                    editable.insert(start, Character.toString((char) primaryCode));
+                    case KeyboardUtil.SYMBOL_WORD: {
+                        //字母与符号切换
+                        if (isSymbol) {
+                            //显示字母键盘
+                            showLetterView2();
+                        } else {
+                            //显示符号键盘
+                            showSymbolView();
+                        }
+                        break;
+                    }
+                    case KeyboardUtil.CLEAR: {
+                        //清除
+                        editable.clear();
+                        break;
+                    }
+                    default: {
+                        // 输入键盘值
+                        editable.insert(start, Character.toString((char) primaryCode));
+                        break;
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
