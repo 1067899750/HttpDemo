@@ -29,10 +29,14 @@ public class KhKeyboardView {
     //身份证
     public static final String CARD_TYPE = "cardType";
 
+
+    // 金额
+    public static final String MONEY_TYPE = "moneyType";
+
     //其他
     public static final String OTHER_TYPE = "otherType";
 
-    @StringDef(value = {PHONE_TYPE, CARD_TYPE, OTHER_TYPE})
+    @StringDef(value = {PHONE_TYPE, CARD_TYPE, OTHER_TYPE, MONEY_TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     public @interface NumberType {
     }
@@ -46,7 +50,7 @@ public class KhKeyboardView {
     private KeyboardView mLetterView;
 
     /**
-     * 数字键盘 View
+     * 数字键盘（身份证\电话\金额） View
      */
     private KeyboardView mNumberView;
 
@@ -68,7 +72,12 @@ public class KhKeyboardView {
     /**
      * 电话键盘
      */
-    private Keyboard mPhonrKeyboard;
+    private Keyboard mPhoneKeyboard;
+
+    /**
+     * 金额
+     */
+    private Keyboard mMoneyKeyboard;
 
     /**
      * 符号键盘
@@ -130,8 +139,11 @@ public class KhKeyboardView {
         mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
         mSymbolKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol);
         mCardKeyboard = new Keyboard(mContext, R.xml.keyborad_card_numbers);
-        mPhonrKeyboard = new Keyboard(mContext, R.xml.keyborad_phone_numbers);
+        mPhoneKeyboard = new Keyboard(mContext, R.xml.keyborad_phone_numbers);
+        mMoneyKeyboard = new Keyboard(mContext, R.xml.keyboard_money);
 
+        //数字键盘（身份证\电话\金额）
+        mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
         //数字键盘
         mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
         //字母键盘/符号
@@ -355,17 +367,20 @@ public class KhKeyboardView {
     }
 
     /**
-     * 显示身份证键盘
+     * 显示身份证\电话\金额键盘
      */
     private void showPhoneOrCardView(@NumberType String type) {
         try {
             isNumber = true;
             mLetterView.setVisibility(View.GONE);
             mNumberView.setVisibility(View.VISIBLE);
-            if (type.equals(CARD_TYPE)) {
+            if (type.equals(CARD_TYPE)) { // 身份证键盘
                 mNumberView.setKeyboard(setRandomNumberKeyboard(mCardKeyboard, isRandom));
+            } else if (type.equals(MONEY_TYPE)) { //金额键盘
+                mNumberView.setKeyboard(setRandomNumberKeyboard(mMoneyKeyboard, isRandom));
             } else {
-                mNumberView.setKeyboard(setRandomNumberKeyboard(mPhonrKeyboard, isRandom));
+                // 电话键盘
+                mNumberView.setKeyboard(setRandomNumberKeyboard(mPhoneKeyboard, isRandom));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -500,8 +515,8 @@ public class KhKeyboardView {
             int inputText = mEditText.getInputType();
             headerView.setVisibility(View.VISIBLE);
 
-            if (CARD_TYPE.equals(type) || PHONE_TYPE.equals(type)) {
-                // 显示身份证键盘
+            if (CARD_TYPE.equals(type) || PHONE_TYPE.equals(type) || MONEY_TYPE.equals(type)) {
+                // 显示身份证\电话\金额 等键盘
                 showPhoneOrCardView(type);
                 return;
             }
