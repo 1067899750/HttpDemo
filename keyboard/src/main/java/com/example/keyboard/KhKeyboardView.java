@@ -29,7 +29,6 @@ public class KhKeyboardView {
     //身份证
     public static final String CARD_TYPE = "cardType";
 
-
     // 金额
     public static final String MONEY_TYPE = "moneyType";
 
@@ -85,6 +84,16 @@ public class KhKeyboardView {
     private Keyboard mSymbolKeyboard;
 
     /**
+     * 符号 + 数字键盘
+     */
+    private Keyboard mSymbolOneKeyboard;
+
+    /**
+     * 符号键盘
+     */
+    private Keyboard mSymbolTwoKeyboard;
+
+    /**
      * 是否数字键盘
      */
     private boolean isNumber = true;
@@ -93,6 +102,7 @@ public class KhKeyboardView {
      * 是否大写
      */
     public static boolean isUpper = false;
+
 
     /**
      * 键盘点击的key值
@@ -103,11 +113,6 @@ public class KhKeyboardView {
      * 键盘是否点击
      */
     public static boolean isClickBoard = false;
-
-    /**
-     * 是否是符号
-     */
-    private boolean isSymbol = false;
 
     /**
      * 设置字母键盘是否随机
@@ -137,14 +142,14 @@ public class KhKeyboardView {
 
         mNumberKeyboard = new Keyboard(mContext, R.xml.keyboard_numbers);
         mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
-        mSymbolKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol);
         mCardKeyboard = new Keyboard(mContext, R.xml.keyborad_card_numbers);
         mPhoneKeyboard = new Keyboard(mContext, R.xml.keyborad_phone_numbers);
         mMoneyKeyboard = new Keyboard(mContext, R.xml.keyboard_money);
+        mSymbolKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol);
+        mSymbolOneKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_one);
+        mSymbolTwoKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_two);
 
         //数字键盘（身份证\电话\金额）
-        mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
-        //数字键盘
         mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
         //字母键盘/符号
         mLetterView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_2);
@@ -168,10 +173,6 @@ public class KhKeyboardView {
     }
 
     private KeyboardView.OnKeyboardActionListener listener = new KeyboardView.OnKeyboardActionListener() {
-
-        /**
-         * 当按下键盘上的键并且是长按时调用
-         */
         @Override
         public void onPress(int primaryCode) {
             isClickBoard = true;
@@ -188,15 +189,12 @@ public class KhKeyboardView {
                     mLetterView.setPreviewEnabled(false);
                     break;
                 default:
-                    mLetterView.setPreviewEnabled(true);
-//                    mLetterView.setPreviewEnabled(false);
+//                    mLetterView.setPreviewEnabled(true);
+                    mLetterView.setPreviewEnabled(false);
                     break;
             }
         }
 
-        /**
-         * 当释放键盘上的键时调用
-         */
         @Override
         public void onRelease(int primaryCode) {
             isClickBoard = false;
@@ -208,11 +206,9 @@ public class KhKeyboardView {
 
         /**
          * 根据 key 切换键盘
-         * 当按下键盘上的键时调用
          */
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
-            // keyCodes 是按下键的UNICODE值
             try {
                 if (mEditText == null)
                     return;
@@ -254,20 +250,29 @@ public class KhKeyboardView {
                         }
                         break;
                     }
-                    case KeyboardUtil.SYMBOL_WORD: {
-                        //字母与符号切换
-                        if (isSymbol) {
-                            //显示字母键盘
-                            showLetterView2();
-                        } else {
-                            //显示符号键盘
-                            showSymbolView();
-                        }
+                    case KeyboardUtil.NUMBER:
+                    case KeyboardUtil.SYMBOL_ONE: {
+                        // 数字 + 符号
+                        showSymbolOneView();
+                        break;
+                    }
+                    case KeyboardUtil.WORD: {
+                        // 字符
+                        showLetterView2();
+                        break;
+                    }
+                    case KeyboardUtil.SYMBOL_TWO: {
+                        //显示符号键盘
+                        showSymbolTwoView();
                         break;
                     }
                     case KeyboardUtil.CLEAR: {
                         //清除
                         editable.clear();
+                        break;
+                    }
+                    case KeyboardUtil.LINE_FEED:    //换行键
+                    case KeyboardUtil.EMPTY: {  //空格
                         break;
                     }
                     default: {
@@ -282,48 +287,29 @@ public class KhKeyboardView {
 
         }
 
-        /**
-         * 当输入文本时调用
-         */
         @Override
         public void onText(CharSequence text) {
-            int i = 0;
+
         }
 
-
-        /**
-         * 当滑动键盘向左时调用
-         */
         @Override
         public void swipeLeft() {
-            int i = 0;
+
         }
 
-
-        /**
-         * 当滑动键盘向右时调用
-         */
         @Override
         public void swipeRight() {
-            int i = 0;
+
         }
 
-
-        /**
-         * 当滑动键盘向下时调用
-         */
         @Override
         public void swipeDown() {
-            int i = 0;
+
         }
 
-
-        /**
-         * 当滑动键盘向上时调用
-         */
         @Override
         public void swipeUp() {
-            int i = 0;
+
         }
     };
 
@@ -332,7 +318,6 @@ public class KhKeyboardView {
      */
     private void showLetterView2() {
         if (mLetterView != null) {
-            isSymbol = false;
             mLetterView.setKeyboard(mLetterKeyboard);
         }
     }
@@ -342,9 +327,32 @@ public class KhKeyboardView {
      */
     private void showSymbolView() {
         try {
-            if (mLetterKeyboard != null) {
-                isSymbol = true;
+            if (mSymbolKeyboard != null) {
                 mLetterView.setKeyboard(mSymbolKeyboard);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 数字-符号,显示符号
+     */
+    private void showSymbolOneView() {
+        try {
+            if (mSymbolOneKeyboard != null) {
+                mLetterView.setKeyboard(mSymbolOneKeyboard);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 符号,显示符号
+     */
+    private void showSymbolTwoView() {
+        try {
+            if (mSymbolTwoKeyboard != null) {
+                mLetterView.setKeyboard(mSymbolTwoKeyboard);
             }
         } catch (Exception e) {
         }
@@ -487,6 +495,7 @@ public class KhKeyboardView {
      */
     public void hideKeyboard() {
         try {
+            clearKeyboard();
             int visibility = mLetterView.getVisibility();
             if (visibility == View.VISIBLE) {
                 headerView.setVisibility(View.GONE);
@@ -500,7 +509,17 @@ public class KhKeyboardView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 恢复配置
+     */
+    public void clearKeyboard() {
+        isNumber = true;
+        isUpper = false;
+        boardKey = -19991888;
+        isClickBoard = false;
+        CustomKeyboardView.isFirstShow = true;
     }
 
     /**

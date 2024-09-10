@@ -173,7 +173,7 @@
             android:keyWidth="9%p"
             android:keyLabel="¥" />
         <Key
-            android:codes="90001"
+            android:codes="-37"
             android:horizontalGap="2%p"
             android:keyWidth="13%p"
             android:keyEdgeFlags="right"

@@ -4,7 +4,7 @@
     android:id="@+id/rl_key"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00000000"
+    android:background="@color/keyboard_transparent"
     android:orientation="vertical">
 
     <View
@@ -43,8 +43,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="xxxx安全输入"
-                    android:textColor="#666666"
+                    android:text="中欧财富安全输入"
+                    android:textColor="@color/keyboard_666666"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_marginRight="10dp"
                 android:padding="13dp"
                 android:text="完成"
-                android:textColor="#017BFF"
+                android:textColor="@color/keyboard_017BFF"
                 android:textSize="15sp" />
         </RelativeLayout>
 
@@ -80,7 +80,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/keyboard_bg"
-                android:elevation="0dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:keyBackground="@drawable/keyboard_selector_bg_two"
@@ -93,8 +92,9 @@
                 android:id="@+id/keyboard_view_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:background="@color/keyboard_bg"
-                android:elevation="0dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:keyBackground="@drawable/keyboard_selector_bg_two"

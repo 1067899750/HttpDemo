@@ -10,9 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -23,15 +21,15 @@ import java.util.List;
 public class CustomKeyboardView extends KeyboardView {
     private Context context;
 
-    // 是否抬起按键
-    private boolean isClickUP = true;
+    // 是否按下按键
+    public static boolean isClickDown = false;
+
+    public static boolean isFirstShow = true;
 
     public CustomKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
     }
-
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -44,7 +42,22 @@ public class CustomKeyboardView extends KeyboardView {
                 switch (key.codes[0]) {
                     case Keyboard.KEYCODE_DELETE:
                     case KeyboardUtil.DELETE: {
-                        setDeleteIcon(canvas, key);
+                        Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_selected);
+                        if (key.codes[0] == KhKeyboardView.boardKey) {
+                            if (isClickDown) {
+                                dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_default);
+                            }
+                            isFirstShow = false;
+                        }
+                        if (isFirstShow) {
+                            dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_default);
+                        }
+                        key.icon = dr;
+                        break;
+                    }
+                    case KeyboardUtil.EMPTY: {
+                        // 空白位置
+                        onEmptyDrawBg(canvas, key);
                         break;
                     }
                     case Keyboard.KEYCODE_SHIFT: {
@@ -63,37 +76,18 @@ public class CustomKeyboardView extends KeyboardView {
                         }
                         break;
                     }
-                    case Keyboard.KEYCODE_MODE_CHANGE:
-                    case KeyboardUtil.SYMBOL_WORD: {
-                        //大小写字母和特殊字符切换键
-                        if (key.codes[0] == KhKeyboardView.boardKey) {
-                            if (KhKeyboardView.isClickBoard) {
-                                onBufferDrawOne(canvas, key);
-                                drawText(canvas, key, Color.parseColor("#000000"));
-                            } else {
-                                onBufferDrawTwo(canvas, key);
-                                drawText(canvas, key, Color.WHITE);
-                            }
-                        } else {
-                            onBufferDrawTwo(canvas, key);
-                            drawText(canvas, key, Color.WHITE);
-                        }
-                        break;
-                    }
                     case KeyboardUtil.BLANK: {
                         // 空格键
                         if (key.codes[0] == KhKeyboardView.boardKey) {
-                            if (isClickUP) {
-                                onBufferDrawOne(canvas, key);
-                                drawText(canvas, key, Color.parseColor("#000000"));
-                            } else {
+                            if (isClickDown) {
                                 onBufferDrawTwo(canvas, key);
-                                drawText(canvas, key, Color.WHITE);
+                            } else {
+                                onBufferDrawOne(canvas, key);
                             }
                         } else {
                             onBufferDrawOne(canvas, key);
-                            drawText(canvas, key, Color.parseColor("#000000"));
                         }
+                        drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
                     default: {
@@ -101,18 +95,33 @@ public class CustomKeyboardView extends KeyboardView {
                         if (key.codes[0] == KhKeyboardView.boardKey) {
                             if (KhKeyboardView.isClickBoard) {
                                 onBufferDrawTwo(canvas, key);
-                                drawText(canvas, key, Color.WHITE);
                             } else {
                                 onBufferDrawOne(canvas, key);
-                                drawText(canvas, key, Color.parseColor("#000000"));
                             }
                         } else {
                             onBufferDrawOne(canvas, key);
-                            drawText(canvas, key, Color.parseColor("#000000"));
                         }
+                        drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
-
+                    case Keyboard.KEYCODE_MODE_CHANGE:
+                    case KeyboardUtil.SYMBOL_ONE:
+                    case KeyboardUtil.SYMBOL_TWO:
+                    case KeyboardUtil.NUMBER:
+                    case KeyboardUtil.WORD: {
+                        //大小写字母和特殊字符切换键
+                        if (key.codes[0] == KhKeyboardView.boardKey) {
+                            if (KhKeyboardView.isClickBoard) {
+                                onBufferDrawOne(canvas, key);
+                            } else {
+                                onBufferDrawTwo(canvas, key);
+                            }
+                        } else {
+                            onBufferDrawTwo(canvas, key);
+                        }
+                        drawText(canvas, key, Color.parseColor("#000000"));
+                        break;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -120,40 +129,45 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent me) {
         switch (me.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                isClickUP = false;
+                isClickDown = true;
+                isFirstShow = false;
                 break;
             case MotionEvent.ACTION_UP:
-                isClickUP = true;
+                isClickDown = false;
+                isFirstShow = true;
                 break;
         }
         invalidate();
         return super.onTouchEvent(me);
     }
 
-    /**
-     * 设置删除 icon
-     */
-    private void setDeleteIcon(Canvas canvas, Keyboard.Key key) {
-        Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_shuzi_keyboard_del_default);
-        if (isClickUP) {
-            dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_selected);
-        }
-        key.icon = dr;
-    }
 
     /**
      * 绘制背景
      */
     private void onBufferDrawOne(Canvas canvas, Keyboard.Key key) {
         Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_one);
-        ;
         keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         keyBackground.draw(canvas);
     }
+
+    /**
+     * 空白键
+     *
+     * @param canvas
+     * @param key
+     */
+    private void onEmptyDrawBg(Canvas canvas, Keyboard.Key key) {
+        Drawable keyBackground = (Drawable) context.getResources().getDrawable(R.drawable.keyboard_selector_bg_three);
+        keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        keyBackground.draw(canvas);
+    }
+
 
     /**
      * 绘制背景
@@ -184,30 +198,21 @@ public class CustomKeyboardView extends KeyboardView {
             if (key.label != null) {
                 String label = key.label.toString();
                 Field field;
-                if (label.length() > 1 && key.codes.length < 2) {
-                    field = KeyboardView.class.getDeclaredField("mLabelTextSize");
-                    field.setAccessible(true);
-                    int labelTextSize = (int) field.get(this);
-                    paint.setTextSize(labelTextSize);
-                    paint.setTypeface(Typeface.DEFAULT_BOLD);
 
-                } else {
-                    field = KeyboardView.class.getDeclaredField("mLabelTextSize");
-                    field.setAccessible(true);
-                    int keyTextSize = (int) field.get(this);
-                    paint.setTextSize(keyTextSize);
-                    paint.setTypeface(Typeface.DEFAULT_BOLD);
-                }
+                //绘制字体
+                field = KeyboardView.class.getDeclaredField("mLabelTextSize");
+                field.setAccessible(true);
+                int labelTextSize = (int) field.get(this);
+                paint.setTextSize(labelTextSize);
+                paint.setTypeface(Typeface.DEFAULT_BOLD);
 
                 paint.getTextBounds(label, 0, key.label.toString().length(), bounds);
-
                 Rect rect = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
                 Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
                 int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
                 // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
                 canvas.drawText(label, rect.centerX(), baseline, paint);
 
-//                canvas.drawText(label, key.x + (key.width / 2), (key.y + key.height / 2) + bounds.height() / 2, paint);
             } else if (key.icon != null) {
                 key.icon.setBounds(key.x + (key.width - key.icon.getIntrinsicWidth()) / 2, key.y + (key.height - key.icon.getIntrinsicHeight()) / 2,
                         key.x + (key.width - key.icon.getIntrinsicWidth()) / 2 + key.icon.getIntrinsicWidth(), key.y + (key.height - key.icon.getIntrinsicHeight()) / 2 + key.icon.getIntrinsicHeight());

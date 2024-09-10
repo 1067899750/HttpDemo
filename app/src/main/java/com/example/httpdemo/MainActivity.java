@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.httpdemo.untils.HttpUtil;
 import com.example.keyboard.KeyBoardDialogUtils;
+import com.example.keyboard.KhKeyboardView;
 import com.example.mylibrary.HttpHelper;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
         mEditText = findViewById(R.id.key_board);
-        keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText, true);
+        new KeyBoardDialogUtils(this, mEditText, KhKeyboardView.OTHER_TYPE);
 
         //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
 //            @Override

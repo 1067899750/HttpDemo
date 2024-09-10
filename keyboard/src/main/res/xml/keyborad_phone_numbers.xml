@@ -42,14 +42,13 @@
 
     <Row>
         <Key
-            android:codes="-36"
-            android:keyLabel="清除" />
+            android:codes="-30" />
         <Key
             android:codes="48"
             android:keyLabel="0" />
         <Key
             android:codes="-35"
             android:isRepeatable="true"
-            android:keyIcon="@drawable/icon_keyboard_del_default"/>
+            android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>
 </Keyboard>

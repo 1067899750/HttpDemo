@@ -3,8 +3,10 @@
     <color name="keyboard_white">#FFFFFF</color>
     <color name="keyboard_ABAFBA">#ABAFBA</color>
     <color name="keyboard_black">#000000</color>
+    <color name="keyboard_666666">#666666</color>
+    <color name="keyboard_017BFF">#017BFF</color>
     <color name="keyboard_keyTextColor">#424242</color>
     <color name="keyboard_bg">#FFCFD4DA</color>
-    <color name="keyboard_1c69ac">#1c69ac</color>
+    <color name="keyboard_red">#ff0000</color>
     <color name="keyboard_transparent">#00000000</color>
 </resources>
