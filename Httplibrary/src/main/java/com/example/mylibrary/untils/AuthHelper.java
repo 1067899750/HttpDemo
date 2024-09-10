@@ -2,11 +2,9 @@ package com.example.mylibrary.untils;
 
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import androidx.annotation.RequiresApi;
 
 import org.json.JSONObject;
 
@@ -75,7 +73,7 @@ public class AuthHelper {
 //                Cookie cookie = Cookie.parse(httpUrl, cookieList.get(i));
 //                cookies.add(cookie);
 
-                if (cookieList.get(i).contains("JSESSIONID")){
+                if (cookieList.get(i).contains("JSESSIONID")) {
                     cookies.add(cookieList.get(i));
                 }
 

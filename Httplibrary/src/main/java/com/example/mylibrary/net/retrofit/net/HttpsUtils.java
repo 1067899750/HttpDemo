@@ -1,9 +1,10 @@
 package com.example.mylibrary.net.retrofit.net;
 
 import android.content.Context;
-import android.support.annotation.RawRes;
 import android.text.TextUtils;
 
+
+import androidx.annotation.RawRes;
 
 import com.example.mylibrary.untils.CloseUtils;
 
