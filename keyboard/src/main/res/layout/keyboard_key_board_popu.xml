@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="中欧财富安全输入"
+                    android:text="xxxx安全输入"
                     android:textColor="@color/keyboard_666666"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -90,6 +90,40 @@
 
             <com.example.keyboard.CustomKeyboardView
                 android:id="@+id/keyboard_view_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/keyboard_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:keyBackground="@drawable/keyboard_selector_bg_two"
+                android:keyPreviewHeight="90dp"
+                android:keyPreviewLayout="@layout/keyboard_key_preview_layout"
+                android:keyPreviewOffset="45dp"
+                android:keyTextColor="@color/keyboard_black"
+                android:keyTextSize="20dp"
+                android:visibility="gone" />
+
+            <com.example.keyboard.CustomKeyboardView
+                android:id="@+id/keyboard_view_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/keyboard_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:keyBackground="@drawable/keyboard_selector_bg_two"
+                android:keyPreviewHeight="90dp"
+                android:keyPreviewLayout="@layout/keyboard_key_preview_layout"
+                android:keyPreviewOffset="45dp"
+                android:keyTextColor="@color/keyboard_black"
+                android:keyTextSize="20dp"
+                android:visibility="gone" />
+
+            <com.example.keyboard.CustomKeyboardView
+                android:id="@+id/keyboard_view_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

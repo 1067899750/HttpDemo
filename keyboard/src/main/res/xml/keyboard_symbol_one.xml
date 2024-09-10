@@ -103,23 +103,23 @@
             android:keyLabel="#+=" />
         <Key
             android:codes="46"
-            android:keyWidth="9%p"
+            android:keyWidth="13%p"
             android:keyLabel="." />
         <Key
             android:codes="44"
-            android:keyWidth="9%p"
+            android:keyWidth="13%p"
             android:keyLabel="," />
         <Key
             android:codes="63"
-            android:keyWidth="9%p"
+            android:keyWidth="13%p"
             android:keyLabel="\?" />
         <Key
             android:codes="33"
-            android:keyWidth="9%p"
+            android:keyWidth="13%p"
             android:keyLabel="!" />
         <Key
             android:codes="39"
-            android:keyWidth="9%p"
+            android:keyWidth="13%p"
             android:keyLabel="'" />
         <Key
             android:codes="-5"

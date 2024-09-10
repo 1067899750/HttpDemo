@@ -48,6 +48,9 @@ public class KhKeyboardView {
      */
     private KeyboardView mLetterView;
 
+    private KeyboardView mSymbolOneView;
+    private KeyboardView mSymbolTwoView;
+
     /**
      * 数字键盘（身份证\电话\金额） View
      */
@@ -139,20 +142,25 @@ public class KhKeyboardView {
         this.mContext = context;
         this.parentView = view;
         this.isRandom = isRandom;
-
+        //数字
         mNumberKeyboard = new Keyboard(mContext, R.xml.keyboard_numbers);
-        mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
         mCardKeyboard = new Keyboard(mContext, R.xml.keyborad_card_numbers);
         mPhoneKeyboard = new Keyboard(mContext, R.xml.keyborad_phone_numbers);
         mMoneyKeyboard = new Keyboard(mContext, R.xml.keyboard_money);
+        // 字母
+        mLetterKeyboard = new Keyboard(mContext, R.xml.keyboard_word);
+        //特殊符号
         mSymbolKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol);
         mSymbolOneKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_one);
         mSymbolTwoKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_two);
 
         //数字键盘（身份证\电话\金额）
         mNumberView = (KeyboardView) parentView.findViewById(R.id.keyboard_view);
-        //字母键盘/符号
+        //字母键盘
         mLetterView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_2);
+        // 符号键盘
+        mSymbolOneView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_3);
+        mSymbolTwoView = (KeyboardView) parentView.findViewById(R.id.keyboard_view_4);
 
         //初始化数字键盘
         mNumberView.setKeyboard(mNumberKeyboard);
@@ -164,9 +172,19 @@ public class KhKeyboardView {
         //初始化字母键盘
         mLetterView.setKeyboard(mLetterKeyboard);
         mLetterView.setEnabled(true);
-        //设置隐藏浮框
         mLetterView.setPreviewEnabled(false);
         mLetterView.setOnKeyboardActionListener(listener);
+
+        //符号键盘
+        mSymbolOneView.setKeyboard(mSymbolOneKeyboard);
+        mSymbolOneView.setEnabled(true);
+        mSymbolOneView.setPreviewEnabled(false);
+        mSymbolOneView.setOnKeyboardActionListener(listener);
+
+        mSymbolTwoView.setKeyboard(mSymbolTwoKeyboard);
+        mSymbolTwoView.setEnabled(true);
+        mSymbolTwoView.setPreviewEnabled(false);
+        mSymbolTwoView.setOnKeyboardActionListener(listener);
 
         headerView = parentView.findViewById(R.id.keyboard_header);
 
@@ -256,14 +274,14 @@ public class KhKeyboardView {
                         showSymbolOneView();
                         break;
                     }
-                    case KeyboardUtil.WORD: {
-                        // 字符
-                        showLetterView2();
-                        break;
-                    }
                     case KeyboardUtil.SYMBOL_TWO: {
                         //显示符号键盘
                         showSymbolTwoView();
+                        break;
+                    }
+                    case KeyboardUtil.WORD: {
+                        // 字符
+                        showLetterView2();
                         break;
                     }
                     case KeyboardUtil.CLEAR: {
@@ -317,18 +335,10 @@ public class KhKeyboardView {
      * 字母-符号,显示字母
      */
     private void showLetterView2() {
-        if (mLetterView != null) {
-            mLetterView.setKeyboard(mLetterKeyboard);
-        }
-    }
-
-    /**
-     * 字母-符号,显示符号
-     */
-    private void showSymbolView() {
         try {
-            if (mSymbolKeyboard != null) {
-                mLetterView.setKeyboard(mSymbolKeyboard);
+            showLetterView();
+            if (mLetterView != null) {
+                mLetterView.setKeyboard(mLetterKeyboard);
             }
         } catch (Exception e) {
         }
@@ -338,40 +348,38 @@ public class KhKeyboardView {
      * 数字-符号,显示符号
      */
     private void showSymbolOneView() {
-        try {
-            if (mSymbolOneKeyboard != null) {
-                mLetterView.setKeyboard(mSymbolOneKeyboard);
-            }
-        } catch (Exception e) {
-        }
+        mLetterView.setVisibility(View.GONE);
+        mNumberView.setVisibility(View.GONE);
+        mSymbolOneView.setVisibility(View.VISIBLE);
+        mSymbolTwoView.setVisibility(View.GONE);
     }
 
     /**
      * 符号,显示符号
      */
     private void showSymbolTwoView() {
-        try {
-            if (mSymbolTwoKeyboard != null) {
-                mLetterView.setKeyboard(mSymbolTwoKeyboard);
-            }
-        } catch (Exception e) {
-        }
+        mLetterView.setVisibility(View.GONE);
+        mNumberView.setVisibility(View.GONE);
+        mSymbolOneView.setVisibility(View.GONE);
+        mSymbolTwoView.setVisibility(View.VISIBLE);
     }
 
     /**
-     * 数字-字母,显示字母键盘
+     * 字母,显示字母键盘
      */
     private void showLetterView() {
-        try {
-            if (mLetterView != null && mNumberView != null) {
-                isNumber = false;
-                mLetterView.setVisibility(View.VISIBLE);
-                mNumberView.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        isNumber = false;
+        mLetterView.setVisibility(View.VISIBLE);
+        mNumberView.setVisibility(View.GONE);
+        mSymbolOneView.setVisibility(View.GONE);
+        mSymbolTwoView.setVisibility(View.GONE);
+    }
 
+    private void setShowNumberView() {
+        mLetterView.setVisibility(View.GONE);
+        mNumberView.setVisibility(View.VISIBLE);
+        mSymbolOneView.setVisibility(View.GONE);
+        mSymbolTwoView.setVisibility(View.GONE);
     }
 
     /**
@@ -380,8 +388,7 @@ public class KhKeyboardView {
     private void showPhoneOrCardView(@NumberType String type) {
         try {
             isNumber = true;
-            mLetterView.setVisibility(View.GONE);
-            mNumberView.setVisibility(View.VISIBLE);
+            setShowNumberView();
             if (type.equals(CARD_TYPE)) { // 身份证键盘
                 mNumberView.setKeyboard(setRandomNumberKeyboard(mCardKeyboard, isRandom));
             } else if (type.equals(MONEY_TYPE)) { //金额键盘
@@ -403,8 +410,7 @@ public class KhKeyboardView {
         try {
             if (mLetterView != null && mNumberView != null) {
                 isNumber = true;
-                mLetterView.setVisibility(View.GONE);
-                mNumberView.setVisibility(View.VISIBLE);
+                setShowNumberView();
                 mNumberView.setKeyboard(setRandomNumberKeyboard(mNumberKeyboard, isRandom));
             }
         } catch (Exception e) {
