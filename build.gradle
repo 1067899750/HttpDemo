@@ -4,13 +4,16 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenLocal()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         maven {
             url "http://mvn.mob.com/android"
         }
+        maven { url 'https://repo1.maven.org/maven2/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath("com.android.tools.build:gradle:7.1.2")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,7 +24,21 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+
         maven { url "https://jitpack.io" }
+//        maven { url 'https://dl.bintray.com/umsdk/release' }
+//        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        maven { url 'https://repo1.maven.org/maven2/' }
+
+        //阿里云镜像
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/releases/' }
+
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
     }
 }
 
@@ -32,9 +49,9 @@ task clean(type: Delete) {
 
 ext {
     android = [
-            compileSdkVersion: 30,
+            compileSdkVersion: 33,
             minSdkVersion    : 24,
-            targetSdkVersion : 30
+            targetSdkVersion : 33
     ]
 }
 
