@@ -85,13 +85,15 @@ public class CustomKeyboardView extends KeyboardView {
                         if (key.codes[0] == KhKeyboardView.boardKey) {
                             if (isClickUP) {
                                 onBufferDrawOne(canvas, key);
+                                drawText(canvas, key, Color.parseColor("#000000"));
                             } else {
                                 onBufferDrawTwo(canvas, key);
+                                drawText(canvas, key, Color.WHITE);
                             }
                         } else {
                             onBufferDrawOne(canvas, key);
+                            drawText(canvas, key, Color.parseColor("#000000"));
                         }
-                        drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
                     default: {
@@ -99,13 +101,15 @@ public class CustomKeyboardView extends KeyboardView {
                         if (key.codes[0] == KhKeyboardView.boardKey) {
                             if (KhKeyboardView.isClickBoard) {
                                 onBufferDrawTwo(canvas, key);
+                                drawText(canvas, key, Color.WHITE);
                             } else {
                                 onBufferDrawOne(canvas, key);
+                                drawText(canvas, key, Color.parseColor("#000000"));
                             }
                         } else {
                             onBufferDrawOne(canvas, key);
+                            drawText(canvas, key, Color.parseColor("#000000"));
                         }
-                        drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
 
