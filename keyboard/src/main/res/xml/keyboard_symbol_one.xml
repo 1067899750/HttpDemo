@@ -98,7 +98,7 @@
     <Row>
         <Key
             android:codes="-37"
-            android:keyWidth="14%p"
+            android:keyWidth="50.5dp"
             android:keyEdgeFlags="left"
             android:keyLabel="#+=" />
         <Key
@@ -123,7 +123,7 @@
             android:keyLabel="'" />
         <Key
             android:codes="-5"
-            android:keyWidth="14%p"
+            android:keyWidth="50.5dp"
             android:keyEdgeFlags="right"
             android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>

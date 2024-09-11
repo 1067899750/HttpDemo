@@ -199,16 +199,26 @@ public class KhKeyboardView {
                 case Keyboard.KEYCODE_SHIFT:
                     List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
                     mLetterView.setPreviewEnabled(false);
+                    mSymbolOneView.setPreviewEnabled(false);
+                    mSymbolTwoView.setPreviewEnabled(false);
                     break;
                 case Keyboard.KEYCODE_DELETE:
                 case Keyboard.KEYCODE_MODE_CHANGE:
-                case 32:
-                case 90001:
+                case KeyboardUtil.SYMBOL_ONE:
+                case KeyboardUtil.DELETE:
+                case KeyboardUtil.CLEAR:
+                case KeyboardUtil.SYMBOL_TWO:
+                case KeyboardUtil.WORD:
+                case KeyboardUtil.LINE_FEED:
+                case KeyboardUtil.BLANK:
                     mLetterView.setPreviewEnabled(false);
+                    mSymbolOneView.setPreviewEnabled(false);
+                    mSymbolTwoView.setPreviewEnabled(false);
                     break;
                 default:
-//                    mLetterView.setPreviewEnabled(true);
-                    mLetterView.setPreviewEnabled(false);
+                    mLetterView.setPreviewEnabled(true);
+                    mSymbolOneView.setPreviewEnabled(true);
+                    mSymbolTwoView.setPreviewEnabled(true);
                     break;
             }
         }

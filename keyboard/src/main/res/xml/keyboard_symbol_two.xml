@@ -101,7 +101,7 @@
         <Key
             android:codes="-32"
             android:isRepeatable="true"
-            android:keyWidth="14%p"
+            android:keyWidth="50.5dp"
             android:keyEdgeFlags="left"
             android:keyLabel="123" />
         <Key
@@ -127,7 +127,7 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
-            android:keyWidth="14%p"
+            android:keyWidth="50.5dp"
             android:keyEdgeFlags="right"
             android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>
