@@ -15,7 +15,7 @@ public class KeyboardUtil {
     public static final int SYMBOL_ONE = -31;
 
     // 123 切换键
-    public static final int NUMBER = -32;
+    public static final int NUMBER = -34;
 
     //字母和身份证删除键
     public static final int DELETE = -35;

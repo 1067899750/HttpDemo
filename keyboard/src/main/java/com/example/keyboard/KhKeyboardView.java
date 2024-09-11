@@ -206,6 +206,7 @@ public class KhKeyboardView {
                 case Keyboard.KEYCODE_MODE_CHANGE:
                 case KeyboardUtil.SYMBOL_ONE:
                 case KeyboardUtil.DELETE:
+                case KeyboardUtil.NUMBER:
                 case KeyboardUtil.CLEAR:
                 case KeyboardUtil.SYMBOL_TWO:
                 case KeyboardUtil.WORD:

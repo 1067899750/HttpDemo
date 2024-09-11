@@ -99,8 +99,7 @@
 
     <Row>
         <Key
-            android:codes="-32"
-            android:isRepeatable="true"
+            android:codes="-34"
             android:keyWidth="50.5dp"
             android:keyEdgeFlags="left"
             android:keyLabel="123" />
