@@ -1,6 +1,8 @@
 package com.example.keyboard;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -24,8 +26,6 @@ public class CustomKeyboardView extends KeyboardView {
     // 是否按下按键
     public static boolean isClickDown = false;
 
-    public static boolean isFirstShow = true;
-
     public CustomKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -42,17 +42,7 @@ public class CustomKeyboardView extends KeyboardView {
                 switch (key.codes[0]) {
                     case Keyboard.KEYCODE_DELETE:
                     case KeyboardUtil.DELETE: {
-                        Drawable dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_selected);
-                        if (key.codes[0] == KhKeyboardView.boardKey) {
-                            if (isClickDown) {
-                                dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_default);
-                            }
-                            isFirstShow = false;
-                        }
-                        if (isFirstShow) {
-                            dr = (Drawable) context.getResources().getDrawable(R.drawable.icon_keyboard_del_default);
-                        }
-                        key.icon = dr;
+                        onDrawDeleteBg(canvas, key);
                         break;
                     }
                     case KeyboardUtil.EMPTY: {
@@ -78,15 +68,7 @@ public class CustomKeyboardView extends KeyboardView {
                     }
                     case KeyboardUtil.BLANK: {
                         // 空格键
-                        if (key.codes[0] == KhKeyboardView.boardKey) {
-                            if (isClickDown) {
-                                onBufferDrawTwo(canvas, key);
-                            } else {
-                                onBufferDrawOne(canvas, key);
-                            }
-                        } else {
-                            onBufferDrawOne(canvas, key);
-                        }
+                        onDrawClickBg(canvas, key);
                         drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
@@ -135,15 +117,59 @@ public class CustomKeyboardView extends KeyboardView {
         switch (me.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isClickDown = true;
-                isFirstShow = false;
                 break;
             case MotionEvent.ACTION_UP:
                 isClickDown = false;
-                isFirstShow = true;
                 break;
         }
-        invalidate();
         return super.onTouchEvent(me);
+    }
+
+    /**
+     * 绘制删除键
+     *
+     * @param canvas
+     * @param key
+     */
+    private void onDrawDeleteBg(Canvas canvas, Keyboard.Key key) {
+        Bitmap bitmap;
+        if (key.codes[0] == KhKeyboardView.boardKey) {
+            if (isClickDown) {
+                onBufferDrawOne(canvas, key);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_del_selected);
+            } else {
+                onBufferDrawTwo(canvas, key);
+                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_del_default);
+            }
+        } else {
+            onBufferDrawTwo(canvas, key);
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_del_default);
+        }
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        float width = key.width / 2 - dpToPx(context, 23) / 2;
+        float height = key.height / 2 - dpToPx(context, 17) / 2;
+        canvas.drawBitmap(bitmap, key.x + width, key.y + height, paint);
+    }
+
+
+    /**
+     * 绘制点击和抬起时候的背景
+     *
+     * @param canvas
+     * @param key
+     */
+    private void onDrawClickBg(Canvas canvas, Keyboard.Key key) {
+        if (key.codes[0] == KhKeyboardView.boardKey) {
+            if (isClickDown) {
+                onBufferDrawTwo(canvas, key);
+            } else {
+                onBufferDrawOne(canvas, key);
+            }
+        } else {
+            onBufferDrawOne(canvas, key);
+        }
     }
 
 
@@ -222,5 +248,10 @@ public class CustomKeyboardView extends KeyboardView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public float dpToPx(Context context, float dp) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
     }
 }

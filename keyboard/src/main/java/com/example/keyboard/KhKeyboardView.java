@@ -468,7 +468,8 @@ public class KhKeyboardView {
      */
     boolean isRandomKey(int code) {
         return code != Keyboard.KEYCODE_DELETE && code != Keyboard.KEYCODE_MODE_CHANGE
-                && code != KeyboardUtil.DELETE && code != KeyboardUtil.CLEAR;
+                && code != KeyboardUtil.DELETE && code != KeyboardUtil.CLEAR
+                && code != KeyboardUtil.EMPTY;
     }
 
     /**
@@ -536,7 +537,6 @@ public class KhKeyboardView {
         isUpper = false;
         boardKey = -19991888;
         isClickBoard = false;
-        CustomKeyboardView.isFirstShow = true;
     }
 
     /**
