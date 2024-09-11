@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
         mEditText = findViewById(R.id.key_board);
-        new KeyBoardDialogUtils(this, mEditText, KhKeyboardView.OTHER_TYPE);
+        new KeyBoardDialogUtils(this, mEditText, KhKeyboardView.CARD_TYPE);
 
         //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
 //            @Override
