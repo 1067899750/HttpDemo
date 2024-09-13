@@ -229,7 +229,15 @@ public class CustomKeyboardView extends KeyboardView {
                 field = KeyboardView.class.getDeclaredField("mLabelTextSize");
                 field.setAccessible(true);
                 int labelTextSize = (int) field.get(this);
-                paint.setTextSize(labelTextSize);
+                // 设置字体
+                if (key.codes[0] == KeyboardUtil.BLANK || key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE
+                        || key.codes[0] == KeyboardUtil.SYMBOL_ONE || key.codes[0] == KeyboardUtil.SYMBOL_TWO
+                        || key.codes[0] == KeyboardUtil.NUMBER || key.codes[0] == KeyboardUtil.WORD
+                        || key.codes[0] == KeyboardUtil.LINE_FEED) {
+                    paint.setTextSize(sp2px(context, 15));
+                } else {
+                    paint.setTextSize(labelTextSize);
+                }
                 paint.setTypeface(Typeface.DEFAULT_BOLD);
 
                 paint.getTextBounds(label, 0, key.label.toString().length(), bounds);
@@ -250,8 +258,19 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
+    /**
+     * dp转换成px
+     */
     public float dpToPx(Context context, float dp) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
+    }
+
+    /**
+     * sp转换成px
+     */
+    private int sp2px(Context context, float spValue) {
+        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 }

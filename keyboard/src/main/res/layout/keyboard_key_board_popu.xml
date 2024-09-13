@@ -86,6 +86,7 @@
                 android:keyPreviewLayout="@null"
                 android:keyTextColor="@color/keyboard_black"
                 android:keyTextSize="20dp"
+                android:labelTextSize="20dp"
                 android:visibility="gone" />
 
             <com.example.keyboard.CustomKeyboardView
@@ -103,6 +104,7 @@
                 android:keyPreviewOffset="45dp"
                 android:keyTextColor="@color/keyboard_black"
                 android:keyTextSize="20dp"
+                android:labelTextSize="20dp"
                 android:visibility="gone" />
 
             <com.example.keyboard.CustomKeyboardView
@@ -120,6 +122,7 @@
                 android:keyPreviewOffset="45dp"
                 android:keyTextColor="@color/keyboard_black"
                 android:keyTextSize="20dp"
+                android:labelTextSize="20dp"
                 android:visibility="gone" />
 
             <com.example.keyboard.CustomKeyboardView
@@ -137,6 +140,7 @@
                 android:keyPreviewOffset="45dp"
                 android:keyTextColor="@color/keyboard_black"
                 android:keyTextSize="20dp"
+                android:labelTextSize="20dp"
                 android:visibility="gone" />
         </FrameLayout>
 
