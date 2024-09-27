@@ -49,9 +49,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mEditText = findViewById(R.id.key_board);
         View rootView = findViewById(R.id.main_root);
         View scrollLayout = findViewById(R.id.scroll_layout);
-        SafeKeyboardConfig config = SafeKeyboardConfig.getDefaultConfig();
-        safeKeyboard = new KhKeyboardView(getApplicationContext(), keyboardContainer, rootView, scrollLayout, config);
-        safeKeyboard.setVibrateEnable(true);
+        safeKeyboard = new KhKeyboardView(getApplicationContext(), keyboardContainer, rootView, scrollLayout);
         safeKeyboard.putEditText(mEditText);
         safeKeyboard.putRandomEdit(findViewById(R.id.key_board2));
 
