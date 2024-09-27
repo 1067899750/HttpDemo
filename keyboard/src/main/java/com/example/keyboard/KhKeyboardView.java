@@ -12,7 +12,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -23,12 +26,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -299,6 +304,7 @@ public class KhKeyboardView {
         mEditMap.put(editText.getTag().toString(), editText);
         mBoardTypeMap.put(editText.getTag().toString(), type);
         editText.setOnTouchListener(onEditTextTouchListener);
+        disableCopyAndPaste(editText);
     }
 
     /**
@@ -744,6 +750,49 @@ public class KhKeyboardView {
         }
     }
 
+    /**
+     * 禁止粘贴复制
+     *
+     * @param editText
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    public void disableCopyAndPaste(final EditText editText) {
+        try {
+            if (editText == null) {
+                return;
+            }
+            editText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return true;
+                }
+            });
+            editText.setLongClickable(false);
+            editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    return false;
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 判断是否是字母
@@ -753,6 +802,9 @@ public class KhKeyboardView {
         return wordStr.contains(str.toLowerCase());
     }
 
+    /**
+     * 切换键盘
+     */
     private void switchKeyboard() {
         switch (keyboardType) {
             case WORD_TYPE:
@@ -1089,6 +1141,15 @@ public class KhKeyboardView {
                 && code != KeyboardUtil.EMPTY;
     }
 
+    /**
+     * 还原字母+特殊符号数据键盘数据
+     */
+    public void onPause() {
+        isUpper = false;
+        boardKey = -19991888;
+        isClickBoard = false;
+        hideKeyboard();
+    }
 
     /**
      * 清空数据

@@ -140,6 +140,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onPause() {
+        if (safeKeyboard != null) {
+            safeKeyboard.onPause();
+        }
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         if (safeKeyboard != null) {
             safeKeyboard.release();
