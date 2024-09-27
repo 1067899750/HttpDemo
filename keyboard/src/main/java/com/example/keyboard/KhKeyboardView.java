@@ -137,13 +137,13 @@ public class KhKeyboardView {
     /**
      * 只起到延时开始显示的作用
      */
-    private final Runnable showRun = this::showKeyboard;
+    private Runnable showRun;
 
-    private final Runnable hideRun = this::hideKeyboard;
+    private Runnable hideRun;
 
-    private final Runnable hideEnd = this::doHideEnd;
+    private Runnable hideEnd;
 
-    private final Runnable showEnd = this::doShowEnd;
+    private Runnable showEnd;
 
     private TranslateAnimation showAnimation;
     private TranslateAnimation hideAnimation;
@@ -192,10 +192,40 @@ public class KhKeyboardView {
         this.rootView = rootView;
         this.mScrollLayout = scrollLayout;
 
+        initRunnable();
         initData();
         initKeyboardAndFindView();
         setListeners();
         initAnimation();
+    }
+
+    private void initRunnable() {
+        showRun = new Runnable() {
+            @Override
+            public void run() {
+                showKeyboard();
+            }
+        };
+
+        hideRun = new Runnable() {
+            @Override
+            public void run() {
+                hideKeyboard();
+            }
+        };
+
+        hideEnd = new Runnable() {
+            @Override
+            public void run() {
+                doHideEnd();
+            }
+        };
+        showEnd = new Runnable() {
+            @Override
+            public void run() {
+                doShowEnd();
+            }
+        };
     }
 
     private void initData() {
@@ -279,81 +309,87 @@ public class KhKeyboardView {
         keyboardView.setOnKeyboardActionListener(listener);
 
         // 关闭键盘
-        keyContainer.findViewById(R.id.keyboard_finish).setOnClickListener(v -> {
-            if (isKeyboardShown()) {
-                safeHandler.removeCallbacks(hideRun);
-                safeHandler.removeCallbacks(showRun);
-                safeHandler.postDelayed(hideRun, keyboardConfig.hideDelay);
+        keyContainer.findViewById(R.id.keyboard_finish).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isKeyboardShown()) {
+                    safeHandler.removeCallbacks(hideRun);
+                    safeHandler.removeCallbacks(showRun);
+                    safeHandler.postDelayed(hideRun, keyboardConfig.hideDelay);
+                }
             }
         });
 
         if (rootView != null) {
             treeObserver = rootView.getViewTreeObserver();
-            onGlobalFocusChangeListener = (oldFocus, newFocus) -> {
-                if (newFocus instanceof EditText) {
-                    EditText newEdit = (EditText) newFocus;
-                    forceChangeEditImeOptNextToDone(newEdit);
-                }
-                if (oldFocus instanceof EditText) {
-                    // 上一个获得焦点的为 EditText
-                    EditText oldEdit = (EditText) oldFocus;
-                    if (isEditMapContainThisEdit(oldEdit)) {
-                        // 前 EditText 使用了 SafeKeyboard
-                        // 新获取焦点的是 EditText
-                        if (newFocus instanceof EditText) {
-                            EditText newEdit = (EditText) newFocus;
-                            if (isEditMapContainThisEdit(newEdit)) {
-                                // 该 EditText 也使用了 SafeKeyboard
-                                Log.i(TAG, "Safe --> Safe, 开始检查是否需要手动 show");
-                                keyboardPreShow(newEdit);
-                            } else {
-                                // 该 EditText 没有使用 SafeKeyboard, 则隐藏 SafeKeyboard
-                                Log.i(TAG, "Safe --> 系统, 开始检查是否需要手动 hide");
+            onGlobalFocusChangeListener = new ViewTreeObserver.OnGlobalFocusChangeListener() {
+                @Override
+                public void onGlobalFocusChanged(View oldFocus, View newFocus) {
+                    if (newFocus instanceof EditText) {
+                        EditText newEdit = (EditText) newFocus;
+                        forceChangeEditImeOptNextToDone(newEdit);
+                    }
+                    if (oldFocus instanceof EditText) {
+                        // 上一个获得焦点的为 EditText
+                        EditText oldEdit = (EditText) oldFocus;
+                        if (isEditMapContainThisEdit(oldEdit)) {
+                            // 前 EditText 使用了 SafeKeyboard
+                            // 新获取焦点的是 EditText
+                            if (newFocus instanceof EditText) {
+                                EditText newEdit = (EditText) newFocus;
+                                if (isEditMapContainThisEdit(newEdit)) {
+                                    // 该 EditText 也使用了 SafeKeyboard
+                                    Log.i(TAG, "Safe --> Safe, 开始检查是否需要手动 show");
+                                    keyboardPreShow(newEdit);
+                                } else {
+                                    // 该 EditText 没有使用 SafeKeyboard, 则隐藏 SafeKeyboard
+                                    Log.i(TAG, "Safe --> 系统, 开始检查是否需要手动 hide");
 
-                                // 说明: 如果 EditText 外被 ScrollView 包裹, 切换成系统输入法的时候, SafeKeyboard 会被异常顶起
-                                // 需要在 Activity 的声明中增加 android:windowSoftInputMode="stateAlwaysHidden|adjustPan" 语句
+                                    // 说明: 如果 EditText 外被 ScrollView 包裹, 切换成系统输入法的时候, SafeKeyboard 会被异常顶起
+                                    // 需要在 Activity 的声明中增加 android:windowSoftInputMode="stateAlwaysHidden|adjustPan" 语句
+                                    keyboardPreHide();
+                                }
+                            } else {
+                                // 新获取焦点的不是 EditText, 则隐藏 SafeKeyboard
+                                Log.i(TAG, "Safe --> 其他, 开始检查是否需要手动 hide");
                                 keyboardPreHide();
                             }
                         } else {
-                            // 新获取焦点的不是 EditText, 则隐藏 SafeKeyboard
-                            Log.i(TAG, "Safe --> 其他, 开始检查是否需要手动 hide");
-                            keyboardPreHide();
+                            // 前 EditText 没有使用 SafeKeyboard
+                            // 新获取焦点的是 EditText
+                            if (newFocus instanceof EditText) {
+                                EditText newEdit = (EditText) newFocus;
+                                // 该 EditText 使用了 SafeKeyboard, 则显示
+                                if (isEditMapContainThisEdit(newEdit)) {
+                                    Log.i(TAG, "系统 --> Safe, 开始检查是否需要手动 show");
+                                    keyboardPreShow(newEdit);
+                                } else {
+                                    Log.i(TAG, "系统 --> 系统, 开始检查是否需要手动 hide");
+                                    keyboardPreHide();
+                                }
+                            } else {
+                                // ... 否则不需要管理此次事件, 但是为保险起见, 可以隐藏一次 SafeKeyboard, 当然隐藏前需要判断是否已显示
+                                Log.i(TAG, "系统 --> 其他, 开始检查是否需要手动 hide");
+                                keyboardPreHide();
+                            }
                         }
                     } else {
-                        // 前 EditText 没有使用 SafeKeyboard
                         // 新获取焦点的是 EditText
                         if (newFocus instanceof EditText) {
                             EditText newEdit = (EditText) newFocus;
                             // 该 EditText 使用了 SafeKeyboard, 则显示
                             if (isEditMapContainThisEdit(newEdit)) {
-                                Log.i(TAG, "系统 --> Safe, 开始检查是否需要手动 show");
+                                Log.i(TAG, "其他 --> Safe, 开始检查是否需要手动 show");
                                 keyboardPreShow(newEdit);
                             } else {
-                                Log.i(TAG, "系统 --> 系统, 开始检查是否需要手动 hide");
+                                Log.i(TAG, "其他 --> 系统, 开始检查是否需要手动 hide");
                                 keyboardPreHide();
                             }
                         } else {
                             // ... 否则不需要管理此次事件, 但是为保险起见, 可以隐藏一次 SafeKeyboard, 当然隐藏前需要判断是否已显示
-                            Log.i(TAG, "系统 --> 其他, 开始检查是否需要手动 hide");
+                            Log.i(TAG, "其他 --> 其他, 开始检查是否需要手动 hide");
                             keyboardPreHide();
                         }
-                    }
-                } else {
-                    // 新获取焦点的是 EditText
-                    if (newFocus instanceof EditText) {
-                        EditText newEdit = (EditText) newFocus;
-                        // 该 EditText 使用了 SafeKeyboard, 则显示
-                        if (isEditMapContainThisEdit(newEdit)) {
-                            Log.i(TAG, "其他 --> Safe, 开始检查是否需要手动 show");
-                            keyboardPreShow(newEdit);
-                        } else {
-                            Log.i(TAG, "其他 --> 系统, 开始检查是否需要手动 hide");
-                            keyboardPreHide();
-                        }
-                    } else {
-                        // ... 否则不需要管理此次事件, 但是为保险起见, 可以隐藏一次 SafeKeyboard, 当然隐藏前需要判断是否已显示
-                        Log.i(TAG, "其他 --> 其他, 开始检查是否需要手动 hide");
-                        keyboardPreHide();
                     }
                 }
             };
@@ -362,29 +398,32 @@ public class KhKeyboardView {
             Log.e(TAG, "Root View is null!");
         }
 
-        onEditTextTouchListener = (v, event) -> {
-            if (v instanceof EditText) {
-                EditText mEditText = (EditText) v;
-                // 隐藏系统键盘关键代码
-                hideSystemKeyBoard(mEditText);
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    downPoint.setCoo_x((int) event.getRawX());
-                    downPoint.setCoo_y((int) event.getRawY());
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    upPoint.setCoo_x((int) event.getRawX());
-                    upPoint.setCoo_y((int) event.getRawY());
-                    if (isTouchConsiderClick(downPoint, upPoint, mEditText) && mEditText.hasFocus()) {
-                        if (mCurrentEditText == mEditText && isShow()) {
-                            return false;
+        onEditTextTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v instanceof EditText) {
+                    EditText mEditText = (EditText) v;
+                    // 隐藏系统键盘关键代码
+                    hideSystemKeyBoard(mEditText);
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        downPoint.setCoo_x((int) event.getRawX());
+                        downPoint.setCoo_y((int) event.getRawY());
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        upPoint.setCoo_x((int) event.getRawX());
+                        upPoint.setCoo_y((int) event.getRawY());
+                        if (isTouchConsiderClick(downPoint, upPoint, mEditText) && mEditText.hasFocus()) {
+                            if (mCurrentEditText == mEditText && isShow()) {
+                                return false;
+                            }
+                            // 显示自定义键盘
+                            keyboardPreShow(mEditText);
                         }
-                        // 显示自定义键盘
-                        keyboardPreShow(mEditText);
+                        downPoint.clearPoint();
+                        upPoint.clearPoint();
                     }
-                    downPoint.clearPoint();
-                    upPoint.clearPoint();
                 }
+                return false;
             }
-            return false;
         };
     }
 
@@ -527,10 +566,13 @@ public class KhKeyboardView {
             // 说明不需要再手动显示, 只需要切换键盘模式即可 (甚至不用切换)
             // 这里需要检查当前 EditText 的显示是否合理
             final long delay = doScrollLayoutBack(false, mEditText) ? keyboardConfig.hideDuration + 50 : 0;
-            new Handler().postDelayed(() -> {
-                // 如果已经显示了, 那么切换键盘即可
-                setCurrentEditText(mEditText);
-                setKeyboard(getKeyboardByInputType());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 如果已经显示了, 那么切换键盘即可
+                    setCurrentEditText(mEditText);
+                    setKeyboard(getKeyboardByInputType());
+                }
             }, delay);
         }
     }
@@ -1052,6 +1094,9 @@ public class KhKeyboardView {
      * 清空数据
      */
     public void release() {
+        isUpper = false;
+        boardKey = -19991888;
+        isClickBoard = false;
         mContext = null;
         toBackSize = 0;
         onEditTextTouchListener = null;
