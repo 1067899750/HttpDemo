@@ -10,7 +10,7 @@ public class SafeKeyboardConfig {
     public long showDuration = DEFAULT_SHOW_TIME;
     public long hideDuration = DEFAULT_HIDE_TIME;
     public long showDelay = DEFAULT_DELAY_TIME;
-    public long hideDelay = DEFAULT_SHOW_DELAY;     // 开启按键震动
+    public long hideDelay = DEFAULT_SHOW_DELAY;
 
     public static SafeKeyboardConfig getDefaultConfig() {
         return new SafeKeyboardConfig();

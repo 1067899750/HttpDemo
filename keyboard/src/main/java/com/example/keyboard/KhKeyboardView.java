@@ -31,6 +31,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -117,6 +119,12 @@ public class KhKeyboardView {
      * 生份证键盘
      */
     private Keyboard mCardKeyboard;
+
+    /**
+     * 字母键盘
+     */
+    private Keyboard mLetterKeyboard;
+
     private boolean isShowStart = false;
     private boolean isHideStart = false;
 
@@ -160,14 +168,9 @@ public class KhKeyboardView {
     private int[] originalScrollPosInPar;
 
     /**
-     * 字母键盘
+     * 设置字母键盘是否随机 (暂时不需要)
      */
-    private Keyboard mLetterKeyboard;
-
-    public KhKeyboardView(Context mContext, LinearLayout keyboardOuterContainer, @NonNull View rootView,
-                          @NonNull View scrollLayout) {
-        this(mContext, keyboardOuterContainer, rootView, scrollLayout, null);
-    }
+    private boolean isRandom = false;
 
     /**
      * SafeKeyboard 构造方法, 传入必要的参数, 已精简传入参数
@@ -182,10 +185,9 @@ public class KhKeyboardView {
      *                               传入目的是：当 EditText 需要被顶起的时候, 顶起该布局, 以达到输入时可以显示已输入内容的功能
      *                               注意, 可以是 EditText 本身, 不过需要传入 View 类型的 EditText
      */
-    public KhKeyboardView(Context mContext, LinearLayout keyboardOuterContainer, @NonNull View rootView,
-                          @NonNull View scrollLayout, SafeKeyboardConfig keyboardConfig) {
+    public KhKeyboardView(Context mContext, LinearLayout keyboardOuterContainer, @NonNull View rootView, @NonNull View scrollLayout) {
         this.mContext = mContext;
-        this.keyboardConfig = keyboardConfig == null ? SafeKeyboardConfig.getDefaultConfig() : keyboardConfig;
+        this.keyboardConfig = SafeKeyboardConfig.getDefaultConfig();
         this.keyboardOuterContainer = keyboardOuterContainer;
         this.rootView = rootView;
         this.mScrollLayout = scrollLayout;
@@ -884,15 +886,15 @@ public class KhKeyboardView {
         Keyboard lastKeyboard = mLetterKeyboard;
         switch (numberType) {
             case KhKeyboardView.CARD_TYPE: {
-                lastKeyboard = mCardKeyboard;
+                lastKeyboard = setRandomNumberKeyboard(mCardKeyboard, isRandom);
                 break;
             }
             case KhKeyboardView.MONEY_TYPE: {
-                lastKeyboard = mMoneyKeyboard;
+                lastKeyboard = setRandomNumberKeyboard(mMoneyKeyboard, isRandom);
                 break;
             }
             case KhKeyboardView.PHONE_TYPE: {
-                lastKeyboard = mPhoneKeyboard;
+                lastKeyboard = setRandomNumberKeyboard(mPhoneKeyboard, isRandom);
                 break;
             }
             case KhKeyboardView.OTHER_TYPE: {
@@ -1000,6 +1002,49 @@ public class KhKeyboardView {
             flag = isShowStart || (isKeyboardShown() && !isHideStart);
         }
         return flag;
+    }
+
+    /**
+     * 设置随机键盘
+     */
+    private Keyboard setRandomNumberKeyboard(Keyboard keyboard, boolean isRandom) {
+        if (isRandom) {
+            ArrayList<Character> keyCodes = new ArrayList<>();
+            // 这里以数字键盘为例  获取到键盘原有的按键 随机排列 然后在重新赋值
+            for (Keyboard.Key item : keyboard.getKeys()) {
+                int code = item.codes[0];
+                if (isRandomKey(code)) {
+                    keyCodes.add((char) code);
+                }
+            }
+            // 随机排序数字
+            Collections.shuffle(keyCodes);
+
+            // 遍历所有的按键
+            List<Keyboard.Key> keys = keyboard.getKeys();
+            int index = 0;
+            for (Keyboard.Key key : keys) {
+                int code = key.codes[0];
+                // 如果按键是数字 去除左下角和右下角的非数字键
+                if (isRandomKey(code)) {
+                    char keyCode = keyCodes.get(index++);
+                    key.codes[0] = keyCode;
+                    // 报 ASCII 码转化成值，添加到 label
+                    key.label = Character.toString(keyCode);
+                }
+            }
+        }
+        return keyboard;
+    }
+
+    /**
+     * @param code
+     * @return 是否过滤随机键
+     */
+    boolean isRandomKey(int code) {
+        return code != Keyboard.KEYCODE_DELETE && code != Keyboard.KEYCODE_MODE_CHANGE
+                && code != KeyboardUtil.DELETE && code != KeyboardUtil.CLEAR
+                && code != KeyboardUtil.EMPTY;
     }
 
 
