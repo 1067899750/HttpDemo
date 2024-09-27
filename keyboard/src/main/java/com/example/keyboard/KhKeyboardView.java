@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.method.BaseKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ActionMode;
@@ -304,7 +305,12 @@ public class KhKeyboardView {
         mEditMap.put(editText.getTag().toString(), editText);
         mBoardTypeMap.put(editText.getTag().toString(), type);
         // 移除 digits 属性
-        editText.setKeyListener(null);
+        editText.setKeyListener(new BaseKeyListener() {
+            @Override
+            public int getInputType() {
+                return editText.getInputType();
+            }
+        });
         editText.setOnTouchListener(onEditTextTouchListener);
         disableCopyAndPaste(editText);
     }
