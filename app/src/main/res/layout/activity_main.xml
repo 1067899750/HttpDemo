@@ -50,6 +50,7 @@
             android:layout_height="50dp"
             android:background="#22ff0000"
             android:gravity="center"
+            android:digits="@string/pwd_digits"
             android:text="自定义键盘"
             android:imeOptions="normal"
             android:layout_marginTop="20dp"

@@ -303,6 +303,8 @@ public class KhKeyboardView {
         editText.setTag(Integer.toHexString(System.identityHashCode(editText)));
         mEditMap.put(editText.getTag().toString(), editText);
         mBoardTypeMap.put(editText.getTag().toString(), type);
+        // 移除 digits 属性
+        editText.setKeyListener(null);
         editText.setOnTouchListener(onEditTextTouchListener);
         disableCopyAndPaste(editText);
     }
@@ -682,8 +684,7 @@ public class KhKeyboardView {
                         editable.clear();
                         break;
                     }
-                    case KeyboardUtil.LINE_FEED:    //换行键
-                    case KeyboardUtil.EMPTY: {  //空格
+                    case KeyboardUtil.LINE_FEED: {   //换行键
                         break;
                     }
                     default: {
