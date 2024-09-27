@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="@dimen/keyboard_horizontalGap"
-    android:keyWidth="33%p"
+    android:horizontalGap="1%p"
+    android:keyWidth="10%p"
     android:keyHeight="@dimen/keyboard_key_height"
     android:verticalGap="@dimen/keyboard_verticalGap">
     <Row>
@@ -154,28 +154,4 @@
             android:keyLabel="换行" />
     </Row>
 
-<!--    <Row android:rowEdgeFlags="bottom">-->
-<!--        <Key-->
-<!--            android:codes="100860"-->
-<!--            android:keyWidth="17%p"-->
-<!--            android:keyEdgeFlags="right"-->
-<!--            android:keyLabel="#+=" />-->
-<!--        <Key-->
-<!--            android:codes="44"-->
-<!--            android:keyWidth="12%p"-->
-<!--            android:keyLabel="," />-->
-<!--        <Key-->
-<!--            android:codes="32"-->
-<!--            android:isRepeatable="false"-->
-<!--            android:keyWidth="36%p"-->
-<!--            android:keyLabel="space" />-->
-<!--        <Key-->
-<!--            android:codes="46"-->
-<!--            android:keyWidth="12%p"-->
-<!--            android:keyLabel="." />-->
-<!--        <Key-->
-<!--            android:codes="-2"-->
-<!--            android:keyWidth="17%p"-->
-<!--            android:keyLabel="123" />-->
-<!--    </Row>-->
 </Keyboard>

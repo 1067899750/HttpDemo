@@ -61,10 +61,9 @@
             android:layout_height="50dp"
             android:background="#22ff0000"
             android:gravity="center"
-            android:text="系统键盘"
+            android:text="电话"
             android:imeOptions="normal"
-            android:layout_marginTop="20dp"
-            android:inputType="number"/>
+            android:layout_marginTop="20dp" />
 
         <EditText
             android:id="@+id/safeEditText3"
@@ -72,7 +71,16 @@
             android:layout_height="50sp"
             android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
-            android:hint="数字键盘" />
+            android:hint="生份证" />
+
+
+        <EditText
+            android:id="@+id/safeEditText4"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:hint="金额" />
 
         <TextView
             android:id="@+id/text_tv"

@@ -1,6 +1,5 @@
 package com.example.keyboard;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -16,9 +15,6 @@ import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -32,10 +28,6 @@ public class CustomKeyboardView extends KeyboardView {
     private final Context mContext;
 
     private Keyboard lastKeyboard;
-    /**
-     * 按键的宽高至少是图标宽高的倍数
-     */
-    private static final int ICON2KEY = 2;
 
     // 键盘的一些自定义属性
     private boolean rememberLastType;

@@ -50,12 +50,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         View rootView = findViewById(R.id.main_root);
         View scrollLayout = findViewById(R.id.scroll_layout);
         safeKeyboard = new KhKeyboardView(getApplicationContext(), keyboardContainer, rootView, scrollLayout);
-        safeKeyboard.putEditText(mEditText);
-        safeKeyboard.putRandomEdit(findViewById(R.id.key_board2));
+        // 普通
+        safeKeyboard.putEditText(mEditText, KhKeyboardView.OTHER_TYPE);
 
+        // 电话
+        safeKeyboard.putEditText(findViewById(R.id.key_board2), KhKeyboardView.PHONE_TYPE );
+
+        //身份证
         EditText safeEdit3 = findViewById(R.id.safeEditText3);
-        safeKeyboard.putRandomEdit(safeEdit3);
-        safeKeyboard.putEditText2IdCardType(safeEdit3);
+        safeKeyboard.putEditText(safeEdit3, KhKeyboardView.CARD_TYPE);
+
+        EditText safeEdit4 = findViewById(R.id.safeEditText4);
+        safeKeyboard.putEditText(safeEdit4, KhKeyboardView.MONEY_TYPE);
 
     }
 
@@ -122,6 +128,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         ((TextView) findViewById(R.id.text_tv)).setText(string);
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (safeKeyboard.stillNeedOptManually(false)) {
+            safeKeyboard.hideKeyboard();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
