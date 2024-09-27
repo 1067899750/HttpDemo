@@ -99,7 +99,7 @@
 
     <Row>
         <Key
-            android:codes="-34"
+            android:codes="-40"
             android:keyWidth="50.5dp"
             android:keyEdgeFlags="left"
             android:keyLabel="123" />

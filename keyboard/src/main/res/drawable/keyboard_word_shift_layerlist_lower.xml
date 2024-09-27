@@ -24,8 +24,8 @@
     <item
         android:bottom="13dp"
         android:drawable="@drawable/icon_keyboard_capital_default"
-        android:left="15dp"
-        android:right="15dp"
+        android:left="14dp"
+        android:right="14dp"
         android:top="13dp" />
 
 </layer-list>

@@ -50,6 +50,6 @@
         <Key
             android:codes="-35"
             android:isRepeatable="true"
-            android:keyIcon="@drawable/icon_keyboard_del_default"/>
+            android:keyIcon="@drawable/icon_keyboard_del_default" />
     </Row>
 </Keyboard>

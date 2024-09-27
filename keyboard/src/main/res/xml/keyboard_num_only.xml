@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="@dimen/keyboard_horizontalGap"
-    android:keyWidth="33%p"
-    android:keyHeight="@dimen/keyboard_key_height"
-    android:verticalGap="@dimen/keyboard_verticalGap">
+    android:horizontalGap="2.5%p"
+    android:keyWidth="30%p"
+    android:keyHeight="@dimen/key_num_height"
+    android:verticalGap="@dimen/key_vertical_gap">
+
     <Row>
         <Key
             android:codes="49"
@@ -42,14 +43,13 @@
 
     <Row>
         <Key
-            android:codes="-2"
-            android:keyLabel="ABC" />
+            android:codes="100861"
+            android:keyLabel="SValence" />
         <Key
             android:codes="48"
             android:keyLabel="0" />
         <Key
-            android:codes="-35"
-            android:isRepeatable="true"
-            android:keyIcon="@drawable/icon_keyboard_del_default" />
+            android:codes="-5"
+            android:isRepeatable="true" />
     </Row>
 </Keyboard>
