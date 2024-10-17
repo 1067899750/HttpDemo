@@ -839,20 +839,26 @@ public class KhKeyboardView {
      * @param keyboard 键盘
      */
     private void setKeyboard(Keyboard keyboard) {
-        BoardType type;
-        if (keyboard == mLetterKeyboard) {
-            type = BoardType.WORD_TYPE;
-        } else if (keyboard == mSymbolTwoKeyboard) {
-            type = BoardType.SYMBOL_TYPE;
-        } else if (keyboard == mSymbolOneKeyboard) {
-            type = BoardType.NUM_AND_SYMBOL_TYPE;
-        } else {
-            type = BoardType.DEFAULT_TYPE;
+        Object tag = mCurrentEditText.getTag();
+        // 初始化键盘类型
+        String numberType = mBoardTypeMap.get(tag.toString());
+        if (numberType == null) {
+            numberType = KhKeyboardView.OTHER_TYPE;
         }
-        // Object tagObj = mCurrentEditText.getTag();
-        // 这里 tagObj 不可能等于 null, 如果等于 null 了就说明整个程序出现了问题!
-        mEditLastKeyboardTypeMap.put(mCurrentEditText.getTag().toString(), type);
-        keyboardType = type;
+        if (numberType.equals(KhKeyboardView.OTHER_TYPE)) {
+            BoardType type;
+            if (keyboard == mLetterKeyboard) {
+                type = BoardType.WORD_TYPE;
+            } else if (keyboard == mSymbolTwoKeyboard) {
+                type = BoardType.SYMBOL_TYPE;
+            } else if (keyboard == mSymbolOneKeyboard) {
+                type = BoardType.NUM_AND_SYMBOL_TYPE;
+            } else {
+                type = BoardType.DEFAULT_TYPE;
+            }
+            mEditLastKeyboardTypeMap.put(mCurrentEditText.getTag().toString(), type);
+            keyboardType = type;
+        }
         keyboardView.setKeyboard(keyboard);
     }
 
@@ -1010,10 +1016,10 @@ public class KhKeyboardView {
                         lastKeyboard = mLetterKeyboard;
                         break;
                     case SYMBOL_TYPE:
-                        lastKeyboard = mSymbolOneKeyboard;
+                        lastKeyboard = mSymbolTwoKeyboard;
                         break;
                     case NUM_AND_SYMBOL_TYPE:
-                        lastKeyboard = mSymbolTwoKeyboard;
+                        lastKeyboard = mSymbolOneKeyboard;
                         break;
                     default:
                         Log.e(TAG, "ERROR keyboard type");
