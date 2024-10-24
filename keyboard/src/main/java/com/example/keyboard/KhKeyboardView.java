@@ -76,7 +76,7 @@ public class KhKeyboardView {
     private final SafeKeyboardConfig keyboardConfig;
 
     /**
-     * 是否大写
+     * 是否大写，true:大写，false:小写
      */
     public static boolean isUpper = false;
 
@@ -739,8 +739,8 @@ public class KhKeyboardView {
             isUpper = false;
             for (Keyboard.Key key : keyList) {
                 Drawable icon = key.icon;
-
-                if (key.label != null && isLetter(key.label.toString())) {
+                // 如果是大写字母 +32，转化成小写字母
+                if (key.label != null && isUpperLetter(key.label.toString())) {
                     key.label = key.label.toString().toLowerCase();
                     key.codes[0] = key.codes[0] + 32;
                 }
@@ -749,13 +749,15 @@ public class KhKeyboardView {
             // 小写切换成大写
             isUpper = true;
             for (Keyboard.Key key : keyList) {
-                if (key.label != null && isLetter(key.label.toString())) {
+                // 如果是小写字母 -32，转化成大写字母
+                if (key.label != null && isLoweLetter(key.label.toString())) {
                     key.label = key.label.toString().toUpperCase();
                     key.codes[0] = key.codes[0] - 32;
                 }
             }
         }
     }
+
 
     /**
      * 禁止粘贴复制
@@ -807,6 +809,22 @@ public class KhKeyboardView {
     private boolean isLetter(String str) {
         String wordStr = "abcdefghijklmnopqrstuvwxyz";
         return wordStr.contains(str.toLowerCase());
+    }
+
+    /**
+     * 判断是否是小写
+     */
+    private boolean isLoweLetter(String str) {
+        String wordStr = "abcdefghijklmnopqrstuvwxyz";
+        return wordStr.contains(str);
+    }
+
+    /**
+     * 判断是否是大写
+     */
+    private boolean isUpperLetter(String str) {
+        String wordStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ";
+        return wordStr.contains(str);
     }
 
     /**
@@ -1158,10 +1176,17 @@ public class KhKeyboardView {
      * 还原字母+特殊符号数据键盘数据
      */
     public void onPause() {
-        isUpper = false;
         boardKey = -19991888;
         isClickBoard = false;
-        hideKeyboard();
+        //大写回复成小写
+        // 转化方法先把isUpper设置成 true,然后在切换
+        isUpper = true;
+        changeKeyboard();
+        mEditLastKeyboardTypeMap.put(mCurrentEditText.getTag().toString(), keyboardType);
+        // 如果显示键盘，进行隐藏
+        if (stillNeedOptManually(false)) {
+            hideKeyboard();
+        }
     }
 
     /**
