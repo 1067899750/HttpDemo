@@ -97,11 +97,10 @@
             android:codes="-1"
             android:isModifier="true"
             android:isSticky="true"
-            android:keyWidth="13%p"
+            android:keyWidth="13.5%p"
             android:keyEdgeFlags="left" />
         <Key
             android:codes="122"
-            android:horizontalGap="1.5%p"
             android:keyWidth="9%p"
             android:keyLabel="z" />
         <Key
@@ -130,10 +129,9 @@
             android:keyLabel="m" />
         <Key
             android:codes="-5"
-            android:horizontalGap="1.5%p"
             android:keyEdgeFlags="right"
             android:isRepeatable="true"
-            android:keyWidth="13%p" />
+            android:keyWidth="13.5%p" />
     </Row>
 
     <Row android:rowEdgeFlags="bottom">
