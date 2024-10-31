@@ -105,6 +105,7 @@ public class CustomKeyboardView extends KeyboardView {
                             //小写字母
                             dr.draw(canvas);
                         }
+//                        onDrawCapitalBg(canvas, key);
                         break;
                     }
                     case KeyboardUtil.BLANK: {
@@ -194,6 +195,32 @@ public class CustomKeyboardView extends KeyboardView {
                 break;
         }
         return super.onTouchEvent(me);
+    }
+
+    /**
+     * 绘制大小写切换键
+     *
+     * @param canvas
+     * @param key
+     */
+    private void onDrawCapitalBg(Canvas canvas, Keyboard.Key key){
+        Bitmap dr = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_capital_default);  //小写字母
+        Bitmap dr_da = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_capital_selected);  //大写字母
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        float width = key.width / 2 - dpToPx(mContext, 22) / 2;
+        float height = key.height / 2 - dpToPx(mContext, 18) / 2;
+        if (KhKeyboardView.isUpper) {
+            //大写字母
+            onBufferDrawOne(canvas, key);
+            canvas.drawBitmap(dr_da, key.x + width, key.y + height, paint);
+        } else {
+            //小写字母
+            onBufferDrawTwo(canvas, key);
+            canvas.drawBitmap(dr, key.x + width, key.y + height, paint);
+        }
     }
 
     /**
