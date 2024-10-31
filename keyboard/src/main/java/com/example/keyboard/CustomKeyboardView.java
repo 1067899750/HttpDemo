@@ -113,9 +113,40 @@ public class CustomKeyboardView extends KeyboardView {
                         drawText(canvas, key, Color.parseColor("#000000"));
                         break;
                     }
+                    case KeyboardUtil.SYMBOL_THREE: {
+                        // ₵₱§ 按键
+                        if(KhKeyboardView.isSpecialTwoBoard){
+                            onBufferDrawTwo(canvas, key);
+                        } else {
+                            onBufferDrawOne(canvas, key);
+                        }
+                        drawText(canvas, key, Color.parseColor("#000000"));
+                        break;
+                    }
+                    case KeyboardUtil.SYMBOL_TWO:{
+                        if(KhKeyboardView.isSpecialTwoBoard){
+                            if(KhKeyboardView.isSpecialOneBoard){
+                                onBufferDrawTwo(canvas, key);
+                            } else {
+                                onBufferDrawOne(canvas, key);
+                            }
+                        } else {
+                            //大小写字母和特殊字符切换键
+                            if (key.codes[0] == KhKeyboardView.boardKey) {
+                                if (KhKeyboardView.isClickBoard) {
+                                    onBufferDrawOne(canvas, key);
+                                } else {
+                                    onBufferDrawTwo(canvas, key);
+                                }
+                            } else {
+                                onBufferDrawTwo(canvas, key);
+                            }
+                        }
+                        drawText(canvas, key, Color.parseColor("#000000"));
+                        break;
+                    }
                     case Keyboard.KEYCODE_MODE_CHANGE:
                     case KeyboardUtil.SYMBOL_ONE:
-                    case KeyboardUtil.SYMBOL_TWO:
                     case KeyboardUtil.NUMBER:
                     case KeyboardUtil.WORD: {
                         //大小写字母和特殊字符切换键
@@ -223,6 +254,15 @@ public class CustomKeyboardView extends KeyboardView {
     }
 
     /**
+     * 绘制背景
+     */
+    private void onBufferDrawTwo(Canvas canvas, Keyboard.Key key) {
+        Drawable keyBackground = (Drawable) mContext.getResources().getDrawable(R.drawable.keyboard_selector_bg_two);
+        keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        keyBackground.draw(canvas);
+    }
+
+    /**
      * 空白键
      *
      * @param canvas
@@ -230,16 +270,6 @@ public class CustomKeyboardView extends KeyboardView {
      */
     private void onEmptyDrawBg(Canvas canvas, Keyboard.Key key) {
         Drawable keyBackground = (Drawable) mContext.getResources().getDrawable(R.drawable.keyboard_selector_bg_three);
-        keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-        keyBackground.draw(canvas);
-    }
-
-
-    /**
-     * 绘制背景
-     */
-    private void onBufferDrawTwo(Canvas canvas, Keyboard.Key key) {
-        Drawable keyBackground = (Drawable) mContext.getResources().getDrawable(R.drawable.keyboard_selector_bg_two);
         keyBackground.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         keyBackground.draw(canvas);
     }
@@ -270,10 +300,7 @@ public class CustomKeyboardView extends KeyboardView {
                 field.setAccessible(true);
                 int labelTextSize = (int) field.get(this);
                 // 设置字体
-                if (key.codes[0] == KeyboardUtil.BLANK || key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE
-                        || key.codes[0] == KeyboardUtil.SYMBOL_ONE || key.codes[0] == KeyboardUtil.SYMBOL_TWO
-                        || key.codes[0] == KeyboardUtil.NUMBER || key.codes[0] == KeyboardUtil.WORD
-                        || key.codes[0] == KeyboardUtil.LINE_FEED) {
+                if (isSpecialBtn(key.codes[0])) {
                     paint.setTextSize(sp2px(mContext, 15));
                 } else {
                     paint.setTextSize(labelTextSize);
@@ -298,6 +325,18 @@ public class CustomKeyboardView extends KeyboardView {
         }
     }
 
+    /**
+     * 是否是特殊按键
+     *
+     * @param code
+     * @return
+     */
+    public boolean isSpecialBtn(int code) {
+        return code == KeyboardUtil.BLANK || code == Keyboard.KEYCODE_MODE_CHANGE
+                || code == KeyboardUtil.SYMBOL_ONE || code == KeyboardUtil.SYMBOL_TWO
+                || code == KeyboardUtil.NUMBER || code == KeyboardUtil.WORD
+                || code == KeyboardUtil.LINE_FEED || code == KeyboardUtil.SYMBOL_THREE;
+    }
 
     /**
      * dp转换成px

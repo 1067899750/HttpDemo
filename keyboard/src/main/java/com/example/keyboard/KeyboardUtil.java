@@ -19,6 +19,8 @@ public class KeyboardUtil {
     public static final int SYMBOL_TWO = -37;
     //ABC
     public static final int WORD = -38;
+    // ₵₱§ 键盘
+    public static final int SYMBOL_THREE = -39;
     // 123 切换键
     public static final int NUMBER = -40;
 

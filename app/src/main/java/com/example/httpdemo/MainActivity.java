@@ -63,6 +63,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         EditText safeEdit4 = findViewById(R.id.safeEditText4);
         safeKeyboard.putEditText(safeEdit4, KhKeyboardView.MONEY_TYPE);
 
+        String a = ",,";
+        EditText safeEdit5 = findViewById(R.id.safeEditText5);
     }
 
     @Override

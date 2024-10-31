@@ -90,6 +90,17 @@ public class KhKeyboardView {
      */
     public static boolean isClickBoard = false;
 
+
+    /**
+     * true: #+=选中
+     */
+    public static boolean isSpecialOneBoard = true;
+
+    /**
+     * true:₵₱§:选中
+     */
+    public static boolean isSpecialTwoBoard = false;
+
     /**
      * 键盘容器
      */
@@ -110,6 +121,11 @@ public class KhKeyboardView {
      * 符号键盘
      */
     private Keyboard mSymbolTwoKeyboard;
+
+    /**
+     * 符号键盘
+     */
+    private Keyboard mSymbolThreeKeyboard;
 
     /**
      * 电话键盘
@@ -271,6 +287,7 @@ public class KhKeyboardView {
         //实例化数字键盘
         mSymbolOneKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_one);
         mSymbolTwoKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_two);
+        mSymbolThreeKeyboard = new Keyboard(mContext, R.xml.keyboard_symbol_three);
 
         // 纯数字键盘
         mPhoneKeyboard = new Keyboard(mContext, R.xml.keyborad_phone_numbers);
@@ -669,14 +686,36 @@ public class KhKeyboardView {
                     case KeyboardUtil.NUMBER:
                     case KeyboardUtil.SYMBOL_ONE: {
                         // 数字 + 符号
-                        keyboardType = BoardType.NUM_AND_SYMBOL_TYPE;
+                        if (isSpecialTwoBoard) {
+                            keyboardType = BoardType.NUM_AND_SYMBOL_TYPE_TWO;
+                        } else {
+                            keyboardType = BoardType.NUM_AND_SYMBOL_TYPE_ONE;
+                        }
                         switchKeyboard();
                         break;
                     }
                     case KeyboardUtil.SYMBOL_TWO: {
                         //显示符号键盘
-                        keyboardType = BoardType.SYMBOL_TYPE;
+                        if (isSpecialTwoBoard) {
+                            isSpecialOneBoard = true;
+                            isSpecialTwoBoard = false;
+                            keyboardType = BoardType.NUM_AND_SYMBOL_TYPE_ONE;
+                        } else {
+                            //走纯特殊字符逻辑
+                            keyboardType = BoardType.SYMBOL_TYPE;
+                        }
                         switchKeyboard();
+                        break;
+                    }
+                    case KeyboardUtil.SYMBOL_THREE: { // 特殊键盘 ₵₱§
+                        // 键盘 #+= 和 按键 ₵₱§ 互斥
+                        if (!isSpecialTwoBoard) {
+                            // 但按键 ₵₱§ 点击的时候，不能在触发点击
+                            isSpecialOneBoard = false;
+                            isSpecialTwoBoard = true;
+                            keyboardType = BoardType.NUM_AND_SYMBOL_TYPE_TWO;
+                            switchKeyboard();
+                        }
                         break;
                     }
                     case KeyboardUtil.WORD: {
@@ -696,6 +735,8 @@ public class KhKeyboardView {
                     default: {
                         // 输入键盘值
                         // editable.insert(start, Character.toString((char) primaryCode));
+                        char a = '„';
+                        int aa = (int)a;
                         editable.replace(start, end, Character.toString((char) primaryCode));
                         break;
                     }
@@ -835,8 +876,11 @@ public class KhKeyboardView {
             case WORD_TYPE:
                 setKeyboard(mLetterKeyboard);
                 break;
-            case NUM_AND_SYMBOL_TYPE:
+            case NUM_AND_SYMBOL_TYPE_ONE:
                 setKeyboard(mSymbolOneKeyboard);
+                break;
+            case NUM_AND_SYMBOL_TYPE_TWO:
+                setKeyboard(mSymbolThreeKeyboard);
                 break;
             case SYMBOL_TYPE:
                 setKeyboard(mSymbolTwoKeyboard);
@@ -866,11 +910,17 @@ public class KhKeyboardView {
         if (numberType.equals(KhKeyboardView.OTHER_TYPE)) {
             BoardType type;
             if (keyboard == mLetterKeyboard) {
+                // 英文大小写字符
                 type = BoardType.WORD_TYPE;
             } else if (keyboard == mSymbolTwoKeyboard) {
+                // 特使符号
                 type = BoardType.SYMBOL_TYPE;
             } else if (keyboard == mSymbolOneKeyboard) {
-                type = BoardType.NUM_AND_SYMBOL_TYPE;
+                // 特殊符号+数字
+                type = BoardType.NUM_AND_SYMBOL_TYPE_ONE;
+            } else if (keyboard == mSymbolThreeKeyboard) {
+                // 特殊符号+数字
+                type = BoardType.NUM_AND_SYMBOL_TYPE_TWO;
             } else {
                 type = BoardType.DEFAULT_TYPE;
             }
@@ -1010,15 +1060,15 @@ public class KhKeyboardView {
         // 默认字母键盘
         Keyboard lastKeyboard = mLetterKeyboard;
         switch (numberType) {
-            case KhKeyboardView.CARD_TYPE: {
+            case KhKeyboardView.CARD_TYPE: {//身份证
                 lastKeyboard = setRandomNumberKeyboard(mCardKeyboard, isRandom);
                 break;
             }
-            case KhKeyboardView.MONEY_TYPE: {
+            case KhKeyboardView.MONEY_TYPE: { //金额
                 lastKeyboard = setRandomNumberKeyboard(mMoneyKeyboard, isRandom);
                 break;
             }
-            case KhKeyboardView.PHONE_TYPE: {
+            case KhKeyboardView.PHONE_TYPE: {//电话
                 lastKeyboard = setRandomNumberKeyboard(mPhoneKeyboard, isRandom);
                 break;
             }
@@ -1030,14 +1080,17 @@ public class KhKeyboardView {
                     type = boardType == null ? BoardType.WORD_TYPE : boardType;
                 }
                 switch (type) {
-                    case WORD_TYPE:
+                    case WORD_TYPE: //英文大小写字符
                         lastKeyboard = mLetterKeyboard;
                         break;
-                    case SYMBOL_TYPE:
+                    case SYMBOL_TYPE: //特使符号
                         lastKeyboard = mSymbolTwoKeyboard;
                         break;
-                    case NUM_AND_SYMBOL_TYPE:
+                    case NUM_AND_SYMBOL_TYPE_ONE://特殊符号+数字
                         lastKeyboard = mSymbolOneKeyboard;
+                        break;
+                    case NUM_AND_SYMBOL_TYPE_TWO://特殊符号+数字
+                        lastKeyboard = mSymbolThreeKeyboard;
                         break;
                     default:
                         Log.e(TAG, "ERROR keyboard type");
@@ -1178,6 +1231,12 @@ public class KhKeyboardView {
     public void onPause() {
         boardKey = -19991888;
         isClickBoard = false;
+        // 恢复特殊符号
+        isSpecialOneBoard = true;
+        isSpecialTwoBoard = false;
+        // 恢复默认键盘
+        keyboardType = BoardType.WORD_TYPE;
+        mEditLastKeyboardTypeMap.put(mCurrentEditText.getTag().toString(), keyboardType);
         //大写回复成小写
         // 转化方法先把isUpper设置成 true,然后在切换
         isUpper = true;
@@ -1193,6 +1252,8 @@ public class KhKeyboardView {
      * 清空数据
      */
     public void release() {
+        isSpecialOneBoard = true;
+        isSpecialTwoBoard = false;
         isUpper = false;
         boardKey = -19991888;
         isClickBoard = false;

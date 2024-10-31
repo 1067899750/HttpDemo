@@ -52,47 +52,47 @@
 
     <Row>
         <Key
-            android:codes="45"
+            android:codes="171"
             android:keyWidth="8.9%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="-" />
+            android:keyLabel="«" />
         <Key
-            android:codes="47"
+            android:codes="187"
             android:keyWidth="8.9%p"
-            android:keyLabel="/" />
+            android:keyLabel="»" />
         <Key
-            android:codes="58"
+            android:codes="8220"
             android:keyWidth="8.9%p"
-            android:keyLabel=":" />
+            android:keyLabel="“" />
         <Key
-            android:codes="59"
+            android:codes="8221"
             android:keyWidth="8.9%p"
-            android:keyLabel=";" />
+            android:keyLabel="”" />
         <Key
-            android:codes="40"
+            android:codes="8222"
             android:keyWidth="8.9%p"
-            android:keyLabel="(" />
+            android:keyLabel="„" />
         <Key
-            android:codes="41"
+            android:codes="8240"
             android:keyWidth="8.9%p"
-            android:keyLabel=")" />
+            android:keyLabel="‰" />
         <Key
-            android:codes="36"
+            android:codes="8373"
             android:keyWidth="8.9%p"
-            android:keyLabel="$" />
+            android:keyLabel="₵" />
         <Key
-            android:codes="38"
+            android:codes="8369"
             android:keyWidth="8.9%p"
-            android:keyLabel="@string/keyboard_key2" /><!--&-->
+            android:keyLabel="₱" />
         <Key
-            android:codes="64"
+            android:codes="8361"
             android:keyWidth="8.9%p"
-            android:keyLabel="@string/keyboard_key1" /><!--@-->
+            android:keyLabel="₩" />
         <Key
-            android:codes="34"
+            android:codes="167"
             android:keyWidth="8.9%p"
             android:keyEdgeFlags="right"
-            android:keyLabel="@string/keyboard_key3" /> <!--"-->
+            android:keyLabel="§" />
     </Row>
 
     <Row>
@@ -106,25 +106,25 @@
             android:keyWidth="13.5%p"
             android:keyLabel="₵₱§" />
         <Key
-            android:codes="46"
+            android:codes="8230"
             android:keyWidth="10.1%p"
-            android:keyLabel="." />
+            android:keyLabel="…" />
         <Key
-            android:codes="44"
+            android:codes="191"
             android:keyWidth="10.1%p"
-            android:keyLabel="," />
+            android:keyLabel="¿" />
         <Key
-            android:codes="63"
+            android:codes="161"
             android:keyWidth="10.1%p"
-            android:keyLabel="\?" />
+            android:keyLabel="¡" />
         <Key
-            android:codes="33"
+            android:codes="8216"
             android:keyWidth="10.1%p"
-            android:keyLabel="!" />
+            android:keyLabel="‘" />
         <Key
-            android:codes="39"
+            android:codes="8217"
             android:keyWidth="10.1%p"
-            android:keyLabel="'" />
+            android:keyLabel="’" />
         <Key
             android:codes="-5"
             android:keyWidth="13.5%p"

@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_root"
     tools:context=".MainActivity">
 
 
@@ -13,14 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:background="#22ff0000"
             android:gravity="center"
             android:text="登录接口"
-            android:layout_marginTop="20dp"
             android:textAllCaps="false" />
 
 
@@ -28,43 +29,43 @@
             android:id="@+id/other_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:background="#22ff0000"
             android:gravity="center"
             android:text="其他接口"
-            android:layout_marginTop="20dp"
             android:textAllCaps="false" />
 
         <Button
             android:id="@+id/other_keyboard"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:background="#22ff0000"
             android:gravity="center"
             android:text="其他键盘"
-            android:layout_marginTop="20dp"
             android:textAllCaps="false" />
 
         <EditText
             android:id="@+id/key_board"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#22ff0000"
-            android:gravity="center"
-            android:digits="@string/pwd_digits"
-            android:text="自定义键盘"
-            android:imeOptions="normal"
             android:layout_marginTop="20dp"
-            android:inputType="textVisiblePassword" />
+            android:background="#22ff0000"
+            android:digits="@string/pwd_digits"
+            android:gravity="center"
+            android:imeOptions="normal"
+            android:inputType="textVisiblePassword"
+            android:text="自定义键盘" />
 
         <EditText
             android:id="@+id/key_board2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:background="#22ff0000"
             android:gravity="center"
-            android:text="电话"
             android:imeOptions="normal"
-            android:layout_marginTop="20dp" />
+            android:text="电话" />
 
         <EditText
             android:id="@+id/safeEditText3"
@@ -81,15 +82,24 @@
             android:layout_height="50sp"
             android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
+            android:inputType="text"
             android:hint="金额" />
+
+
+        <EditText
+            android:id="@+id/safeEditText5"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:hint="系统键盘" />
 
         <TextView
             android:id="@+id/text_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -98,6 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical" />
+
 </RelativeLayout>
 
 
