@@ -203,21 +203,23 @@ public class CustomKeyboardView extends KeyboardView {
      * @param canvas
      * @param key
      */
-    private void onDrawCapitalBg(Canvas canvas, Keyboard.Key key){
+    private void onDrawCapitalBg(Canvas canvas, Keyboard.Key key) {
         Bitmap dr = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_capital_default);  //小写字母
         Bitmap dr_da = BitmapFactory.decodeResource(getResources(), R.drawable.icon_keyboard_capital_selected);  //大写字母
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
-        float width = key.width / 2 - dpToPx(mContext, 22) / 2;
-        float height = key.height / 2 - dpToPx(mContext, 18) / 2;
         if (KhKeyboardView.isUpper) {
             //大写字母
+            float width = key.width / 2f - dr_da.getWidth() / 2f;
+            float height = key.height / 2f - dr_da.getHeight() / 2f;
             onBufferDrawOne(canvas, key);
             canvas.drawBitmap(dr_da, key.x + width, key.y + height, paint);
         } else {
             //小写字母
+            float width = key.width / 2f - dr.getWidth() / 2f;
+            float height = key.height / 2f - dr.getHeight() / 2f;
             onBufferDrawTwo(canvas, key);
             canvas.drawBitmap(dr, key.x + width, key.y + height, paint);
         }
@@ -246,10 +248,11 @@ public class CustomKeyboardView extends KeyboardView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
-        float width = key.width / 2 - dpToPx(mContext, 23) / 2;
-        float height = key.height / 2 - dpToPx(mContext, 17) / 2;
+        float width = key.width / 2f - bitmap.getWidth() / 2f;
+        float height = key.height / 2f - bitmap.getHeight() / 2f;
         canvas.drawBitmap(bitmap, key.x + width, key.y + height, paint);
     }
+
 
 
     /**
