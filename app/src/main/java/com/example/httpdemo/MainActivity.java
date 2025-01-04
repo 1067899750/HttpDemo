@@ -12,7 +12,8 @@ import android.widget.Toast;
 import com.example.httpdemo.untils.HttpUtil;
 import com.example.keyboard.KeyBoardDialogUtils;
 import com.example.mylibrary.HttpHelper;
-//import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
+import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
+import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,9 +165,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         SharedPreferences sharedPreferences = this.getSharedPreferences("CookiePersistence", Context.MODE_PRIVATE);
         Map<String, ?> map = sharedPreferences.getAll();
         Set<String> keySet = map.keySet();
-//        for (String key : keySet) {
-//            cookies.add(new SerializableCookie().decode((String) map.get(key)).value());
-//        }
+        for (String key : keySet) {
+            cookies.add(new SerializableCookie().decode((String) map.get(key)).value());
+        }
         ((TextView) findViewById(R.id.text_tv)).setText(string);
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
