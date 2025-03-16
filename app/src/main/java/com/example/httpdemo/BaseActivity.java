@@ -1,13 +1,11 @@
 package com.example.httpdemo;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylibrary.base.ICallBack;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 /**
  * @Describe 基类

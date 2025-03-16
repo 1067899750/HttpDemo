@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HttpDemo</string>
+    <string name="pwd_digits">￡abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^*()_+{}|:"?`-=[]\;',€¥·./\\&amp;&lt;&gt; </string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="@dimen/keyboard_horizontalGap"
-    android:keyWidth="33%p"
+    android:horizontalGap="1.75%p"
+    android:keyWidth="31%p"
     android:keyHeight="@dimen/keyboard_key_height"
     android:verticalGap="@dimen/keyboard_verticalGap">
     <Row>
@@ -42,8 +42,8 @@
 
     <Row>
         <Key
-            android:codes="-38"
-            android:keyLabel="ABC" />
+            android:codes="46"
+            android:keyLabel="." />
         <Key
             android:codes="48"
             android:keyLabel="0" />

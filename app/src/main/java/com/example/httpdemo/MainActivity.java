@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.httpdemo.untils.HttpUtil;
-import com.example.keyboard.KeyBoardDialogUtils;
+import com.example.keyboard.KhKeyboardView;
+import com.example.keyboard.SafeKeyboardConfig;
 import com.example.mylibrary.HttpHelper;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
@@ -19,15 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String url = HttpUtil.GET_LOGIN1;
@@ -38,7 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String mobile = "18503970627";
     private String cid = "09164b5a280eda07839aabbd9e3c5961";
 
-    private KeyBoardDialogUtils keyBoardDialogUtils;
+    private KhKeyboardView safeKeyboard;
 
     private EditText mEditText;
 
@@ -52,59 +45,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
+
+        LinearLayout keyboardContainer = findViewById(R.id.safe_keyboard_place);
         mEditText = findViewById(R.id.key_board);
-        keyBoardDialogUtils = new KeyBoardDialogUtils(this, mEditText, true);
+        View rootView = findViewById(R.id.main_root);
+        View scrollLayout = findViewById(R.id.scroll_layout);
+        safeKeyboard = new KhKeyboardView(getApplicationContext(), keyboardContainer, rootView, scrollLayout);
+        // 普通
+        safeKeyboard.putEditText(mEditText, KhKeyboardView.OTHER_TYPE);
 
-        //        HttpHelper.getInstance().get(url, params, new HttpCallback<Login>() {
-//            @Override
-//            public void onFailed(String message) {
-//
-//            }
-//
-//            @Override
-//            public void onError(int code, String message) {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(Login login, String tag) {
-//
-//            }
-//        });
-        Observable.interval(500, TimeUnit.MINUTES).subscribe();
-        Observable.create(new ObservableOnSubscribe<String>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                        emitter.onNext("1 next");
-                        emitter.onNext("2 next");
-                        emitter.onComplete();
-                    }
-                }).map(new Function<String, String>() {
-                    @Override
-                    public String apply(String s) throws Exception {
-                        return s + "Rxjava";
-                    }
-                }).observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
-                    }
-                }).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        String s1 = s;
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        String s1 = throwable.getMessage();
-                    }
-                });
+        // 电话
+        safeKeyboard.putEditText(findViewById(R.id.key_board2), KhKeyboardView.PHONE_TYPE );
 
+        //身份证
+        EditText safeEdit3 = findViewById(R.id.safeEditText3);
+        safeKeyboard.putEditText(safeEdit3, KhKeyboardView.CARD_TYPE);
 
+        EditText safeEdit4 = findViewById(R.id.safeEditText4);
+        safeKeyboard.putEditText(safeEdit4, KhKeyboardView.MONEY_TYPE);
+
+        String a = ",,";
+        EditText safeEdit5 = findViewById(R.id.safeEditText5);
     }
 
     @Override
@@ -172,7 +133,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (safeKeyboard.stillNeedOptManually(false)) {
+            safeKeyboard.hideKeyboard();
+            return;
+        }
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void onPause() {
+        if (safeKeyboard != null) {
+            safeKeyboard.onPause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (safeKeyboard != null) {
+            safeKeyboard.release();
+            safeKeyboard = null;
+        }
+        super.onDestroy();
+    }
 }
 
 
