@@ -864,7 +864,7 @@ public class KhKeyboardView {
      * 判断是否是大写
      */
     private boolean isUpperLetter(String str) {
-        String wordStr = "ABCDEFGHIGKLMNOPQRSTUVWXYZ";
+        String wordStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return wordStr.contains(str);
     }
 
