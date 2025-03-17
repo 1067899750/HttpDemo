@@ -17,6 +17,8 @@ android {
         }
     }
 
+    // 主要用于指定Java源代码的兼容性级别。
+    // 通过配置compileOptions，开发者可以确保代码在不同版本的Android设备上具有更好的兼容性和性能。
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
