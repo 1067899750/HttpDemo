@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 /**
  * 应用间跳转
@@ -25,7 +26,7 @@ public class ForwardUtils {
             return false;
         }
         try {
-            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -35,10 +36,10 @@ public class ForwardUtils {
 
     /**
      * 拉起应用
-     *             <intent-filter>
-     *                 <action android:name="SHIQJ" />
-     *                 <category android:name="android.intent.category.DEFAULT" />
-     *             </intent-filter>
+     * <intent-filter>
+     * <action android:name="SHIQJ" />
+     * <category android:name="android.intent.category.DEFAULT" />
+     * </intent-filter>
      */
     public static void skipAppOne(Context context) {
         try {
@@ -70,32 +71,41 @@ public class ForwardUtils {
      * 拉起应用
      */
     public static void skipAppThree(Context context) {
+        boolean isAppInstalled = false;
         try {
-            Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.lightpalm.daidai");
-            if (intent != null) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+            context.getPackageManager().getPackageInfo("com.example.app", PackageManager.GET_ACTIVITIES);
+            isAppInstalled = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            isAppInstalled = false;
+        }
+
+        try {
+            if (isAppInstalled) {
+                Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("com.example.app");
+                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(launchIntent);
+            } else {
+                Toast.makeText(context, "应用未安装", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
 
     /**
      * 拉起应用
-     *
-     *             <intent-filter>
-     *                 <data
-     *                     android:host="B应用包名最好"
-     *                     android:path="/shiqj"
-     *                     android:scheme="shiqj" />
-     *                 <action android:name="android.intent.action.VIEW" />
-     *
-     *                 <category android:name="android.intent.category.DEFAULT" />
-     *                 <category android:name="android.intent.category.BROWSABLE" />
-     *             </intent-filter>
+     * <p>
+     * <intent-filter>
+     * <data
+     * android:host="B应用包名最好"
+     * android:path="/shiqj"
+     * android:scheme="shiqj" />
+     * <action android:name="android.intent.action.VIEW" />
+     * <p>
+     * <category android:name="android.intent.category.DEFAULT" />
+     * <category android:name="android.intent.category.BROWSABLE" />
+     * </intent-filter>
      */
     public static void skipAppFour(Context context) {
         try {

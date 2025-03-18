@@ -96,11 +96,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(this, KeyBoardActivity2.class));
                 break;
             case R.id.skip_btn:
-                boolean b = ForwardUtils.isApkInstalled(this, "com.lightpalm.daidai");
+                boolean b = ForwardUtils.isApkInstalled(this, "com.example.httpdemo");
                 if(b){
 
                 }
-                ForwardUtils.skipAppFour(this);
+                ForwardUtils.skipAppTwo(this);
                 break;
 
         }
