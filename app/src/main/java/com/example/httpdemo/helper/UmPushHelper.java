@@ -2,6 +2,7 @@ package com.example.httpdemo.helper;
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.umeng.commonsdk.UMConfigure;
@@ -21,6 +22,8 @@ import org.android.agoo.mezu.MeizuRegister;
 import org.android.agoo.oppo.OppoRegister;
 import org.android.agoo.vivo.VivoRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
+
+import java.time.Instant;
 
 /**
  * 友盟推送
@@ -44,7 +47,7 @@ public class UmPushHelper {
 
         PushAgent api = PushAgent.getInstance(context);
         // 推送设置
-        UmPushHelper.setting(api);
+        UmPushHelper.setting(context, api);
 
         // 推送注册
         api.register(new UPushRegisterCallback() {
@@ -66,7 +69,7 @@ public class UmPushHelper {
     /**
      * 推送设置
      */
-    public static void setting(PushAgent api) {
+    public static void setting(Context context, PushAgent api) {
         //修改为您app/src/main/AndroidManifest.xml中package值
         api.setResourcePackageName("com.example.httpdemo");
 
@@ -100,10 +103,16 @@ public class UmPushHelper {
 
         //推送消息点击处理
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+            // 打开应用
             @Override
             public void openActivity(Context context, UMessage msg) {
                 super.openActivity(context, msg);
                 Log.i(TAG, "click open activity:\n" + msg.getRaw().toString());
+
+//                Intent intent = new Intent();
+//                intent.setClassName("com.example.httpdemo", msg.activity);
+//                context.startActivity(intent);
+
             }
 
             @Override

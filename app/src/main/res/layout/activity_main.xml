@@ -36,6 +36,16 @@
             android:textAllCaps="false" />
 
         <Button
+            android:id="@+id/skip_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="#22ff0000"
+            android:gravity="center"
+            android:text="拉起应用"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/other_keyboard"
             android:layout_width="match_parent"
             android:layout_height="50dp"

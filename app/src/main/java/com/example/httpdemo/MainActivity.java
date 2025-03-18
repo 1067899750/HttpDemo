@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.httpdemo.untils.ForwardUtils;
 import com.example.httpdemo.untils.HttpUtil;
 import com.example.keyboard.KhKeyboardView;
 import com.example.keyboard.SafeKeyboardConfig;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.login_btn).setOnClickListener(this);
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
+        findViewById(R.id.skip_btn).setOnClickListener(this);
 
         LinearLayout keyboardContainer = findViewById(R.id.safe_keyboard_place);
         mEditText = findViewById(R.id.key_board);
@@ -92,6 +94,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.other_keyboard:
                 startActivity(new Intent(this, KeyBoardActivity2.class));
+                break;
+            case R.id.skip_btn:
+                boolean b = ForwardUtils.isApkInstalled(this, "com.lightpalm.daidai");
+                if(b){
+
+                }
+                ForwardUtils.skipAppFour(this);
                 break;
 
         }

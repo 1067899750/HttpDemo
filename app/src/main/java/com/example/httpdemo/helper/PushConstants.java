@@ -8,13 +8,13 @@ public class PushConstants {
      * 应用申请的Appkey
      */
 //    public static final String APP_KEY = "应用申请的Appkey";
-    public static final String APP_KEY = "67d7b7fbc98cfc7fd09363f1";
+    public static final String APP_KEY = "67d7e249f4974846a529ad7c";
 
     /**
      * 应用申请的UmengMessageSecret
      */
 //    public static final String MESSAGE_SECRET = "应用申请的UmengMessageSecret";
-    public static final String MESSAGE_SECRET = "528108fa8813543d138f9556d1225c92";
+    public static final String MESSAGE_SECRET = "23400d26d356a5774b1ef553b5058298";
 
     /**
      * 后台加密消息的密码（仅Demo用，请勿将此密码泄漏）
