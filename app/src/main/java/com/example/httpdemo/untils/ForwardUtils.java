@@ -35,6 +35,10 @@ public class ForwardUtils {
 
     /**
      * 拉起应用
+     *             <intent-filter>
+     *                 <action android:name="SHIQJ" />
+     *                 <category android:name="android.intent.category.DEFAULT" />
+     *             </intent-filter>
      */
     public static void skipAppOne(Context context) {
         try {
