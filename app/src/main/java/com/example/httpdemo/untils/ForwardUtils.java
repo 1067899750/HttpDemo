@@ -58,11 +58,11 @@ public class ForwardUtils {
     public static void skipAppTwo(Context context) {
         try {
             Intent intent = new Intent();
-            intent.setClassName("com.lightpalm.daidai", "com.lightpalm.daidai.loan.launch.LaunchActivity");
+            intent.setClassName("com.lightpalm.fenqia", "com.lightpalm.daidai.loan.launch.LaunchActivity");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -127,7 +127,7 @@ public class ForwardUtils {
      * @param appPkg    目标App的包名
      * @param marketPkg 应用商店包名
      */
-    public void launchAppDetail(Context context, String appPkg, String marketPkg) {
+    public static void launchAppDetail(Context context, String appPkg, String marketPkg) {
         try {
             if (TextUtils.isEmpty(appPkg)) return;
             Uri uri = Uri.parse("market://details?id=" + appPkg);
