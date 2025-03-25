@@ -35,13 +35,13 @@ public class ForwardUtils {
     }
 
     /**
-     * 拉起应用
+     * 通过 action 拉起应用
      * <intent-filter>
-     * <action android:name="SHIQJ" />
-     * <category android:name="android.intent.category.DEFAULT" />
+     * <action android:name="SHIQJ" />  动作
+     * <category android:name="android.intent.category.DEFAULT" /> 类别
      * </intent-filter>
      */
-    public static void skipAppOne(Context context) {
+    public static void goActionSkipAppOne(Context context) {
         try {
             Intent intent = new Intent();
             intent.setAction("SHIQJ");//这个值一定要和B应用的action一致，否则会报错
@@ -53,9 +53,9 @@ public class ForwardUtils {
     }
 
     /**
-     * 拉起应用
+     * 通过 包名+activity名 拉起应用
      */
-    public static void skipAppTwo(Context context) {
+    public static void getPackageAndPageNameSkipAppTwo(Context context) {
         try {
             Intent intent = new Intent();
             intent.setClassName("com.lightpalm.fenqia", "com.lightpalm.daidai.loan.launch.LaunchActivity");
@@ -70,18 +70,20 @@ public class ForwardUtils {
     /**
      * 拉起应用
      */
-    public static void skipAppThree(Context context) {
+    public static void skipAppThree(Context context, String packageName) {
+        // 判断应用是否存在
         boolean isAppInstalled = false;
         try {
-            context.getPackageManager().getPackageInfo("com.example.app", PackageManager.GET_ACTIVITIES);
+            context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
             isAppInstalled = true;
         } catch (PackageManager.NameNotFoundException e) {
             isAppInstalled = false;
         }
 
         try {
+            // 拉起应用
             if (isAppInstalled) {
-                Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("com.example.app");
+                Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(launchIntent);
             } else {
@@ -92,9 +94,21 @@ public class ForwardUtils {
         }
     }
 
+    /**
+     * 通过 包名 拉起应用
+     */
+    public static void goPackageNameSkipApp(Context context, String packageName) {
+        try {
+            Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(launchIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
-     * 拉起应用
+     * 通过 scheme 拉起应用
      * <p>
      * <intent-filter>
      * <data
@@ -107,11 +121,12 @@ public class ForwardUtils {
      * <category android:name="android.intent.category.BROWSABLE" />
      * </intent-filter>
      */
-    public static void skipAppFour(Context context) {
+    public static void goSchemeSkipAppFour(Context context) {
         try {
             Intent intent = new Intent();
             Uri uri = Uri.parse("fenqi://loan/splash");
-            intent.putExtra("", "");//这里Intent当然也可传递参数,但是一般情况下都会放到上面的URI中进行传递也就是"scheme://host/path?xx=xx"
+            //这里Intent当然也可传递参数,但是一般情况下都会放到上面的URI中进行传递也就是"scheme://host/path?xx=xx"
+            intent.putExtra("", "");
             intent.setData(uri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         safeKeyboard.putEditText(mEditText, KhKeyboardView.OTHER_TYPE);
 
         // 电话
-        safeKeyboard.putEditText(findViewById(R.id.key_board2), KhKeyboardView.PHONE_TYPE );
+        safeKeyboard.putEditText(findViewById(R.id.key_board2), KhKeyboardView.PHONE_TYPE);
 
         //身份证
         EditText safeEdit3 = findViewById(R.id.safeEditText3);
@@ -96,9 +96,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(this, KeyBoardActivity2.class));
                 break;
             case R.id.skip_btn:
-                boolean b = ForwardUtils.isApkInstalled(this, "com.lightpalm.fenqia");
-                if(b){
-                    ForwardUtils.skipAppTwo(this);
+                String packageName = "com.lightpalm.fenqia";
+                boolean b = ForwardUtils.isApkInstalled(this, packageName);
+                if (b) {
+                    ForwardUtils.goActionSkipAppOne(this);
                 }
                 break;
 
