@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.other_btn).setOnClickListener(this);
         findViewById(R.id.other_keyboard).setOnClickListener(this);
         findViewById(R.id.skip_btn).setOnClickListener(this);
+        findViewById(R.id.webView).setOnClickListener(this);
 
         LinearLayout keyboardContainer = findViewById(R.id.safe_keyboard_place);
         mEditText = findViewById(R.id.key_board);
@@ -99,8 +100,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String packageName = "com.lightpalm.fenqia";
                 boolean b = ForwardUtils.isApkInstalled(this, packageName);
                 if (b) {
-                    ForwardUtils.goActionSkipAppOne(this);
+                    ForwardUtils.goPackageNameSkipApp(this, packageName);
                 }
+                break;
+            case R.id.webView:
+                startActivity(new Intent(this, WebMainActivity.class));
                 break;
 
         }
@@ -154,7 +158,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onPause() {
         if (safeKeyboard != null) {
-            safeKeyboard.onPause();
+//            safeKeyboard.onPause();
         }
         super.onPause();
     }

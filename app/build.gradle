@@ -102,6 +102,7 @@ dependencies {
 dependencies {
     api 'com.umeng.umsdk:honor-umengaccs:+'
     api 'com.umeng.umsdk:honor-push:+'
+    implementation 'androidx.activity:activity:1.8.0'
 }
 
 

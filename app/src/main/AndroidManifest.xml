@@ -86,8 +86,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="behind"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="behind">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -95,9 +95,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".KeyBoardActivity" />
-        <activity android:name=".KeyBoardActivity2" />
+        <activity
+            android:name=".KeyBoardActivity"
+            android:screenOrientation="behind" />
 
+        <activity
+            android:name=".KeyBoardActivity2"
+            android:screenOrientation="behind" />
+
+        <activity
+            android:name=".WebMainActivity"
+            android:exported="false"
+            android:screenOrientation="behind" />
 
         <activity
             android:name=".mfr.MfrMessageActivity"
