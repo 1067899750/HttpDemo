@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 /**
@@ -137,6 +139,27 @@ public class ForwardUtils {
             throw new RuntimeException(e);
         }
 
+    }
+
+    /**
+     * 通过 scheme 拉起应用
+     *
+     * @param context
+     * @param scheme
+     */
+    private void handleDeepLink(Context context, String scheme) {
+        try {
+            Intent intent = Intent.parseUri(scheme, Intent.URI_INTENT_SCHEME);
+            if (intent != null) {
+                PackageManager packageManager = context.getPackageManager();
+                ResolveInfo info = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                if (info != null) {
+                    context.startActivity(intent);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
