@@ -84,6 +84,17 @@
             tools:node="remove" />
         <!-- 华为鸿蒙4.2.0允许通知弹窗问题 end -->
 
+        <meta-data
+            android:name="DEEPLINK_HOST"
+            android:value="${DEEPLINK_HOST}" />
+        <meta-data
+            android:name="DEEPLINK_PATH"
+            android:value="${DEEPLINK_PATH}" />
+
+        <meta-data
+            android:name="DEEPLINK_SCHEME"
+            android:value="${DEEPLINK_SCHEME}" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -92,6 +103,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <action android:name="android.intent.category.DEFINE" />
+                <action android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${DEEPLINK_HOST}"
+                    android:path="${DEEPLINK_PATH}"
+                    android:scheme="${DEEPLINK_SCHEME}" />
             </intent-filter>
         </activity>
 

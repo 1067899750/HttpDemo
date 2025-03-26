@@ -15,7 +15,17 @@ android {
 //            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
 //        }
 
+        // 项目的初始化资源
+        resValue("string", "DEEPLINK_SCHEME", "shiqj")
+        resValue("string", "DEEPLINK_HOST", "http")
+        resValue("string", "DEEPLINK_PATH", "/shiqj")
         buildConfigField "String", "APPLICATION_ID", "\"${rootProject.ext.android.applicationId}\""
+
+        manifestPlaceholders = [
+                "DEEPLINK_SCHEME": "${scheme}",
+                "DEEPLINK_HOST": "${host}",
+                "DEEPLINK_PATH": "${host_path}"
+        ]
     }
     buildTypes {
         release {
