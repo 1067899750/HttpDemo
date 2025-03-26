@@ -126,7 +126,7 @@ public class ForwardUtils {
             if (TextUtils.isEmpty(scheme)) {
                 scheme = "fenqi://loan/splash";
             }
-            Intent intent = new Intent();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri uri = Uri.parse(scheme);
             //这里Intent当然也可传递参数,但是一般情况下都会放到上面的URI中进行传递也就是"scheme://host/path?xx=xx"
             intent.putExtra("", "");
