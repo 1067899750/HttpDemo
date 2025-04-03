@@ -95,6 +95,10 @@
             android:name="DEEPLINK_SCHEME"
             android:value="${DEEPLINK_SCHEME}" />
 
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -127,6 +131,11 @@
 
         <activity
             android:name=".WebMainActivity"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+        <activity
+            android:name=".FlutterActivity"
             android:exported="false"
             android:screenOrientation="behind" />
 
@@ -180,5 +189,12 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
 
 </manifest>

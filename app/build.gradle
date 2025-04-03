@@ -62,6 +62,10 @@ dependencies {
     implementation project(':keyboard2')
     implementation project(':keyboard3')
 
+    if(BUILD_WITH_FLUTTER){
+        implementation project(':flutter')
+    }
+
     // + 表示使用最新版本的依赖库
     implementation('com.umeng.umsdk:common:+')
     implementation('com.umeng.umsdk:asms:+')
