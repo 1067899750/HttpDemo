@@ -135,7 +135,7 @@
             android:screenOrientation="behind" />
 
         <activity
-            android:name=".FlutterActivity"
+            android:name=".EntryFlutterActivity"
             android:exported="false"
             android:screenOrientation="behind" />
 
