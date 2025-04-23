@@ -23,8 +23,8 @@ android {
 
         manifestPlaceholders = [
                 "DEEPLINK_SCHEME": "${scheme}",
-                "DEEPLINK_HOST": "${host}",
-                "DEEPLINK_PATH": "${host_path}"
+                "DEEPLINK_HOST"  : "${host}",
+                "DEEPLINK_PATH"  : "${host_path}"
         ]
     }
     buildTypes {
@@ -62,6 +62,8 @@ dependencies {
     implementation project(':keyboard2')
     implementation project(':keyboard3')
 
+    implementation project(':flutter')
+    implementation project(':flutter_module')
 }
 
 

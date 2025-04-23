@@ -61,6 +61,17 @@
             android:exported="false"
             android:screenOrientation="behind" />
 
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- This meta-data tag is required to use Flutter's plugins -->
+            <meta-data
+                android:name="flutterEmbedding"
+                android:value="2" />
+        </activity>
+
     </application>
 
 </manifest>
