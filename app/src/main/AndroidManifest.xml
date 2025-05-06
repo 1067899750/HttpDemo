@@ -141,7 +141,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="${applicationId"
+                    android:host="${applicationId}"
                     android:path="/thirdpush"
                     android:scheme="agoo" />
             </intent-filter>
