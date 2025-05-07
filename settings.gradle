@@ -1,5 +1,3 @@
 include ':app',
         ':Httplibrary',
-        ':keyboard',
-        ':keyboard2',
-        ':keyboard3'
+        ':keyboard'

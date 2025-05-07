@@ -13,8 +13,6 @@
             <option value="$PROJECT_DIR$/Httplibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/keyboard" />
-            <option value="$PROJECT_DIR$/keyboard2" />
-            <option value="$PROJECT_DIR$/keyboard3" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

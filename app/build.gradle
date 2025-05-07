@@ -59,8 +59,6 @@ dependencies {
 
     implementation project(':Httplibrary')
     implementation project(':keyboard')
-    implementation project(':keyboard2')
-    implementation project(':keyboard3')
 
     // + 表示使用最新版本的依赖库
     implementation('com.umeng.umsdk:common:+')
