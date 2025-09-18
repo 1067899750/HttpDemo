@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -70,12 +69,12 @@
 
 <body>
 
-    <img id="loading-img" th:src="${res_url}" alt="" class="loading-img">
-    <p class="tip">正在返回中…</p>
-    <p class="time" id="showtime"></p>
-    
+<img id="loading-img" th:src="${res_url}" alt="" class="loading-img">
+<p class="tip">正在返回中…</p>
+<p class="time" id="showtime"></p>
+
 <script>
-    
+
     var agent = window.navigator.userAgent;
     var isWechat = /MicroMessenger/.test(agent);
     var isIOS = /iPad|iPhone|iPod/.test(agent) && !window.MSStream;
@@ -108,28 +107,10 @@
 
     //回调数据改原生端
     function btnJump() {
-        try {
-            if (sys == "ios") {
-                //iOS端的处理
-                try {
-                    //回退界面
-                    window.webkit.messageHandlers.MengmaRunjs.postMessage({
-                        "class": "self",
-                        "method": "tapHomeItem:",
-                        "params": {}
-                    });
-                } catch (err) {
-                    window.webkit.messageHandlers.onBackPressed.postMessage(null);
-                }
-            } else {
-                window.jsInterface.finishWebview();
-            }
-        } catch (err) {
-            var myif = document.createElement("iframe");
-            myif.src = deepLink;
-            myif.style.display = "none";
-            document.body.appendChild(myif);
-        }
+         var myif = document.createElement("iframe");
+         myif.src = deepLink;
+         myif.style.display = "none";
+         document.body.appendChild(myif);
     }
 </script>
 
