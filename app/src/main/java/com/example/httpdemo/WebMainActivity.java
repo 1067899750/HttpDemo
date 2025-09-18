@@ -27,7 +27,7 @@ public class WebMainActivity extends BaseActivity {
     protected void initView() {
         mWebView = findViewById(R.id.web_view);
 
-        mWebView.loadUrl("file:///android_asset/scheme.html");
+        mWebView.loadUrl("file:///android_asset/juduoduo_return.html");
         WebSettings webSettings = mWebView.getSettings();
         //①设置WebView允许调用js
         webSettings.setJavaScriptEnabled(true);

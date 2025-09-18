@@ -22,8 +22,6 @@ buildscript {
         jcenter()
         mavenLocal()
         maven { url 'https://repo1.maven.org/maven2/' }
-        //华为厂商推送
-        maven { url 'https://developer.huawei.com/repo' }
     }
 
     dependencies {
@@ -32,8 +30,6 @@ buildscript {
 //        classpath 'com.growingio.android:vds-gradle-plugin:autotrack-2.9.8'
         //多渠道打包插件
         classpath 'com.meituan.android.walle:plugin:1.1.7'
-        //华为厂商推送
-        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
         //FCM 谷歌
 //        classpath 'com.google.gms:google-services:4.3.15'
     }

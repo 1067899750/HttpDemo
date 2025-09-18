@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script type="text/javascript">
+        (function (doc, win) {
+            let docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recall = function () {
+                    let clientWidth = docEl.clientWidth;
+                    clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                    if (!clientWidth) return;
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recall, false);
+            doc.addEventListener('DOMContentLoaded', recall, false);
+        })(document, window);
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background: #F7F9FF;
+        }
+
+        img {
+            margin-top: 1.2rem;
+            width: 1.4rem;
+            height: 1.4rem;
+        }
+
+        .tip {
+            margin-top: 0.68rem;
+            width: 100%; 
+            height: 0.36rem;
+            font-size: 0.36rem;
+            font-family: PingFang SC, PingFang SC-Bold;
+            font-weight: 700;
+            text-align: center;
+            color: #1f2635;
+            line-height: 0.36rem;
+        }
+
+        .time{
+            margin-top: 0.24rem;
+            font-size: 0.32rem;
+            font-family: PingFang SC, PingFang SC-Regular;
+            font-weight: 400;
+            text-align: center;
+            color: #5a5d73;
+            line-height: 0.32rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="loading-img" th:src="${res_url}" alt="" class="loading-img">
+    <p class="tip">正在返回中…</p>
+    <p class="time" id="showtime"></p>
+    
+<script>
+    
+    var agent = window.navigator.userAgent;
+    var isWechat = /MicroMessenger/.test(agent);
+    var isIOS = /iPad|iPhone|iPod/.test(agent) && !window.MSStream;
+    var isAndroid = /Android/i.test(agent) && !window.MSStream;
+    var sys = isIOS ? 'ios' : (isWechat ? 'wechat' : 'android');
+    let jump_case = "${jump_case}";
+    let backend_id = '${backend_id}';
+    let android_web = '${android_web}';
+    let cd = 1;
+    let timer;
+    const deepLink = "fenqi://loan/splash"
+
+    onTimer() //开启倒计时
+
+    function onTimer() {
+        //显示倒计时
+        document.getElementById('showtime').innerHTML =  '倒计时 ' + cd + 's';
+        if (cd <= 0) {
+            //清楚倒计时
+            clearTimeout(timer);
+
+            //向原生端发送回退的事件
+            btnJump()
+        } else {
+            //开启计时
+            timer = setTimeout(onTimer, 1000);
+        }
+        cd--;
+    }
+
+    //回调数据改原生端
+    function btnJump() {
+        try {
+            if (sys == "ios") {
+                //iOS端的处理
+                try {
+                    //回退界面
+                    window.webkit.messageHandlers.MengmaRunjs.postMessage({
+                        "class": "self",
+                        "method": "tapHomeItem:",
+                        "params": {}
+                    });
+                } catch (err) {
+                    window.webkit.messageHandlers.onBackPressed.postMessage(null);
+                }
+            } else {
+                window.jsInterface.finishWebview();
+            }
+        } catch (err) {
+            var myif = document.createElement("iframe");
+            myif.src = deepLink;
+            myif.style.display = "none";
+            document.body.appendChild(myif);
+        }
+    }
+</script>
+
+</body>
+</html>

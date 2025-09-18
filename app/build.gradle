@@ -61,69 +61,10 @@ dependencies {
     implementation project(':keyboard')
     implementation project(':keyboard2')
     implementation project(':keyboard3')
-
-    // + 表示使用最新版本的依赖库
-    implementation('com.umeng.umsdk:common:+')
-    implementation('com.umeng.umsdk:asms:+')
-    implementation('com.umeng.umsdk:push:+')
-
 }
 
 
-//集成华为推送
-apply plugin: 'com.huawei.agconnect'
-dependencies {
-    api 'com.umeng.umsdk:huawei-umengaccs:+'
-    api 'com.huawei.hms:push:6.12.0.300'
-}
 
-//集成小米推送
-dependencies {
-    api 'com.umeng.umsdk:xiaomi-umengaccs:+'
-    api 'com.umeng.umsdk:xiaomi-push:+'
-}
-
-//集成vivo推送
-dependencies {
-    api 'com.umeng.umsdk:vivo-umengaccs:+'
-    api 'com.umeng.umsdk:vivo-push:+'
-}
-
-//集成OPPO推送
-dependencies {
-    api 'com.umeng.umsdk:oppo-umengaccs:+'
-    api 'com.umeng.umsdk:oppo-push:+'
-
-    //如果编译过程中出现冲突，可通过exclude移除冲突的module
-//    api('com.umeng.umsdk:oppo-push:3.4.0') {
-//        exclude group: 'androidx.annotation', module: 'annotation'
-//        exclude group: 'commons-codec', module: 'commons-codec'
-//        exclude group: 'com.google.code.gson', module: 'gson'
-//    }
-}
-
-//集成魅族推送
-dependencies {
-    api 'com.umeng.umsdk:meizu-umengaccs:+'
-    api 'com.umeng.umsdk:meizu-push:+'
-}
-
-//集成荣耀推送
-dependencies {
-    api 'com.umeng.umsdk:honor-umengaccs:+'
-    api 'com.umeng.umsdk:honor-push:+'
-    implementation 'androidx.activity:activity:1.8.0'
-}
-
-
-//集成FCM推送
-//apply plugin: 'com.google.gms.google-services'
-//dependencies {
-//    api 'com.umeng.umsdk:fcm-umengaccs:+'
-//    api platform('com.google.firebase:firebase-bom:32.4.0')
-//    api 'com.google.firebase:firebase-analytics'
-//    api 'com.google.firebase:firebase-messaging'
-//}
 
 
 
